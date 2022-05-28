@@ -1,0 +1,60 @@
+{
+  "name": "pj-pralnia",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.3.0",
+    "@testing-library/user-event": "^13.5.0",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "react-scripts": "5.0.1",
+    "web-vitals": "^2.1.4",
+    "@fortawesome/fontawesome-svg-core": "^1.2.32",
+    "@fortawesome/free-regular-svg-icons": "^5.15.3",
+    "@fortawesome/free-solid-svg-icons": "^5.15.1",
+    "@fortawesome/react-fontawesome": "^0.1.13",
+    "axios": "^0.21.1",
+    "bootstrap": "^4.5.3",
+    "immutability-helper": "^3.1.1",
+    "node-sass": "^4.14.1",
+    "query-string": "^6.13.7",
+    "react-dnd": "^14.0.5",
+    "react-dnd-html5-backend": "^14.1.0",
+    "react-horizontal-scrolling-menu": "^0.7.9",
+    "react-idle-timer": "^4.5.0",
+    "react-number-format": "^4.4.1",
+    "react-rating-stars-component": "^2.2.0",
+    "react-router-dom": "^5.2.0",
+    "react-spinners": "^0.9.0",
+    "react-star-ratings": "^2.3.0",
+    "reactour": "^1.18.1",
+    "reactstrap": "^8.7.1",
+    "styled-components": "^5.2.1",
+    "ua-parser-js": "^0.7.22"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
