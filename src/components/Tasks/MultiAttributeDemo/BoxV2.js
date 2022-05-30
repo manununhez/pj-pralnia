@@ -13,7 +13,7 @@ export function Box({ name, type, columnType, index, showIndicator, onDoubleClic
             item: { rating, name },
             collect: (monitor) => ({
                 isDragging: monitor.isDragging(),
-                opacity: isDragging ? 0.4 : 1
+                opacity: monitor.isDragging() ? 0.4 : 1
             })
         }),
         [name, type]

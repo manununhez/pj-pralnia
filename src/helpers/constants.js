@@ -92,7 +92,6 @@ export const FIRST_RADIO_VALUE = "1";
 export const SECOND_RADIO_VALUE = "2";
 export const THIRD_RADIO_VALUE = "3";
 export const SHOW_FEEDBACK_TRUE = "YES";
-export const SHOW_FEEDBACK_NO = "NO";
 
 //Visual Pattern
 export const VISUAL_PATTERN = "VisualPattern"
@@ -184,8 +183,8 @@ export const BARGAIN_DEMO_INSTRUCTION_BEFORE_FINISH = "BargainDemoTaskInstructio
 export const BARGAIN_DEMO_FINISH_INSTRUCTION = "BargainDemoTaskInstructionFinish";
 export const BARGAIN_SCREEN = "BargainTask";
 export const MULTRIATTRIBUTE_DEMO_SCREEN = "MultiAttributeTaskDemo";
-export const MULTRIATTRIBUTE_SCREEN = "MultiAttributeTask";
-
+export const PRALNIA_TASK_SCREEN = "PralniaTask";
+export const PRALNIA_TASK_DEMO_SCREEN = "PralniaTaskDemo";
 
 //CSV input stores
 export const STORES_SHORT_TYPE = "Stores-short";
@@ -231,3 +230,9 @@ export const TOUR_BARGAIN = "This is a bargain."
 export const TOUR_NOT_BARGAIN = "This is not a bargain."
 export const TOUR_BARGAIN_CRITERIA = "A bargain is a product with a discount >= 50% and rating >= 4 stars."
 export const TOUR_BARGAIN_SELECTION = "Select the bargain by clicking the left mouse button."
+
+
+export const FIRST_TASK_M = "Wybierz najlepszą pralkę, korzystając z myszy i zaznaczając jedną z pralek."
+export const FIRST_TASK_F = "Wybierz najlepszą pralkę, korzystając z myszy i zaznaczając jedną z pralek."
+export const FIRST_TASK_DEMO_F = "Wybierz najlepszą pralkę i kliknij na nią lewym przyciskiem myszy."
+export const FIRST_TASK_DEMO_M = "Wybierz najlepszą pralkę i kliknij na nią lewym przyciskiem myszy."

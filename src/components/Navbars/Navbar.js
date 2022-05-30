@@ -32,7 +32,7 @@ class NavbarCustom extends React.Component {
   render() {
     return (<div>
       <Navbar color="light" light expand="md">
-        <NavbarBrand href="/">Pralnia</NavbarBrand>
+        <NavbarBrand href="/">Pralnia Exp V2</NavbarBrand>
         <NavbarToggler onClick={this.toggle} />
         <Collapse isOpen={this.isOpen} navbar>
           <Nav className="mr-auto" navbar>
@@ -41,7 +41,7 @@ class NavbarCustom extends React.Component {
               <NavLink href="/bargain-results">Results</NavLink>
             </NavItem>
           </Nav>
-          <NavbarText>v2.2</NavbarText>
+          <NavbarText>v1.0</NavbarText>
         </Collapse>
       </Navbar>
     </div>

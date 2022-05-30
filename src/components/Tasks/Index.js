@@ -83,6 +83,7 @@ class Index extends Component {
             inputParticipants: [],
             inputPSForm: [],
             inputStores: { storesLong: [], storesShort: [] },
+            inputAttributes: { task: [], demo: [] },
             //Variables for output data (results)
             generalOutput: generalOutputDefault,
             generalOutputIndexes: [],
@@ -90,6 +91,7 @@ class Index extends Component {
             outputPSForm: [],
             outputBargainTask: { task: [], demo: [] },
             outputVisualPattern: { task: [], demo: [] },
+            outputAttribute: { task: [], demo: [] },
             //utils
             logTimestamp: { screen: [], timestamp: [] },
             currentScreenNumber: 0,
@@ -239,7 +241,7 @@ class Index extends Component {
             })
 
             if (DEBUG) console.log(data)
-            request.fetchStores(constant.STORES_LONG_TYPE, this._onLoadStoresLongDataCallBack.bind(this))
+            request.fetchInput(this._onLoadInputAllCallBack.bind(this))
         } else {
             this.setState({
                 loading: false,
@@ -255,18 +257,18 @@ class Index extends Component {
      * @param {*} data 
      * @param {*} error 
      */
-    _onLoadStoresLongDataCallBack(data, error) {
+    _onLoadInputAllCallBack(data, error) {
         if (data) {
 
-            const { inputStores } = this.state
-            inputStores.storesLong = data.response
+            const { inputAttributes } = this.state
+            inputAttributes.task = data.response
 
             this.setState({
-                inputStores: inputStores
+                inputAttributes: inputAttributes
             })
 
             if (DEBUG) console.log(data)
-            request.fetchStores(constant.STORES_SHORT_TYPE, this._onLoadStoresShortDataCallBack.bind(this))
+            request.fetchInputDemo(this._onLoadInputAllDemoCallBack.bind(this))
         } else {
             this.setState({
                 loading: false,
@@ -282,16 +284,16 @@ class Index extends Component {
      * @param {*} data 
      * @param {*} error 
      */
-    _onLoadStoresShortDataCallBack(data, error) {
+    _onLoadInputAllDemoCallBack(data, error) {
         if (data) {
             //Loggin the first screen of the navigation
-            const { inputStores, inputNavigation } = this.state
+            const { inputAttributes, inputNavigation } = this.state
 
-            inputStores.storesShort = data.response
+            inputAttributes.demo = data.response
 
             this.setState({
                 loading: false, //Hide loading
-                inputStores: inputStores,
+                inputAttributes: inputAttributes,
                 logTimestamp: {
                     screen: [inputNavigation[0].screen],//we grap the first screen
                     timestamp: [Date.now()]//we log the first screen we are entering in
@@ -702,13 +704,43 @@ class Index extends Component {
         })
     }
 
-    /**
- * 
- * @param {*} bargainResults 
- */
-    multiAttributeHandler = (selectedOptionsResult) => {
+    multiAttributeTestHandler = (selectedOptionsResult) => {
         //we simulate a space btn pressed because multiAttribute already finishes with a space btn pressed
         this._validateToNextPage()
+    }
+
+    /**
+     * 
+     * @param {*} selectedOptionsResult 
+     */
+    multiAttributeHandler = (selectedOptionsResult) => {
+        //we simulate a space btn pressed because multiAttribute already finishes with a space btn pressed
+        const { outputAttribute } = this.state;
+
+        outputAttribute.task = selectedOptionsResult
+
+        this.setState({
+            outputAttribute: outputAttribute,
+        }, () => {
+            this._validateToNextPage()
+        })
+    }
+
+    /**
+     * 
+     * @param {*} selectedOptionsResult 
+     */
+    multiAttributeDemoHandler = (selectedOptionsResult) => {
+        //we simulate a space btn pressed because multiAttribute already finishes with a space btn pressed
+        const { outputAttribute } = this.state;
+
+        outputAttribute.demo = selectedOptionsResult
+
+        this.setState({
+            outputAttribute: outputAttribute,
+        }, () => {
+            this._validateToNextPage()
+        })
     }
 
     /**
@@ -868,28 +900,11 @@ class Index extends Component {
             } else if (screen === constant.BARGAIN_SCREEN) {
                 let data = this.validateBargainTask();
                 if (data.isValid) this._goToNextTaskInInputNavigation();
-            } else if (screen === constant.MULTRIATTRIBUTE_SCREEN) {
-                this._goToNextTaskInInputNavigation();
-            } else if (screen === constant.MULTRIATTRIBUTE_DEMO_SCREEN) {
+            } else if (screen === constant.MULTRIATTRIBUTE_DEMO_SCREEN ||
+                screen === constant.PRALNIA_TASK_SCREEN ||
+                screen === constant.PRALNIA_TASK_DEMO_SCREEN) {
                 this._goToNextTaskInInputNavigation();
             } else if (screen === constant.USER_FORM_SCREEN) {
-                // let data = this.validateForm();
-
-                // if (data.isValid) {
-                //     this._randomUserScenarioAssignment()
-
-                //     this._goToNextTaskInInputNavigation();
-                // } else {
-                //     if (data.redirect) {
-                //         //we redirect to Ariadna
-                //         alert(constant.PARTICIPANTS_QUOTA_FULL_ALERT_ERROR);
-                //         this.setState({ showAlertWindowsClosing: false }, () => {
-                //             window.location.replace(PROLIFIC_REDIRECT_REJECT);
-                //         })
-                //     }
-                // }
-
-                //Get texts per sex, and after, go to next page
                 this.setState({ loading: true }, () => {
                     request.fetchAppText(outputFormData.sex, this._onLoadAppTextCallBack.bind(this))
                 });
@@ -1121,7 +1136,7 @@ function isFooterShownInCurrentScreen(state) {
     let footerText = constant.TEXT_FOOTER
 
     if (type === constant.INSTRUCTION_SCREEN) {
-        if (screen.includes(constant.VISUAL_PATTERN) || screen.includes(constant.MULTRIATTRIBUTE_SCREEN)) {
+        if (screen.includes(constant.VISUAL_PATTERN) || screen.includes(constant.PRALNIA_TASK_SCREEN)) {
             isFooterShown = true;
         } else if (screen.includes("Bargain")) {
             if (!screen.includes("BeforeFinish")) {
@@ -1149,10 +1164,10 @@ function isFooterShownInCurrentScreen(state) {
  */
 function changePages(state, context) {
 
-    const { currentScreenNumber,
+    const { outputFormData, currentScreenNumber,
         inputNavigation,
         inputTextInstructions,
-        inputPSForm, inputStores, typeTask } = state;
+        inputPSForm, inputStores, inputAttributes, typeTask } = state;
     const totalLength = inputNavigation.length;
 
     if (totalLength === 0 || currentScreenNumber >= totalLength) return //To prevent keep transition between pages
@@ -1176,9 +1191,11 @@ function changePages(state, context) {
     } else if (screen === constant.BARGAIN_SCREEN) {
         return <BargainTask action={context.bargainTaskHandler} data={inputStores} typeTask={typeTask} />;
     } else if (screen === constant.MULTRIATTRIBUTE_DEMO_SCREEN) {
-        return <MultiAttributeDemo action={context.multiAttributeHandler} />;
-    } else if (screen === constant.MULTRIATTRIBUTE_SCREEN) {
-        return <MultiAttribute action={context.multiAttributeHandler} />;
+        return <MultiAttributeDemo action={context.multiAttributeTestHandler} />;
+    } else if (screen === constant.PRALNIA_TASK_SCREEN) {
+        return <MultiAttribute action={context.multiAttributeHandler} data={inputAttributes.task} text={outputFormData.sex === constant.MALE_VALUE ? constant.FIRST_TASK_M : constant.FIRST_TASK_F} />;
+    } else if (screen === constant.PRALNIA_TASK_DEMO_SCREEN) {
+        return <MultiAttribute action={context.multiAttributeDemoHandler} data={inputAttributes.demo} text={outputFormData.sex === constant.MALE_VALUE ? constant.FIRST_TASK_DEMO_M : constant.FIRST_TASK_DEMO_F} />;
     }
 }
 

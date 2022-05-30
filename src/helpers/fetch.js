@@ -6,8 +6,8 @@ const fetch_versions_url = 'versions'
 const fetch_psform_url = 'psform'
 const fetch_apptext_url = 'apptext'
 const fetch_inituserdata_url = 'inituserdata'
-const fetch_stores_short_url = 'stores-short'
-const fetch_stores_long_url = 'stores-long'
+const fetch_input_all_url = 'input-all'
+const fetch_input_all_demo_url = 'input-all-demo'
 const fetch_users_url = 'users'
 const save_visualpattern_url = 'visualpattern'
 const save_userinfo_url = 'userinfo'
@@ -138,14 +138,8 @@ export function fetchUserInitialData(typeTask, callback) {
  * @param {*} type 
  * @param {*} callback 
  */
-export function fetchStores(type, callback) {
-    let url = ''
-
-    if (type === constant.STORES_SHORT_TYPE) {
-        url = fetch_stores_short_url
-    } else if (type === constant.STORES_LONG_TYPE) {
-        url = fetch_stores_long_url
-    }
+export function fetchInput(callback) {
+    let url = fetch_input_all_url
 
     get(url, {})
         .then((response) => {
@@ -155,6 +149,20 @@ export function fetchStores(type, callback) {
         });
 }
 
+/**
+ * 
+ * @param {*} callback 
+ */
+export function fetchInputDemo(callback) {
+    let url = fetch_input_all_demo_url
+
+    get(url, {})
+        .then((response) => {
+            callback({ response });
+        }, (response) => {
+            callback(false, response);
+        });
+}
 // /**
 //  * Load app versions from the spreadsheet
 //  * @param {*} callback 
