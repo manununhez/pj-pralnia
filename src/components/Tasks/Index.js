@@ -32,6 +32,9 @@ import BargainTask from "./BargainTask/BargainTask";
 import BargainDemoTask from "./BargainTask/BargainDemoTask";
 import MultiAttribute from "./MultiAttribute";
 import MultiAttributeDemo from "./MultiAttributeDemo/MultiAttributeDemoV3";
+import RatingTask from "./RatingTask";
+import BrandTask from "./BrandTask";
+import InputTask from "./InputTask";
 
 const DEBUG = (process.env.REACT_APP_DEBUG_LOG === "true") ? true : false;
 const PROLIFIC_REDIRECT_REJECT = process.env.REACT_APP_PROLIFIC_REDIRECT_REJECT;
@@ -92,6 +95,9 @@ class Index extends Component {
             outputBargainTask: { task: [], demo: [] },
             outputVisualPattern: { task: [], demo: [] },
             outputAttribute: { task: [], demo: [] },
+            outputRatings: [],
+            outputBrands: [],
+            outputInputTask: constant.TEXT_EMPTY,
             //utils
             logTimestamp: { screen: [], timestamp: [] },
             currentScreenNumber: 0,
@@ -773,6 +779,30 @@ class Index extends Component {
         }
     }
 
+    ratingTaskHandler = (selectedRatings) => {
+        this.setState({
+            outputRatings: selectedRatings,
+        }, () => {
+            this._validateToNextPage()
+        })
+    }
+
+    brandTaskHandler = (brand) => {
+        this.setState({
+            outputBrands: brand,
+        }, () => {
+            this._validateToNextPage()
+        })
+    }
+
+    inputTaskHandler = (value) => {
+        this.setState({
+            outputInputTask: value,
+        }, () => {
+            this._validateToNextPage()
+        })
+    }
+
     /*********************************************************
      * VALIDATE DATA OF EACH COMPONENT BEFORE GOING TO NEXT PAGE
      **********************************************************/
@@ -902,6 +932,9 @@ class Index extends Component {
                 if (data.isValid) this._goToNextTaskInInputNavigation();
             } else if (screen === constant.MULTRIATTRIBUTE_DEMO_SCREEN ||
                 screen === constant.PRALNIA_TASK_SCREEN ||
+                screen === constant.RATING_TASK_SCREEN ||
+                screen === constant.BRAND_TASK_SCREEN ||
+                screen === constant.INPUT_TASK_SCREEN ||
                 screen === constant.PRALNIA_TASK_DEMO_SCREEN) {
                 this._goToNextTaskInInputNavigation();
             } else if (screen === constant.USER_FORM_SCREEN) {
@@ -988,7 +1021,6 @@ class Index extends Component {
         const { currentScreenNumber, inputNavigation, logTimestamp, showAlertWindowsClosing } = this.state;
         const { screen, timestamp } = logTimestamp
 
-        let currentScreen = inputNavigation[currentScreenNumber].screen;
         let loading = false
         let now = Date.now();
         let totalLength = inputNavigation.length;
@@ -1193,9 +1225,15 @@ function changePages(state, context) {
     } else if (screen === constant.MULTRIATTRIBUTE_DEMO_SCREEN) {
         return <MultiAttributeDemo action={context.multiAttributeTestHandler} />;
     } else if (screen === constant.PRALNIA_TASK_SCREEN) {
-        return <MultiAttribute action={context.multiAttributeHandler} data={inputAttributes.task} text={outputFormData.sex === constant.MALE_VALUE ? constant.FIRST_TASK_M : constant.FIRST_TASK_F} />;
+        return <MultiAttribute action={context.multiAttributeHandler} data={inputAttributes.task} text={outputFormData.sex === constant.MALE_VALUE ? constant.PRALNIA_TASK_TITLE_M : constant.PRALNIA_TASK_TITLE_F} />;
     } else if (screen === constant.PRALNIA_TASK_DEMO_SCREEN) {
-        return <MultiAttribute action={context.multiAttributeDemoHandler} data={inputAttributes.demo} text={outputFormData.sex === constant.MALE_VALUE ? constant.FIRST_TASK_DEMO_M : constant.FIRST_TASK_DEMO_F} />;
+        return <MultiAttribute action={context.multiAttributeDemoHandler} data={inputAttributes.demo} text={outputFormData.sex === constant.MALE_VALUE ? constant.PRALNIA_TASK_DEMO_M : constant.PRALNIA_TASK_DEMO_F} />;
+    } else if (screen === constant.RATING_TASK_SCREEN) {
+        return <RatingTask action={context.ratingTaskHandler} text={outputFormData.sex === constant.MALE_VALUE ? constant.RATING_TASK_TITLE_M : constant.RATING_TASK_TITLE_F} />;
+    } else if (screen === constant.BRAND_TASK_SCREEN) {
+        return <BrandTask action={context.brandTaskHandler} text={outputFormData.sex === constant.MALE_VALUE ? constant.BRAND_TASK_TITLE_M : constant.BRAND_TASK_TITLE_F} />;
+    } else if (screen === constant.INPUT_TASK_SCREEN) {
+        return <InputTask action={context.inputTaskHandler} text={outputFormData.sex === constant.MALE_VALUE ? constant.INPUT_TASK_TITLE_M : constant.INPUT_TASK_TITLE_F} />;
     }
 }
 

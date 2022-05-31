@@ -11,9 +11,8 @@ import { faSmile, faFrown } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
-    FIRST_TASK_PROPERTIES_TOTAL, FIRST_RADIO_VALUE, SECOND_RADIO_VALUE, WHITE, BLACK, RED,
-    THIRD_RADIO_VALUE, TEXT_FOOTER, SPACE_KEY_CODE,
-    EVENT_KEY_DOWN
+    FIRST_TASK_PROPERTIES_TOTAL, FIRST_RADIO_VALUE, SECOND_RADIO_VALUE, WHITE, RED,
+    THIRD_RADIO_VALUE, TEXT_FOOTER, SPACE_KEY_CODE, EVENT_KEY_DOWN
 } from '../../helpers/constants';
 import Footer from "../Footers/Footer";
 
@@ -52,12 +51,9 @@ class MultiAttribute extends React.Component {
 
     handleKeyDownEvent = (event) => {
         if (event.keyCode === SPACE_KEY_CODE) {
-            console.log("SPACE_KEY_CODE")
-            console.log(this.state)
             const { selectedOption, counter } = this.state
 
             if (this.props.data.length === selectedOption.length) {
-                console.log('this.props.action')
                 this.props.action(selectedOption);
             } else if (selectedOption.length === (counter + 1)) {
                 selectedOption.push(defaultValue)
@@ -74,13 +70,10 @@ class MultiAttribute extends React.Component {
     }
 
     optionClicked = (evt) => {
-        console.log(evt)
         const { selectedOption, counter } = this.state
         const currentAnswer = this.props.data[counter]
 
         let selectedValue = evt.target.value
-
-        console.log(evt)
 
         selectedOption[counter] = {
             questionID: currentAnswer.id,
@@ -247,6 +240,11 @@ function getTableVisualizationBody(data) {
     );
 }
 
+/**
+ * 
+ * @param {*} data 
+ * @returns 
+ */
 function getPropertiesTableVizualizationBodyProduct1(data) {
     let children = []
     let attributes = FIRST_TASK_PROPERTIES_TOTAL
@@ -262,6 +260,11 @@ function getPropertiesTableVizualizationBodyProduct1(data) {
     return children
 }
 
+/**
+ * 
+ * @param {*} data 
+ * @returns 
+ */
 function getPropertiesTableVizualizationBodyProduct2(data) {
     let children = []
     let attributes = FIRST_TASK_PROPERTIES_TOTAL
@@ -277,6 +280,11 @@ function getPropertiesTableVizualizationBodyProduct2(data) {
 
 }
 
+/**
+ * 
+ * @param {*} data 
+ * @returns 
+ */
 function getPropertiesTableVizualizationBodyProduct3(data) {
     let children = []
     let attributes = FIRST_TASK_PROPERTIES_TOTAL
@@ -293,6 +301,11 @@ function getPropertiesTableVizualizationBodyProduct3(data) {
 
 }
 
+/**
+ * 
+ * @param {*} value 
+ * @returns 
+ */
 function getPropertiesVerticalRating(value) {
     let children = []
     for (let i = 0; i < value; i++) {

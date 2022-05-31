@@ -1,6 +1,11 @@
 import React from "react";
 
-import { Container, Row } from "reactstrap";
+import { Container, Col, Row, Table } from "reactstrap";
+import ReactStars from "react-rating-stars-component";
+
+// get our fontawesome imports
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import "./style.css";
 import * as constant from '../../helpers/constants';
@@ -53,6 +58,11 @@ class Instruction extends React.Component {
             <Container fluid="md">
                 <Row className="justify-content-md-center">
                     <HtmlFormattedText text={this.props.text} screen={this.props.name} typeTask={this.props.typeTask} />
+                </Row>
+                <Row className="justify-content-md-center">
+                    <Col lg="8" style={{ marginTop: "20px" }}>
+                        {this.props.name === "PralniaTaskSecondInstruction" ? getRatingStarBarTable() : <></>}
+                    </Col>
                 </Row>
                 <br />
                 <br />
@@ -145,5 +155,65 @@ const ColorableRedText = ({ text }) => {
 
     return markedJsx;
 };
+
+function getRatingStarBarTable() {
+    return (
+        <Table responsive borderless size="sm">
+            <thead>
+                <tr>
+                    <th><h5>Właściwość</h5></th>
+                    <th><h5>Ważność</h5></th>
+                </tr>
+            </thead>
+            <tbody>
+                {/* TODO Actualizar estos atributos */}
+                <tr>
+                    <td style={{ textAlign: 'left', fontSize: '1.3em' }}>{constant.ATTRIBUTE_CUSTOM.data.text[0]}</td>
+                    <td className="align-middle">{RatingBarDemo(6)}</td>
+                </tr>
+                <tr>
+                    <td style={{ textAlign: 'left', fontSize: '1.3em' }}>{constant.ATTRIBUTE_CUSTOM.data.text[1]}</td>
+                    <td className="align-middle">{RatingBarDemo(5)}</td>
+                </tr>
+                <tr>
+                    <td style={{ textAlign: 'left', fontSize: '1.3em' }}>{constant.ATTRIBUTE_CUSTOM.data.text[2]}</td>
+                    <td className="align-middle">{RatingBarDemo(4)}</td>
+                </tr>
+                <tr>
+                    <td style={{ textAlign: 'left', fontSize: '1.3em' }}>{constant.ATTRIBUTE_CUSTOM.data.text[3]}</td>
+                    <td className="align-middle">{RatingBarDemo(3)}</td>
+                </tr>
+                <tr>
+                    <td style={{ textAlign: 'left', fontSize: '1.3em' }}>{constant.ATTRIBUTE_CUSTOM.data.text[4]}</td>
+                    <td className="align-middle">{RatingBarDemo(2)}</td>
+                </tr>
+                <tr>
+                    <td style={{ textAlign: 'left', fontSize: '1.3em' }}>{constant.ATTRIBUTE_CUSTOM.data.text[5]}</td>
+                    <td className="align-middle">{RatingBarDemo(1)}</td>
+                </tr>
+            </tbody>
+        </Table>
+    );
+}
+
+
+/**
+ * 
+ * @param {*} value 
+ */
+function RatingBarDemo(value) {
+    return (<ReactStars
+        edit={false}
+        size={20}
+        count={6}
+        value={value}
+        half={false}
+        color1={constant.HIDDEN_STAR}
+        activeColor={constant.RED}
+        emptyIcon={<FontAwesomeIcon icon={faPlus} style={{ marginLeft: "5px" }} />}
+        filledIcon={<FontAwesomeIcon icon={faPlus} style={{ marginLeft: "5px" }} />}
+    />);
+}
+
 
 export default Instruction;
