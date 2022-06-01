@@ -51,16 +51,19 @@ class InputTask extends React.Component {
     }
 
     render() {
+        const showError = false
+        const textError = "Error!"
         return (
             <Container fluid="md">
                 <Row className="justify-content-md-center" style={{ padding: "10px" }}>
-                    <h4>{this.props.text}</h4>
+                    <div className="instr-h3">{this.props.text}</div>
+
                 </Row>
-                {/* <Alert style={{ fontSize: "1.0rem" }} color="warning" isOpen={this.props.error.showError}>
+                <Alert style={{ fontSize: "1.0rem" }} color="warning" isOpen={showError}>
                     <span className="alert-inner--text ml-1">
-                        {this.props.error.textError}
+                        {textError}
                     </span>
-                </Alert> */}
+                </Alert>
                 {getQuestions(this.props.questionsText, this.validateInput)}
                 <br /><br />
                 {this.state.inputCompleted ? <div style={{ 'marginTop': '25px' }}><Footer text={TEXT_FOOTER} /></div> : <></>}

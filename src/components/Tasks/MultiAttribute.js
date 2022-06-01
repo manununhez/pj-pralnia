@@ -105,7 +105,8 @@ class MultiAttribute extends React.Component {
         const showFeedbackCorrectAnswer = selectedOption[counter].selectedAnswer === data.correctAnswer.toString()
         return (
             <Container key={"KEY_" + counter}>
-                <h4>{this.props.text}</h4>
+                <div className="instr-h3">{this.props.text}</div>
+
                 <Alert style={{ fontSize: "1.0rem" }} color="warning" isOpen={showError}>
                     <span className="alert-inner--text ml-1">
                         {textError}

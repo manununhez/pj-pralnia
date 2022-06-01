@@ -35,6 +35,7 @@ import MultiAttributeDemo from "./MultiAttributeDemo/MultiAttributeDemoV3";
 import RatingTask from "./RatingTask";
 import BrandTask from "./BrandTask";
 import InputTask from "./InputTask";
+import PreferenceTask from "./PreferenceTask";
 
 const DEBUG = (process.env.REACT_APP_DEBUG_LOG === "true") ? true : false;
 const PROLIFIC_REDIRECT_REJECT = process.env.REACT_APP_PROLIFIC_REDIRECT_REJECT;
@@ -97,6 +98,7 @@ class Index extends Component {
             outputAttribute: { task: [], demo: [] },
             outputRatings: [],
             outputBrands: [],
+            outputPreferences: [],
             outputInputTask: constant.TEXT_EMPTY,
             //utils
             logTimestamp: { screen: [], timestamp: [] },
@@ -803,6 +805,14 @@ class Index extends Component {
         })
     }
 
+    preferenceTaskHandler = (value) => {
+        this.setState({
+            outputPreferences: value,
+        }, () => {
+            this._validateToNextPage()
+        })
+    }
+
     /*********************************************************
      * VALIDATE DATA OF EACH COMPONENT BEFORE GOING TO NEXT PAGE
      **********************************************************/
@@ -935,6 +945,7 @@ class Index extends Component {
                 screen === constant.RATING_TASK_SCREEN ||
                 screen === constant.BRAND_TASK_SCREEN ||
                 screen === constant.INPUT_TASK_SCREEN ||
+                screen === constant.PREFERENCE_TASK_SCREEN ||
                 screen === constant.PRALNIA_TASK_DEMO_SCREEN) {
                 this._goToNextTaskInInputNavigation();
             } else if (screen === constant.USER_FORM_SCREEN) {
@@ -1234,6 +1245,8 @@ function changePages(state, context) {
         return <BrandTask action={context.brandTaskHandler} text={outputFormData.sex === constant.MALE_VALUE ? constant.BRAND_TASK_TITLE_M : constant.BRAND_TASK_TITLE_F} />;
     } else if (screen === constant.INPUT_TASK_SCREEN) {
         return <InputTask action={context.inputTaskHandler} text={outputFormData.sex === constant.MALE_VALUE ? constant.INPUT_TASK_TITLE_M : constant.INPUT_TASK_TITLE_F} />;
+    } else if (screen === constant.PREFERENCE_TASK_SCREEN) {
+        return <PreferenceTask action={context.preferenceTaskHandler} text={outputFormData.sex === constant.MALE_VALUE ? constant.PREFERENCE_TASK_TITLE_M : constant.PREFERENCE_TASK_TITLE_F} />
     }
 }
 

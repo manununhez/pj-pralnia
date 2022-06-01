@@ -71,6 +71,27 @@ export const attributeListsForDemo = [
     }
 ];
 
+//PreferenceTask
+export const ATTRIBUTE = {
+    data:
+    {
+        id: ["A1", "A2", "A3", "A4", "A5", "A6"],
+        text: ["max prędkość wirowania (obr/min)", "pojemność bębna (kg)",
+            "klasa energetyczna", "poziom hałasu (db)", "zużycie wody (l)",
+            "program szybki"],
+        value: [
+            ["800", "1000", "1200", "1400", "1600"],
+            ["4", "5", "6", "7", "8", "9", "10"],
+            ["A", "A+", "A++", "A+++"],
+            ["70", "65", "60", "55", "50", "45", "40"],
+            ["70", "60", "50", "40", "30"],
+            ["brak", "jest"]
+        ],
+        prefix: ["Min ", "Min ", "Min ", "Max ", "Max ", ""],
+        sufix: [" obr/min", " kg", "", "db", "l", ""]
+    }
+}
+
 //RatingTask
 export const ATTRIBUTE_CUSTOM = {
     data:
@@ -212,7 +233,7 @@ export const PRALNIA_TASK_DEMO_SCREEN = "PralniaTaskDemo";
 export const RATING_TASK_SCREEN = "RatingTask";
 export const BRAND_TASK_SCREEN = "BrandTask";
 export const INPUT_TASK_SCREEN = "InputTask";
-
+export const PREFERENCE_TASK_SCREEN = "PreferenceTask";
 //CSV input stores
 export const STORES_SHORT_TYPE = "Stores-short";
 export const STORES_LONG_TYPE = "Stores-long";
@@ -261,14 +282,18 @@ export const TOUR_BARGAIN_SELECTION = "Select the bargain by clicking the left m
 
 export const PRALNIA_TASK_TITLE_M = "Wybierz najlepszą pralkę, korzystając z myszy i zaznaczając jedną z pralek."
 export const PRALNIA_TASK_TITLE_F = "Wybierz najlepszą pralkę, korzystając z myszy i zaznaczając jedną z pralek."
+
 export const PRALNIA_TASK_DEMO_F = "Wybierz najlepszą pralkę i kliknij na nią lewym przyciskiem myszy."
 export const PRALNIA_TASK_DEMO_M = "Wybierz najlepszą pralkę i kliknij na nią lewym przyciskiem myszy."
 
-export const RATING_TASK_TITLE_M = "Jesteśmy ciekawi na co zwróciłby Pan uwagę przy zakupie pralki.<br>Prosimy o ocenienie ważności właściwości pralek posługując się plusami. Proszę zaznaczyć wybraną liczbę plusów klikając na nie lewym przyciskiem myszy.<br>Im większa liczba plusów, tym ważniejsza jest dla Pana dana właściwość. Może Pan przyznać tę samą liczbę plusów kilku właściwościom. Każda właściwość musi mieć co najmniej jeden plus i żadna właściwość nie może mieć więcej niż sześć plusów.<br> Nie ma tu dobrych ani złych odpowiedzi, proszę się kierować własnymi preferencjami."
-export const RATING_TASK_TITLE_F = "Jesteśmy ciekawi na co zwróciłaby Pani uwagę przy zakupie pralki.<br>Prosimy o ocenienie ważności właściwości pralek posługując się plusami. Proszę zaznaczyć wybraną liczbę plusów klikając na nie lewym przyciskiem myszy.<br>Im większa liczba plusów, tym ważniejsza jest dla Pani dana właściwość. Może Pani przyznać tę samą liczbę plusów kilku właściwościom. Każda właściwość musi mieć co najmniej jeden plus i żadna właściwość nie może mieć więcej niż sześć plusów.<br> Nie ma tu dobrych ani złych odpowiedzi, proszę się kierować własnymi preferencjami."
+export const RATING_TASK_TITLE_M = "Jesteśmy ciekawi na co zwróciłby Pan uwagę przy zakupie pralki.\nProsimy o ocenienie ważności właściwości pralek posługując się plusami. Proszę zaznaczyć wybraną liczbę plusów klikając na nie lewym przyciskiem myszy.\nIm większa liczba plusów, tym ważniejsza jest dla Pana dana właściwość. Może Pan przyznać tę samą liczbę plusów kilku właściwościom. Każda właściwość musi mieć co najmniej jeden plus i żadna właściwość nie może mieć więcej niż sześć plusów.\n Nie ma tu dobrych ani złych odpowiedzi, proszę się kierować własnymi preferencjami."
+export const RATING_TASK_TITLE_F = "Jesteśmy ciekawi na co zwróciłaby Pani uwagę przy zakupie pralki.\nProsimy o ocenienie ważności właściwości pralek posługując się plusami. Proszę zaznaczyć wybraną liczbę plusów klikając na nie lewym przyciskiem myszy.\nIm większa liczba plusów, tym ważniejsza jest dla Pani dana właściwość. Może Pani przyznać tę samą liczbę plusów kilku właściwościom. Każda właściwość musi mieć co najmniej jeden plus i żadna właściwość nie może mieć więcej niż sześć plusów.\n Nie ma tu dobrych ani złych odpowiedzi, proszę się kierować własnymi preferencjami."
 
 export const BRAND_TASK_TITLE_F = "Które z wymienionych poniżej marek bierze Pani pod uwagę kupując pralkę?"
 export const BRAND_TASK_TITLE_M = "Które z wymienionych poniżej marek bierze Pan pod uwagę kupując pralkę?"
 
 export const INPUT_TASK_TITLE_F = "Wyobraź sobie, że planujesz kupić pralkę. Wchodzić na stronę internetową sklepu z AGD i przeglądasz modele pralek. Ile modeli pralek obejrzysz przed dokonaniem wyboru?"
 export const INPUT_TASK_TITLE_M = "Wyobraź sobie, że planujesz kupić pralkę. Wchodzić na stronę internetową sklepu z AGD i przeglądasz modele pralek. Ile modeli pralek obejrzysz przed dokonaniem wyboru?"
+
+export const PREFERENCE_TASK_TITLE_F = "Dodatkowo prosimy o wskazanie akceptowalnego poziomu każdej właściwości pralki, którą kupowałaby Pani dla siebie.\n Przy każdej właściwości prosimy o wybranie wartości, którą uznałaby Pani za wystarczającą przy zakupie nowej pralki."
+export const PREFERENCE_TASK_TITLE_M = "Dodatkowo prosimy o wskazanie akceptowalnego poziomu każdej właściwości pralki, którą kupowałby Pan dla siebie.\n Przy każdej właściwości prosimy o wybranie wartości, którą uznałby Pan za wystarczającą przy zakupie nowej pralki."

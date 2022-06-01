@@ -77,14 +77,17 @@ class RatingTask extends React.Component {
 
     render() {
         const { selectedOption, ratingCompleted } = this.state
+        const showError = false
+        const textError = "Error!"
         return (
             <Container className="justify-content-md-center">
-                {this.props.text}
-                {/* <Alert style={{ fontSize: "1.0rem" }} color="warning" isOpen={this.props.error.showError}>
+                <div className="instr-h3">{this.props.text}</div>
+
+                <Alert style={{ fontSize: "1.0rem" }} color="warning" isOpen={showError}>
                     <span className="alert-inner--text ml-1">
-                        {this.props.error.textError}
+                        {textError}
                     </span>
-                </Alert> */}
+                </Alert>
                 <Row className="justify-content-center">
                     <Card body style={{ marginTop: "20px" }}>
                         <Col>
