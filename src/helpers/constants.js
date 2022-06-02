@@ -82,7 +82,7 @@ export const ATTRIBUTE = {
         value: [
             ["800", "1000", "1200", "1400", "1600"],
             ["4", "5", "6", "7", "8", "9", "10"],
-            ["A", "A+", "A++", "A+++"],
+            ["E", "D", "C", "B"],
             ["70", "65", "60", "55", "50", "45", "40"],
             ["70", "60", "50", "40", "30"],
             ["brak", "jest"]
@@ -96,16 +96,15 @@ export const ATTRIBUTE = {
 export const ATTRIBUTE_CUSTOM = {
     data:
     {
-        id: ["A7", "A3", "A5", "A4", "A6", "A2", "A1"],
-        position: [7, 3, 5, 4, 6, 2, 1],
+        id: ["A6", "A5", "A4", "A3", "A2", "A1"],
+        position: [6, 5, 4, 3, 2, 1],
         text: [
-            "cena",
             "klasa energetyczna",
-            "zużycie wody (l)",
-            "poziom hałasu (db)",
+            "zużycie wody",
+            "poziom hałasu",
             "program szybki",
-            "pojemność bębna (kg)",
-            "max prędkość wirowania (obr/min)"
+            "pojemność bębna",
+            "max prędkość wirowania"
         ]
     }
 }
