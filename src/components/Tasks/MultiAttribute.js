@@ -52,12 +52,15 @@ class MultiAttribute extends React.Component {
     handleKeyDownEvent = (event) => {
         if (event.keyCode === SPACE_KEY_CODE) {
             const { selectedOption, counter } = this.state
+            const isOptionWasSelectedInThisRound = selectedOption.length === (counter + 1) && selectedOption[counter].selectedAnswer !== '\0'
 
-            if (this.props.data.length === selectedOption.length) {
-                this.props.action(selectedOption);
-            } else if (selectedOption.length === (counter + 1)) {
-                selectedOption.push(defaultValue)
-                this.setState({ counter: (counter + 1), modalOpen: false, selectedOption: selectedOption })
+            if (isOptionWasSelectedInThisRound) {
+                if (this.props.data.length === selectedOption.length) {
+                    this.props.action(selectedOption);
+                } else if (selectedOption.length === (counter + 1)) {
+                    selectedOption.push(defaultValue)
+                    this.setState({ counter: (counter + 1), modalOpen: false, selectedOption: selectedOption })
+                }
             }
         }
     }
@@ -74,6 +77,7 @@ class MultiAttribute extends React.Component {
         const currentAnswer = this.props.data[counter]
 
         let selectedValue = evt.target.value
+        evt.target.blur() //remove focus of selected button
 
         selectedOption[counter] = {
             questionID: currentAnswer.id,
@@ -81,7 +85,6 @@ class MultiAttribute extends React.Component {
             selectedAnswer: selectedValue,
             isCorrectAnswer: selectedValue === currentAnswer.correctAnswer.toString()
         }
-        // }
 
         this.setState({ selectedOption: selectedOption, modalOpen: true },
             () => {

@@ -117,7 +117,7 @@ export default function UserForm(props) {
 
   return (
     <Container className="justify-content-center">
-      <div className="text-center mt-2"><h3>Your data</h3></div>
+      <div className="text-center mt-2"><h3>Twoje dane</h3></div>
       <Alert style={{ fontSize: "1.0rem" }} color="warning" isOpen={error.showError}>
         <span className="alert-inner--text ml-1">
           {error.textError}
@@ -150,10 +150,10 @@ export default function UserForm(props) {
             <h5>{constant.FORM_LEVEL_EDUC_TITLE}</h5>
           </div>
           <Input type="select" name="select" id={constant.FORM_LEVEL_EDUC_ID} onChange={evt => validateInputForm(evt)}>
-            <option value={constant.FORM_LEVEL_EDUC_DEFAULT}>Select...</option>
-            <option value={constant.FORM_LEVEL_EDUC_INITIAL}>primary</option>
-            <option value={constant.FORM_LEVEL_EDUC_MIDDLE}>secondary</option>
-            <option value={constant.FORM_LEVEL_EDUC_SUPERIOR}>higher</option>
+            <option value={constant.FORM_LEVEL_EDUC_DEFAULT}>Wybierz...</option>
+            <option value={constant.FORM_LEVEL_EDUC_INITIAL}>podstawowe</option>
+            <option value={constant.FORM_LEVEL_EDUC_MIDDLE}>średnie</option>
+            <option value={constant.FORM_LEVEL_EDUC_SUPERIOR}>wyższe</option>
           </Input>
         </FormGroup>
         <FormGroup className="mb-3">
@@ -180,7 +180,7 @@ export default function UserForm(props) {
                     value={constant.FEMALE_VALUE}
                     onChange={validateInputForm}
                     checked={formData.sex === constant.FEMALE_VALUE} />{' '}
-                  Female
+                  Kobieta
                 </Label>
               </FormGroup>
             </Col>
@@ -193,7 +193,7 @@ export default function UserForm(props) {
                     value={constant.MALE_VALUE}
                     onChange={validateInputForm}
                     checked={formData.sex === constant.MALE_VALUE} />{' '}
-                  Male
+                  Mężczyzna
                 </Label>
               </FormGroup>
             </Col>

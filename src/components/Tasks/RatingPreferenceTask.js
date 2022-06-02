@@ -3,28 +3,22 @@ import React from "react";
 import ReactStars from "react-rating-stars-component";
 
 // reactstrap components
-import {
-    Card,
-    Container,
-    Row,
-    Col,
-    Table,
-    Alert
-} from "reactstrap";
+import { Card, Container, Row, Col, Table, Alert } from "reactstrap";
 
 // get our fontawesome imports
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { ATTRIBUTE_CUSTOM, RED, INACTIVE_STAR, TEXT_FOOTER, SPACE_KEY_CODE, EVENT_KEY_DOWN } from '../../helpers/constants';
+import { ATTRIBUTE_FOURTH_TASK, RED, INACTIVE_STAR, TEXT_FOOTER, SPACE_KEY_CODE, EVENT_KEY_DOWN } from '../../helpers/constants';
 import Footer from "../Footers/Footer";
 
-class RatingTask extends React.Component {
+class RatingPreferenceTask extends React.Component {
     constructor(props) {
         super(props);
+
         this.state = {
-            selectedOption: Array(ATTRIBUTE_CUSTOM.data.id.length).fill(0), //initialize and set to zero. This array of size 6, corresponds to each property rating (A1, A2, ...). +1 for the extra attribute added
-            ratingCompleted: false,
+            selectedOption: Array(ATTRIBUTE_FOURTH_TASK.data.id.length).fill(0), //initialize and set to zero. This array of size 6, corresponds to each property rating (A1, A2, ...). +1 for the extra attribute added
+            ratingCompleted: false
         }
     }
 
@@ -55,12 +49,11 @@ class RatingTask extends React.Component {
     }
 
     validateInput = (id, rating) => {
-        console.log(rating)
-        const { selectedOption } = this.state
+        const selectedOption = this.state.selectedOption;
         let indexItem = 0
 
-        for (let i = 0; i < ATTRIBUTE_CUSTOM.data.id.length; i++) {
-            if (ATTRIBUTE_CUSTOM.data.id[i] === id) {
+        for (let i = 0; i < ATTRIBUTE_FOURTH_TASK.data.id.length; i++) {
+            if (ATTRIBUTE_FOURTH_TASK.data.id[i] === id) {
                 indexItem = i
                 break;
             }
@@ -77,12 +70,12 @@ class RatingTask extends React.Component {
 
     render() {
         const { selectedOption, ratingCompleted } = this.state
+
         const showError = false
         const textError = "Error!"
         return (
             <Container className="justify-content-md-center">
                 <div className="instr-h3">{this.props.text}</div>
-
                 <Alert style={{ fontSize: "1.0rem" }} color="warning" isOpen={showError}>
                     <span className="alert-inner--text ml-1">
                         {textError}
@@ -92,12 +85,6 @@ class RatingTask extends React.Component {
                     <Card body style={{ marginTop: "20px" }}>
                         <Col>
                             <Table responsive borderless size="sm">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
                                 <tbody>
                                     {getTableBodyRatingBar(this.validateInput, selectedOption)}
                                 </tbody>
@@ -119,11 +106,11 @@ class RatingTask extends React.Component {
 function getTableBodyRatingBar(action, value) {
     let children = [];
 
-    for (let i = 0; i < ATTRIBUTE_CUSTOM.data.id.length; i++) {
+    for (let i = 0; i < ATTRIBUTE_FOURTH_TASK.data.id.length; i++) {
         children.push(
-            <tr key={ATTRIBUTE_CUSTOM.data.id[i]}>
-                <td className="align-middle" style={{ fontSize: '1.2em' }}>{ATTRIBUTE_CUSTOM.data.text[i]}</td>
-                <td>{RatingBarDemo(action, ATTRIBUTE_CUSTOM.data.id[i], value[i])}</td>
+            <tr key={ATTRIBUTE_FOURTH_TASK.data.id[i]}>
+                <td className="align-middle" style={{ fontSize: '1.2em' }}>{ATTRIBUTE_FOURTH_TASK.data.text[i]}</td>
+                <td>{RatingBarDemo(action, ATTRIBUTE_FOURTH_TASK.data.id[i], value[i])}</td>
             </tr>
         );
     }
@@ -152,4 +139,4 @@ function RatingBarDemo(action, id, value) {
 }
 
 
-export default RatingTask;
+export default RatingPreferenceTask;

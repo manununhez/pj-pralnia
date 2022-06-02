@@ -36,6 +36,8 @@ import RatingTask from "./RatingTask";
 import BrandTask from "./BrandTask";
 import InputTask from "./InputTask";
 import PreferenceTask from "./PreferenceTask";
+import RatingPreferenceTask from "./RatingPreferenceTask";
+import RewardScreen from "./RewardScreen";
 
 const DEBUG = (process.env.REACT_APP_DEBUG_LOG === "true") ? true : false;
 const PROLIFIC_REDIRECT_REJECT = process.env.REACT_APP_PROLIFIC_REDIRECT_REJECT;
@@ -99,7 +101,9 @@ class Index extends Component {
             outputRatings: [],
             outputBrands: [],
             outputPreferences: [],
+            outputRatingPreferences: [],
             outputInputTask: constant.TEXT_EMPTY,
+            isRewardObtained: false,
             //utils
             logTimestamp: { screen: [], timestamp: [] },
             currentScreenNumber: 0,
@@ -813,6 +817,24 @@ class Index extends Component {
         })
     }
 
+    ratingPreferenceTaskHandler = (value) => {
+        this.setState({
+            outputRatingPreferences: value,
+        }, () => {
+            this._validateToNextPage()
+        })
+    }
+
+    rewardInfoHandler = (value) => {
+        if (DEBUG) console.log(`Is reward obtained ${value}`)
+
+        this.setState({
+            isRewardObtained: value,
+        }, () => {
+            this._validateToNextPage()
+        })
+    }
+
     /*********************************************************
      * VALIDATE DATA OF EACH COMPONENT BEFORE GOING TO NEXT PAGE
      **********************************************************/
@@ -946,6 +968,8 @@ class Index extends Component {
                 screen === constant.BRAND_TASK_SCREEN ||
                 screen === constant.INPUT_TASK_SCREEN ||
                 screen === constant.PREFERENCE_TASK_SCREEN ||
+                screen === constant.RATING_PREFERENCE_TASK_SCREEN ||
+                screen === constant.REWARD_TASK_SCREEN ||
                 screen === constant.PRALNIA_TASK_DEMO_SCREEN) {
                 this._goToNextTaskInInputNavigation();
             } else if (screen === constant.USER_FORM_SCREEN) {
@@ -1190,7 +1214,7 @@ function isFooterShownInCurrentScreen(state) {
                 footerText = constant.TEXT_FOOTER_ENTER
             }
         }
-    } else if (screen === constant.PSFORM_SCREEN) {
+    } else if (screen === constant.PSFORM_SCREEN || screen === constant.REWARD_TASK_SCREEN) {
         isFooterShown = true;
     } else if (screen === constant.USER_FORM_SCREEN) {
         isFooterShown = true;
@@ -1207,10 +1231,8 @@ function isFooterShownInCurrentScreen(state) {
  */
 function changePages(state, context) {
 
-    const { outputFormData, currentScreenNumber,
-        inputNavigation,
-        inputTextInstructions,
-        inputPSForm, inputStores, inputAttributes, typeTask } = state;
+    const { outputFormData, currentScreenNumber, inputNavigation, inputTextInstructions,
+        outputAttribute, inputPSForm, inputStores, inputAttributes, typeTask } = state;
     const totalLength = inputNavigation.length;
 
     if (totalLength === 0 || currentScreenNumber >= totalLength) return //To prevent keep transition between pages
@@ -1220,33 +1242,72 @@ function changePages(state, context) {
     document.body.style.backgroundColor = (type === constant.INSTRUCTION_SCREEN) ? constant.WHITE : constant.LIGHT_GRAY;
 
     if (type === constant.INSTRUCTION_SCREEN) {
-        return <Instruction action={context.instructionHandler} typeTask={typeTask} actionBack={context.instructionHandlerBack} text={inputTextInstructions} name={screen} />;
+        return <Instruction
+            action={context.instructionHandler}
+            typeTask={typeTask}
+            actionBack={context.instructionHandlerBack}
+            text={inputTextInstructions}
+            name={screen} />;
     } else if (screen === constant.USER_FORM_SCREEN) {
-        return <UserForm action={context.formHandler} />;
+        return <UserForm
+            action={context.formHandler} />;
     } else if (screen === constant.VISUAL_PATTERN_SCREEN) {
-        return <VisualPatternTask action={context.visualPatternTaskHandler} />;
+        return <VisualPatternTask
+            action={context.visualPatternTaskHandler} />;
     } else if (screen === constant.VISUAL_PATTERN_DEMO_SCREEN) {
-        return <VisualPatternDemoTask action={context.visualPatternDemoTaskHandler} />;
+        return <VisualPatternDemoTask
+            action={context.visualPatternDemoTaskHandler} />;
     } else if (screen === constant.PSFORM_SCREEN) {
-        return <PSForm action={context.psFormHandler} data={inputPSForm} />;
+        return <PSForm
+            action={context.psFormHandler}
+            data={inputPSForm} />;
     } else if (screen === constant.BARGAIN_DEMO_SCREEN) {
-        return <BargainDemoTask action={context.bargainTaskDemoTaskHandler} typeTask={typeTask} />;
+        return <BargainDemoTask
+            action={context.bargainTaskDemoTaskHandler}
+            typeTask={typeTask} />;
     } else if (screen === constant.BARGAIN_SCREEN) {
-        return <BargainTask action={context.bargainTaskHandler} data={inputStores} typeTask={typeTask} />;
+        return <BargainTask
+            action={context.bargainTaskHandler}
+            data={inputStores}
+            typeTask={typeTask} />;
     } else if (screen === constant.MULTRIATTRIBUTE_DEMO_SCREEN) {
-        return <MultiAttributeDemo action={context.multiAttributeTestHandler} />;
+        return <MultiAttributeDemo
+            action={context.multiAttributeTestHandler} />;
     } else if (screen === constant.PRALNIA_TASK_SCREEN) {
-        return <MultiAttribute action={context.multiAttributeHandler} data={inputAttributes.task} text={outputFormData.sex === constant.MALE_VALUE ? constant.PRALNIA_TASK_TITLE_M : constant.PRALNIA_TASK_TITLE_F} />;
+        return <MultiAttribute
+            action={context.multiAttributeHandler}
+            data={inputAttributes.task}
+            text={outputFormData.sex === constant.MALE_VALUE ? constant.PRALNIA_TASK_TITLE_M : constant.PRALNIA_TASK_TITLE_F} />;
     } else if (screen === constant.PRALNIA_TASK_DEMO_SCREEN) {
-        return <MultiAttribute action={context.multiAttributeDemoHandler} data={inputAttributes.demo} text={outputFormData.sex === constant.MALE_VALUE ? constant.PRALNIA_TASK_DEMO_M : constant.PRALNIA_TASK_DEMO_F} />;
+        return <MultiAttribute
+            action={context.multiAttributeDemoHandler}
+            data={inputAttributes.demo}
+            text={outputFormData.sex === constant.MALE_VALUE ? constant.PRALNIA_TASK_DEMO_M : constant.PRALNIA_TASK_DEMO_F} />;
     } else if (screen === constant.RATING_TASK_SCREEN) {
-        return <RatingTask action={context.ratingTaskHandler} text={outputFormData.sex === constant.MALE_VALUE ? constant.RATING_TASK_TITLE_M : constant.RATING_TASK_TITLE_F} />;
+        return <RatingTask
+            action={context.ratingTaskHandler}
+            text={outputFormData.sex === constant.MALE_VALUE ? constant.RATING_TASK_TITLE_M : constant.RATING_TASK_TITLE_F} />;
     } else if (screen === constant.BRAND_TASK_SCREEN) {
-        return <BrandTask action={context.brandTaskHandler} text={outputFormData.sex === constant.MALE_VALUE ? constant.BRAND_TASK_TITLE_M : constant.BRAND_TASK_TITLE_F} />;
+        return <BrandTask
+            action={context.brandTaskHandler}
+            text={outputFormData.sex === constant.MALE_VALUE ? constant.BRAND_TASK_TITLE_M : constant.BRAND_TASK_TITLE_F} />;
     } else if (screen === constant.INPUT_TASK_SCREEN) {
-        return <InputTask action={context.inputTaskHandler} text={outputFormData.sex === constant.MALE_VALUE ? constant.INPUT_TASK_TITLE_M : constant.INPUT_TASK_TITLE_F} />;
+        return <InputTask
+            action={context.inputTaskHandler}
+            text={outputFormData.sex === constant.MALE_VALUE ? constant.INPUT_TASK_TITLE_M : constant.INPUT_TASK_TITLE_F} />;
     } else if (screen === constant.PREFERENCE_TASK_SCREEN) {
-        return <PreferenceTask action={context.preferenceTaskHandler} text={outputFormData.sex === constant.MALE_VALUE ? constant.PREFERENCE_TASK_TITLE_M : constant.PREFERENCE_TASK_TITLE_F} />
+        return <PreferenceTask
+            action={context.preferenceTaskHandler}
+            text={outputFormData.sex === constant.MALE_VALUE ? constant.PREFERENCE_TASK_TITLE_M : constant.PREFERENCE_TASK_TITLE_F} />
+    } else if (screen === constant.RATING_PREFERENCE_TASK_SCREEN) {
+        return <RatingPreferenceTask
+            action={context.ratingPreferenceTaskHandler}
+            text={outputFormData.sex === constant.MALE_VALUE ? constant.RATING_PREFERENCE_TASK_TITLE_M : constant.RATING_PREFERENCE_TASK_TITLE_F} />
+    } else if (screen === constant.REWARD_TASK_SCREEN) {
+        return <RewardScreen
+            data={outputAttribute.task}
+            action={context.rewardInfoHandler}
+        />
     }
 }
 

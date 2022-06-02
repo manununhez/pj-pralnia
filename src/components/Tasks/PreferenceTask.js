@@ -59,7 +59,7 @@ class PreferenceTask extends React.Component {
         }
     }
 
-    validateInput = (item) => {
+    optionClicked = (item) => {
         const { selectedOption, counter } = this.state
 
         if (selectedOption[counter] !== item) {
@@ -85,7 +85,7 @@ class PreferenceTask extends React.Component {
                     </span>
                 </Alert>
                 <Card body style={{ marginTop: "20px" }}>
-                    {getTableProperty(this.validateInput, selectedAttribute, counter)}
+                    {getTableProperty(this.optionClicked, selectedAttribute, counter)}
                 </Card>
                 {(selectedAttribute !== TEXT_EMPTY) ? <div style={{ 'marginTop': '25px' }}><Footer text={TEXT_FOOTER} /></div> : <></>}
             </Container>
