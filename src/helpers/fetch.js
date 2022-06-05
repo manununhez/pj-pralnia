@@ -14,6 +14,12 @@ const save_userinfo_url = 'userinfo'
 const save_userlogtime_url = 'userlogtime'
 const save_usegeneraldata_url = 'usergeneraldata'
 const save_bargain_url = 'userbargain'
+const save_attributes_url = 'userattribute'
+const save_ratings_url = 'userrating'
+const save_preferences_url = 'userpreference'
+const save_rating_preferences_url = 'userratingpreference'
+const save_brands_url = 'userbrand'
+const save_input_url = 'userinput'
 
 async function request(url, params, method = 'GET') {
 
@@ -320,6 +326,60 @@ export function saveBargains(data, callback) {
 }
 
 /**
+ * 
+ * @param {*} data 
+ * @param {*} callback 
+ */
+export function saveAttributes(data, callback) {
+    save(save_attributes_url, userattributes(data), callback)
+}
+
+/**
+ * 
+ * @param {*} data 
+ * @param {*} callback 
+ */
+export function saveRatings(data, callback) {
+    save(save_ratings_url, userratings(data), callback)
+}
+
+/**
+ * 
+ * @param {*} data 
+ * @param {*} callback 
+ */
+export function savePreferences(data, callback) {
+    save(save_preferences_url, userpreferences(data), callback)
+}
+
+/**
+ * 
+ * @param {*} data 
+ * @param {*} callback 
+ */
+export function saveRatingPreferences(data, callback) {
+    save(save_rating_preferences_url, userratingpreferences(data), callback)
+}
+
+/**
+ * 
+ * @param {*} data 
+ * @param {*} callback 
+ */
+export function saveBrands(data, callback) {
+    save(save_brands_url, userbrands(data), callback)
+}
+
+/**
+ * 
+ * @param {*} data 
+ * @param {*} callback 
+ */
+export function saveInput(data, callback) {
+    save(save_input_url, userinput(data), callback)
+}
+
+/**
  * Helpers to format the data in the correct outputvalue
  * for a specific sheet
  */
@@ -553,3 +613,102 @@ function userpsform(data) {
     return result;
 }
 
+function userattributes(data) {
+    const { userID, outputAttribute } = data;
+
+    let result = []
+
+    for (let i = 0; i < outputAttribute.demo.questionID.length; i++) {
+        result.push([
+            userID,
+            constant.PRALNIA_TASK_DEMO_SCREEN,
+            outputAttribute.demo[i].questionID,
+            outputAttribute.demo[i].questionNumber,
+            outputAttribute.demo[i].selectedAnswer,
+            outputAttribute.demo[i].isCorrectAnswer
+        ]);
+    }
+
+    for (let i = 0; i < outputAttribute.task.questionID.length; i++) {
+        result.push([
+            userID,
+            constant.PRALNIA_TASK_SCREEN,
+            outputAttribute.task[i].questionID,
+            outputAttribute.task[i].questionNumber,
+            outputAttribute.task[i].selectedAnswer,
+            outputAttribute.task[i].isCorrectAnswer
+        ]);
+    }
+
+    return result;
+}
+
+function userratings(data) {
+    const { userID, outputRatings } = data;
+
+    let result = []
+
+    for (let i = 0; i < constant.ATTRIBUTE_CUSTOM.data.id.length; i++) {
+        result.push([
+            userID,
+            constant.ATTRIBUTE_CUSTOM.data.id[i],
+            constant.ATTRIBUTE_CUSTOM.data.text[i],
+            outputRatings[i]
+        ]);
+    }
+
+    return result;
+}
+
+function userpreferences(data) {
+    const { userID, outputPreferences } = data;
+
+    let result = []
+
+    for (let i = 0; i < constant.ATTRIBUTE.data.id.length; i++) {
+        result.push([
+            userID,
+            constant.ATTRIBUTE.data.id[i],
+            constant.ATTRIBUTE.data.text[i],
+            outputPreferences[i]
+        ]);
+    }
+
+    return result;
+}
+
+function userinput(data) {
+    const { userID, outputInputTask } = data;
+
+    return [userID, outputInputTask];
+}
+
+function userratingpreferences(data) {
+    const { userID, outputRatingPreferences } = data;
+
+    let result = []
+
+    for (let i = 0; i < constant.ATTRIBUTE_FOURTH_TASK.data.id.length; i++) {
+        result.push([
+            userID,
+            constant.ATTRIBUTE_FOURTH_TASK.data.id[i],
+            constant.ATTRIBUTE_FOURTH_TASK.data.text[i],
+            outputRatingPreferences[i]
+        ]);
+    }
+
+    return result;
+}
+
+function userbrands(data) {
+    const { userID, outputBrands } = data;
+
+    let result = outputBrands.map((output) => {
+        return [
+            userID,
+            output
+        ];
+    });
+
+    return result;
+}

@@ -439,7 +439,7 @@ class Index extends Component {
         if (data) {
             if (DEBUG) console.log("SaveUserPSForm");
 
-            request.saveBargains(this.state, this._onSaveUserBargainCallBack.bind(this))
+            request.saveAttributes(this.state, this._onSaveUserAttributesCallBack.bind(this))
 
         } else {
             if (DEBUG) console.log("Error saving user psform")
@@ -452,16 +452,106 @@ class Index extends Component {
      * @param {*} data 
      * @param {*} error 
      */
-    _onSaveUserBargainCallBack(data, error) {
+    _onSaveUserAttributesCallBack(data, error) {
         if (DEBUG) console.log(data);
         if (data) {
-            if (DEBUG) console.log("SaveUserBargain");
+            if (DEBUG) console.log("SaveUserAttributes");
+
+            request.saveRatings(this.state, this._onSaveUserRatingsCallBack.bind(this))
+
+        } else {
+            if (DEBUG) console.log("Error saving user Attributes")
+            this.setState({ loading: false });
+        }
+    }
+
+    /**
+     * 
+     * @param {*} data 
+     * @param {*} error 
+     */
+    _onSaveUserRatingsCallBack(data, error) {
+        if (DEBUG) console.log(data);
+        if (data) {
+            if (DEBUG) console.log("SaveUserRatings");
+
+            request.savePreferences(this.state, this._onSaveUserPreferencesCallBack.bind(this))
+
+        } else {
+            if (DEBUG) console.log("Error saving User Ratings")
+            this.setState({ loading: false });
+        }
+    }
+
+    /**
+     * 
+     * @param {*} data 
+     * @param {*} error 
+     */
+    _onSaveUserPreferencesCallBack(data, error) {
+        if (DEBUG) console.log(data);
+        if (data) {
+            if (DEBUG) console.log("SaveUserPreferences");
+
+            request.saveRatingPreferences(this.state, this._onSaveUserRatingPreferencesCallBack.bind(this))
+
+        } else {
+            if (DEBUG) console.log("Error saving user Preferences")
+            this.setState({ loading: false });
+        }
+    }
+
+    /**
+     * 
+     * @param {*} data 
+     * @param {*} error 
+     */
+    _onSaveUserRatingPreferencesCallBack(data, error) {
+        if (DEBUG) console.log(data);
+        if (data) {
+            if (DEBUG) console.log("SaveUserRatingPreferences");
+
+            request.saveInput(this.state, this._onSaveUserInputCallBack.bind(this))
+
+        } else {
+            if (DEBUG) console.log("Error saving user RatingPreferences")
+            this.setState({ loading: false });
+        }
+    }
+
+    /**
+ * 
+ * @param {*} data 
+ * @param {*} error 
+ */
+    _onSaveUserInputCallBack(data, error) {
+        if (DEBUG) console.log(data);
+        if (data) {
+            if (DEBUG) console.log("SaveUserRatingPreferences");
+
+            request.saveBrands(this.state, this._onSaveUserBrandsCallBack.bind(this))
+
+        } else {
+            if (DEBUG) console.log("Error saving user RatingPreferences")
+            this.setState({ loading: false });
+        }
+    }
+
+    /**
+     * 
+     * @param {*} data 
+     * @param {*} error 
+     */
+    _onSaveUserBrandsCallBack(data, error) {
+        if (DEBUG) console.log(data);
+        if (data) {
+            if (DEBUG) console.log("SaveUserBrands");
 
             //redirect to PROLIFIC
             window.location.replace(PROLIFIC_REDIRECT_ACCEPTED);
 
         } else {
-            if (DEBUG) console.log("Error saving UserBargain")
+            if (DEBUG) console.log("Error saving UserBrands")
             this.setState({ loading: false });
         }
     }
