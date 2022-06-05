@@ -618,7 +618,7 @@ function userattributes(data) {
 
     let result = []
 
-    for (let i = 0; i < outputAttribute.demo.questionID.length; i++) {
+    for (let i = 0; i < outputAttribute.demo.length; i++) {
         result.push([
             userID,
             constant.PRALNIA_TASK_DEMO_SCREEN,
@@ -629,7 +629,7 @@ function userattributes(data) {
         ]);
     }
 
-    for (let i = 0; i < outputAttribute.task.questionID.length; i++) {
+    for (let i = 0; i < outputAttribute.task.length; i++) {
         result.push([
             userID,
             constant.PRALNIA_TASK_SCREEN,
