@@ -527,12 +527,12 @@ class Index extends Component {
     _onSaveUserInputCallBack(data, error) {
         if (DEBUG) console.log(data);
         if (data) {
-            if (DEBUG) console.log("SaveUserRatingPreferences");
+            if (DEBUG) console.log("SaveUserInput");
 
             request.saveBrands(this.state, this._onSaveUserBrandsCallBack.bind(this))
 
         } else {
-            if (DEBUG) console.log("Error saving user RatingPreferences")
+            if (DEBUG) console.log("Error saving user Input")
             this.setState({ loading: false });
         }
     }

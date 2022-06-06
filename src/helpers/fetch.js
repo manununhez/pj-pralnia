@@ -679,8 +679,10 @@ function userpreferences(data) {
 
 function userinput(data) {
     const { userID, outputInputTask } = data;
+    let result = []
+    result.push([userID, outputInputTask])
 
-    return [userID, outputInputTask];
+    return result;
 }
 
 function userratingpreferences(data) {
