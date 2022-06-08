@@ -459,6 +459,38 @@ const usergeneraldata = (data, studyParams) => {
                 constant.TEXT_EMPTY,
                 constant.TEXT_EMPTY
             ]);
+        } else if (output.task === constant.PRALNIA_TASK_DEMO_SCREEN) {
+            result.push([
+                output.userID,
+                output.task,
+                output.data.questionID,
+                output.data.questionNumber,
+                output.data.selectedAnswer,
+                output.data.isCorrectAnswer,
+                constant.TEXT_EMPTY,
+                constant.TEXT_EMPTY,
+                constant.TEXT_EMPTY,
+                constant.TEXT_EMPTY,
+                constant.TEXT_EMPTY,
+                constant.TEXT_EMPTY,
+                constant.TEXT_EMPTY
+            ]);
+        } else if (output.task === constant.PRALNIA_TASK_SCREEN) {
+            result.push([
+                output.userID,
+                output.task,
+                output.data.questionID,
+                output.data.questionNumber,
+                output.data.selectedAnswer,
+                output.data.isCorrectAnswer,
+                constant.TEXT_EMPTY,
+                constant.TEXT_EMPTY,
+                constant.TEXT_EMPTY,
+                constant.TEXT_EMPTY,
+                constant.TEXT_EMPTY,
+                constant.TEXT_EMPTY,
+                constant.TEXT_EMPTY
+            ]);
         } else if (output.task === constant.VISUAL_PATTERN_SCREEN || output.task === constant.VISUAL_PATTERN_DEMO_SCREEN) {
             let vp1 = output.data.map((item) => {
                 return [
@@ -498,6 +530,95 @@ const usergeneraldata = (data, studyParams) => {
             });
 
             result = result.concat(bargains);
+        } else if (output.task === constant.RATING_PREFERENCE_TASK_SCREEN) {
+            for (let i = 0; i < constant.ATTRIBUTE_FOURTH_TASK.data.id.length; i++) {
+                result.push([
+                    output.userID,
+                    output.task,
+                    constant.ATTRIBUTE_FOURTH_TASK.data.id[i],
+                    constant.ATTRIBUTE_FOURTH_TASK.data.text[i],
+                    output.data[i],
+                    constant.TEXT_EMPTY,
+                    constant.TEXT_EMPTY,
+                    constant.TEXT_EMPTY,
+                    constant.TEXT_EMPTY,
+                    constant.TEXT_EMPTY,
+                    constant.TEXT_EMPTY,
+                    constant.TEXT_EMPTY,
+                    constant.TEXT_EMPTY
+                ]);
+            }
+        } else if (output.task === constant.PREFERENCE_TASK_SCREEN) {
+            for (let i = 0; i < constant.ATTRIBUTE.data.id.length; i++) {
+                result.push([
+                    output.userID,
+                    output.task,
+                    constant.ATTRIBUTE.data.id[i],
+                    constant.ATTRIBUTE.data.text[i],
+                    output.data[i],
+                    constant.TEXT_EMPTY,
+                    constant.TEXT_EMPTY,
+                    constant.TEXT_EMPTY,
+                    constant.TEXT_EMPTY,
+                    constant.TEXT_EMPTY,
+                    constant.TEXT_EMPTY,
+                    constant.TEXT_EMPTY,
+                    constant.TEXT_EMPTY
+                ]);
+            }
+        } else if (output.task === constant.RATING_TASK_SCREEN) {
+            for (let i = 0; i < constant.ATTRIBUTE_CUSTOM.data.id.length; i++) {
+                result.push([
+                    output.userID,
+                    output.task,
+                    constant.ATTRIBUTE_CUSTOM.data.id[i],
+                    constant.ATTRIBUTE_CUSTOM.data.text[i],
+                    output.data[i],
+                    constant.TEXT_EMPTY,
+                    constant.TEXT_EMPTY,
+                    constant.TEXT_EMPTY,
+                    constant.TEXT_EMPTY,
+                    constant.TEXT_EMPTY,
+                    constant.TEXT_EMPTY,
+                    constant.TEXT_EMPTY,
+                    constant.TEXT_EMPTY
+                ]);
+            }
+        }
+        else if (output.task === constant.BRAND_TASK_SCREEN) {
+            output.data.forEach((brand) => {
+                result.push([
+                    output.userID,
+                    output.task,
+                    brand,
+                    constant.TEXT_EMPTY,
+                    constant.TEXT_EMPTY,
+                    constant.TEXT_EMPTY,
+                    constant.TEXT_EMPTY,
+                    constant.TEXT_EMPTY,
+                    constant.TEXT_EMPTY,
+                    constant.TEXT_EMPTY,
+                    constant.TEXT_EMPTY,
+                    constant.TEXT_EMPTY,
+                    constant.TEXT_EMPTY
+                ])
+            });
+        } else if (output.task === constant.INPUT_TASK_SCREEN) {
+            result.push([
+                output.userID,
+                output.task,
+                output.data,
+                constant.TEXT_EMPTY,
+                constant.TEXT_EMPTY,
+                constant.TEXT_EMPTY,
+                constant.TEXT_EMPTY,
+                constant.TEXT_EMPTY,
+                constant.TEXT_EMPTY,
+                constant.TEXT_EMPTY,
+                constant.TEXT_EMPTY,
+                constant.TEXT_EMPTY,
+                constant.TEXT_EMPTY
+            ])
         }
     }
 

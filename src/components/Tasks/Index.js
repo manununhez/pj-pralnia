@@ -359,8 +359,7 @@ class Index extends Component {
 
             this.setState({
                 loading: false, //Hide loading
-                inputPSForm: data.result,
-                typeTask: constant.EXPERIMENT_TYPE_SHORT
+                inputPSForm: data.result
             }, () => {
                 if (DEBUG) console.log(this.state)
                 this._goToNextTaskInInputNavigation();
@@ -806,6 +805,10 @@ class Index extends Component {
         })
     }
 
+    /**
+     * 
+     * @param {*} selectedOptionsResult 
+     */
     multiAttributeTestHandler = (selectedOptionsResult) => {
         //we simulate a space btn pressed because multiAttribute already finishes with a space btn pressed
         this._validateToNextPage()
@@ -815,34 +818,70 @@ class Index extends Component {
      * 
      * @param {*} selectedOptionsResult 
      */
-    multiAttributeHandler = (selectedOptionsResult) => {
+    multiAttributeHandler = (allSelectedOptionsResult, selectedOption) => {
         //we simulate a space btn pressed because multiAttribute already finishes with a space btn pressed
-        const { outputAttribute } = this.state;
+        const { inputAttributes, outputAttribute, generalOutput, userID } = this.state;
 
-        outputAttribute.task = selectedOptionsResult
-
-        this.setState({
-            outputAttribute: outputAttribute,
-        }, () => {
-            this._validateToNextPage()
+        console.log(this.state)
+        generalOutput.push({
+            userID: userID,
+            task: constant.PRALNIA_TASK_SCREEN,
+            data: selectedOption,
+            sync: constant.STATE_NOT_SYNC
         })
+
+        if (inputAttributes.task.length === allSelectedOptionsResult.length && allSelectedOptionsResult[allSelectedOptionsResult.length - 1].selectedAnswer !== '\0') {
+            outputAttribute.task = allSelectedOptionsResult
+
+            this.setState({
+                generalOutput: generalOutput,
+                outputAttribute: outputAttribute,
+            }, () => {
+                this._checkSyncGeneralData()
+                this._validateToNextPage()
+            })
+        } else {
+            this.setState({
+                generalOutput: generalOutput,
+            }, () => {
+                this._checkSyncGeneralData()
+            })
+        }
     }
 
     /**
      * 
      * @param {*} selectedOptionsResult 
      */
-    multiAttributeDemoHandler = (selectedOptionsResult) => {
+    multiAttributeDemoHandler = (allSelectedOptionsResult, selectedOption) => {
         //we simulate a space btn pressed because multiAttribute already finishes with a space btn pressed
-        const { outputAttribute } = this.state;
+        const { inputAttributes, outputAttribute, generalOutput, userID } = this.state;
+        console.log(this.state)
 
-        outputAttribute.demo = selectedOptionsResult
-
-        this.setState({
-            outputAttribute: outputAttribute,
-        }, () => {
-            this._validateToNextPage()
+        generalOutput.push({
+            userID: userID,
+            task: constant.PRALNIA_TASK_DEMO_SCREEN,
+            data: selectedOption,
+            sync: constant.STATE_NOT_SYNC
         })
+
+        if (inputAttributes.demo.length === allSelectedOptionsResult.length && allSelectedOptionsResult[allSelectedOptionsResult.length - 1].selectedAnswer !== '\0') {
+            outputAttribute.demo = allSelectedOptionsResult
+
+            this.setState({
+                generalOutput: generalOutput,
+                outputAttribute: outputAttribute,
+            }, () => {
+                this._checkSyncGeneralData()
+                this._validateToNextPage()
+            })
+        } else {
+            this.setState({
+                generalOutput: generalOutput,
+            }, () => {
+                this._checkSyncGeneralData()
+            })
+        }
     }
 
     /**
@@ -875,46 +914,120 @@ class Index extends Component {
         }
     }
 
+    /**
+     * 
+     * @param {*} selectedRatings 
+     */
     ratingTaskHandler = (selectedRatings) => {
+        const { generalOutput, userID } = this.state;
+
+        generalOutput.push({
+            userID: userID,
+            task: constant.RATING_TASK_SCREEN,
+            data: selectedRatings,
+            sync: constant.STATE_NOT_SYNC
+        })
+
         this.setState({
+            generalOutput: generalOutput,
             outputRatings: selectedRatings,
         }, () => {
             this._validateToNextPage()
         })
     }
 
+    /**
+     * 
+     * @param {*} brand 
+     */
     brandTaskHandler = (brand) => {
+        const { generalOutput, userID } = this.state;
+
+        generalOutput.push({
+            userID: userID,
+            task: constant.BRAND_TASK_SCREEN,
+            data: brand,
+            sync: constant.STATE_NOT_SYNC
+        })
+
         this.setState({
+            generalOutput: generalOutput,
             outputBrands: brand,
         }, () => {
             this._validateToNextPage()
         })
     }
 
+    /**
+     * 
+     * @param {*} value 
+     */
     inputTaskHandler = (value) => {
+        const { generalOutput, userID } = this.state;
+
+        generalOutput.push({
+            userID: userID,
+            task: constant.INPUT_TASK_SCREEN,
+            data: value,
+            sync: constant.STATE_NOT_SYNC
+        })
+
         this.setState({
+            generalOutput: generalOutput,
             outputInputTask: value,
         }, () => {
             this._validateToNextPage()
         })
     }
 
+    /**
+     * 
+     * @param {*} value 
+     */
     preferenceTaskHandler = (value) => {
+        const { generalOutput, userID } = this.state;
+
+        generalOutput.push({
+            userID: userID,
+            task: constant.PREFERENCE_TASK_SCREEN,
+            data: value,
+            sync: constant.STATE_NOT_SYNC
+        })
+
         this.setState({
+            generalOutput: generalOutput,
             outputPreferences: value,
         }, () => {
             this._validateToNextPage()
         })
     }
 
+    /**
+     * 
+     * @param {*} value 
+     */
     ratingPreferenceTaskHandler = (value) => {
+        const { generalOutput, userID } = this.state;
+
+        generalOutput.push({
+            userID: userID,
+            task: constant.RATING_PREFERENCE_TASK_SCREEN,
+            data: value,
+            sync: constant.STATE_NOT_SYNC
+        })
+
         this.setState({
+            generalOutput: generalOutput,
             outputRatingPreferences: value,
         }, () => {
             this._validateToNextPage()
         })
     }
 
+    /**
+     * 
+     * @param {*} value 
+     */
     rewardInfoHandler = (value) => {
         if (DEBUG) console.log(`Is reward obtained ${value}`)
 

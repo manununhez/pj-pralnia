@@ -53,13 +53,17 @@ class MultiAttribute extends React.Component {
         if (event.keyCode === SPACE_KEY_CODE) {
             const { selectedOption, counter } = this.state
             const isOptionWasSelectedInThisRound = selectedOption.length === (counter + 1) && selectedOption[counter].selectedAnswer !== '\0'
+            let currentSelectedAnswer = selectedOption[counter]
 
             if (isOptionWasSelectedInThisRound) {
                 if (this.props.data.length === selectedOption.length) {
-                    this.props.action(selectedOption);
+                    this.props.action(selectedOption, currentSelectedAnswer);
                 } else if (selectedOption.length === (counter + 1)) {
                     selectedOption.push(defaultValue)
-                    this.setState({ counter: (counter + 1), modalOpen: false, selectedOption: selectedOption })
+
+                    this.setState({ counter: (counter + 1), modalOpen: false, selectedOption: selectedOption }, () => {
+                        this.props.action(selectedOption, currentSelectedAnswer)
+                    })
                 }
             }
         }
