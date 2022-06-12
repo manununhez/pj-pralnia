@@ -1,7 +1,7 @@
 import React from 'react';
 
 // reactstrap components
-import { Card, Button, Container, Row, Table, Alert, Modal, ModalHeader } from "reactstrap";
+import { Card, Container, Row, Table, Alert, Modal, ModalHeader } from "reactstrap";
 
 import ReactStars from "react-rating-stars-component";
 
@@ -11,10 +11,10 @@ import { faSmile, faFrown } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
-    FIRST_TASK_PROPERTIES_TOTAL, FIRST_RADIO_VALUE, SECOND_RADIO_VALUE, WHITE, RED,
+    FIRST_TASK_PROPERTIES_TOTAL, FIRST_RADIO_VALUE, SECOND_RADIO_VALUE, WHITE, BLACK,
     THIRD_RADIO_VALUE, TEXT_FOOTER, SPACE_KEY_CODE, EVENT_KEY_DOWN
-} from '../../helpers/constants';
-import Footer from "../Footers/Footer";
+} from '../../../helpers/constants';
+import Footer from "../../Footers/Footer";
 
 const defaultValue = {
     questionID: 0,
@@ -23,7 +23,7 @@ const defaultValue = {
     isCorrectAnswer: false
 }
 
-class MultiAttribute extends React.Component {
+export default class MultiAttributeSimple extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -87,18 +87,13 @@ class MultiAttribute extends React.Component {
             questionID: currentAnswer.id,
             questionNumber: counter + 1,
             selectedAnswer: selectedValue,
-            isCorrectAnswer: selectedValue === currentAnswer.correctAnswer.toString()
+            isCorrectAnswer: selectedValue === currentAnswer.correctAnswer.toString(),
         }
 
         this.setState({ selectedOption: selectedOption, modalOpen: true },
             () => {
                 console.log(this.state)
             })
-    }
-
-    _stackDisplay() {
-        document.getElementById("cardStackVisual").style.display = "";
-        document.getElementById("btnShowStack").style.display = "none";
     }
 
 
@@ -110,6 +105,7 @@ class MultiAttribute extends React.Component {
         const textError = "TEXT ERROR"
         const isOptionWasSelected = selectedOption[counter].selectedAnswer !== '\0'
         const showFeedbackCorrectAnswer = selectedOption[counter].selectedAnswer === data.correctAnswer.toString()
+        console.log(data.showVisualStack)
         return (
             <Container key={"KEY_" + counter}>
                 <div className="instr-h3">{this.props.text}</div>
@@ -139,14 +135,6 @@ class MultiAttribute extends React.Component {
                     </Card>
                     <Card body style={{ marginTop: "20px" }}>
                         <div>{getTable(selectedOption[counter].selectedAnswer, data, this.optionClicked)}</div>
-                        {(data.showVisualStack) ?
-                            <Button color="info" id="btnShowStack" style={{ width: "fit-content", alignSelf: "center" }}
-                                onClick={() => this._stackDisplay()}> Show me the levels</Button>
-                            : <></>
-                        }
-                    </Card>
-                    <Card id="cardStackVisual" body style={{ marginTop: "20px", display: 'none' }}>
-                        <div>{getTableVisualization(data)}</div>
                     </Card>
                 </Row>
                 {isOptionWasSelected ? <div style={{ 'marginTop': '25px' }}><Footer text={TEXT_FOOTER} /></div> : <></>}
@@ -155,21 +143,6 @@ class MultiAttribute extends React.Component {
     }
 }
 
-function getTableVisualization(data) {
-    return (<Table borderless responsive style={{ textAlign: 'center' }}>
-        <thead>
-            <tr>
-                <th><h5>Pralka 1</h5></th>
-                <th><h5>Pralka 2</h5></th>
-                <th><h5>Pralka 3</h5></th>
-            </tr>
-
-        </thead>
-        <tbody>
-            {getTableVisualizationBody(data)}
-        </tbody>
-    </Table>)
-}
 /**
  * 
  * @param {*} data 
@@ -218,121 +191,6 @@ function getTable(selectedValue, data, onClick) {
  * @param {*} data 
  * @param {*} counter 
  */
-function getTableVisualizationBody(data) {
-    return (<tr>
-        <td style={{ verticalAlign: 'bottom' }}>
-            <Table responsive borderless>
-                <thead></thead>
-                <tbody>
-                    {getPropertiesTableVizualizationBodyProduct1(data)}
-                </tbody>
-            </Table>
-        </td>
-        <td style={{ verticalAlign: 'bottom' }}>
-            <Table responsive borderless>
-                <thead></thead>
-                <tbody>
-                    {getPropertiesTableVizualizationBodyProduct2(data)}
-                </tbody>
-            </Table>
-        </td>
-        <td style={{ verticalAlign: 'bottom' }}>
-            <Table responsive borderless>
-                <thead></thead>
-                <tbody>
-                    {getPropertiesTableVizualizationBodyProduct3(data)}
-                </tbody>
-            </Table>
-        </td>
-    </tr>
-    );
-}
-
-/**
- * 
- * @param {*} data 
- * @returns 
- */
-function getPropertiesTableVizualizationBodyProduct1(data) {
-    let children = []
-    let attributes = FIRST_TASK_PROPERTIES_TOTAL
-    for (let i = attributes - 1; i >= 0; i--) {
-        if (data.attributes[i].p1 === 1) {
-            children.push(
-                <tr style={{ border: '1px solid black', textAlign: '-webkit-center', fontSize: '1.3em', display: 'block ruby' }}>
-                    {getPropertiesVerticalRating(FIRST_TASK_PROPERTIES_TOTAL - i)}
-                </tr>);
-        }
-    }
-
-    return children
-}
-
-/**
- * 
- * @param {*} data 
- * @returns 
- */
-function getPropertiesTableVizualizationBodyProduct2(data) {
-    let children = []
-    let attributes = FIRST_TASK_PROPERTIES_TOTAL
-    for (let i = attributes - 1; i >= 0; i--) {
-        if (data.attributes[i].p2 === 1) {
-            children.push(
-                <tr style={{ border: '1px solid black', textAlign: '-webkit-center', fontSize: '1.3em', display: 'block ruby' }}>
-                    {getPropertiesVerticalRating(FIRST_TASK_PROPERTIES_TOTAL - i)}
-                </tr>);
-        }
-    }
-    return children
-
-}
-
-/**
- * 
- * @param {*} data 
- * @returns 
- */
-function getPropertiesTableVizualizationBodyProduct3(data) {
-    let children = []
-    let attributes = FIRST_TASK_PROPERTIES_TOTAL
-    for (let i = attributes - 1; i >= 0; i--) {
-        if (data.attributes[i].p3 === 1) {
-            children.push(
-                <tr style={{ border: '1px solid black', textAlign: '-webkit-center', fontSize: '1.3em', display: 'block ruby' }}>
-                    {getPropertiesVerticalRating(FIRST_TASK_PROPERTIES_TOTAL - i)}
-                </tr>
-            );
-        }
-    }
-    return children
-
-}
-
-/**
- * 
- * @param {*} value 
- * @returns 
- */
-function getPropertiesVerticalRating(value) {
-    let children = []
-    for (let i = 0; i < value; i++) {
-        children.push(
-            <tr>
-                <td style={{ padding: '0' }}>
-                    <FontAwesomeIcon icon={faPlus} />
-                </td>
-            </tr>
-        )
-    }
-    return children
-}
-
-/**
- * 
- * @param {*} data 
- * @param {*} counter 
- */
 function getTableBody(data) {
     let children = []
     let attributes = FIRST_TASK_PROPERTIES_TOTAL
@@ -372,7 +230,7 @@ function getPropertiesTableBody(data) {
         children.push(
             <tr key={i}>
                 <td style={{ textAlign: 'left', fontSize: '1.0em', padding: '1.0em', verticalAlign: 'middle' }}>{data.attributes[i].name}</td>
-                <td style={{ padding: '0' }} className="align-middle">{RatingBar(rating)}</td>
+                <td style={{ border: '1px solid black', padding: '0' }} className="align-middle">{RatingBar(rating)}</td>
             </tr>
         );
         rating--;
@@ -392,17 +250,18 @@ function RatingBar(value) {
         count={value}
         value={value}
         color={WHITE}
-        activeColor={RED}
+        activeColor={BLACK}
         emptyIcon={<FontAwesomeIcon icon={faPlus} style={{ marginLeft: "5px" }} />}
         filledIcon={<FontAwesomeIcon icon={faPlus} style={{ marginLeft: "5px" }} />}
     />
     );
 }
 
+
 /**
  * 
  * @param {*} data 
- * @param {*} counter 
+ * @returns 
  */
 function getRatingStarBarTable(data) {
     return (
@@ -419,5 +278,3 @@ function getRatingStarBarTable(data) {
         </Table>
     );
 }
-
-export default MultiAttribute;

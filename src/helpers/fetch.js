@@ -475,6 +475,38 @@ const usergeneraldata = (data, studyParams) => {
                 constant.TEXT_EMPTY,
                 constant.TEXT_EMPTY
             ]);
+        } else if (output.task === constant.PRALNIA_TASK_CONDITIONAL1_DEMO_SCREEN) {
+            result.push([
+                output.userID,
+                output.task,
+                output.data.questionID,
+                output.data.questionNumber,
+                output.data.selectedAnswer,
+                output.data.isCorrectAnswer,
+                constant.TEXT_EMPTY,
+                constant.TEXT_EMPTY,
+                constant.TEXT_EMPTY,
+                constant.TEXT_EMPTY,
+                constant.TEXT_EMPTY,
+                constant.TEXT_EMPTY,
+                constant.TEXT_EMPTY
+            ]);
+        } else if (output.task === constant.PRALNIA_TASK_CONDITIONAL1_SCREEN) {
+            result.push([
+                output.userID,
+                output.task,
+                output.data.questionID,
+                output.data.questionNumber,
+                output.data.selectedAnswer,
+                output.data.isCorrectAnswer,
+                constant.TEXT_EMPTY,
+                constant.TEXT_EMPTY,
+                constant.TEXT_EMPTY,
+                constant.TEXT_EMPTY,
+                constant.TEXT_EMPTY,
+                constant.TEXT_EMPTY,
+                constant.TEXT_EMPTY
+            ]);
         } else if (output.task === constant.PRALNIA_TASK_SCREEN) {
             result.push([
                 output.userID,

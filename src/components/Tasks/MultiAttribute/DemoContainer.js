@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 
 import { Table } from "reactstrap";
 
-import { Dustbin } from "./DustbinV2";
+import { Dustbin } from "./Dustbin";
 import { ItemTypes, ItemTypesID, INDEX_HEADER_TOP } from "../../../helpers/constants";
 
 export default function Container(props) {

@@ -10,23 +10,29 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faSmile, faFrown } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ImageMapperRating } from './verticalRateImage';
-import { Box } from "./BoxV2";
-import DemoContainer from './DemoContainerV2'
-import "../style.css"
+import { Box } from "./Box";
+import DemoContainer from './DemoContainer'
+import "./style.css"
 
 import {
     FIRST_TASK_PROPERTIES_TOTAL, FIRST_RADIO_VALUE, SECOND_RADIO_VALUE, WHITE, BLACK,
     THIRD_RADIO_VALUE, TEXT_FOOTER, SHOW_FEEDBACK_TRUE, SPACE_KEY_CODE, EVENT_KEY_DOWN,
-    GREEN, modaltStyle, ItemTypes, attributeListsForDemo, ItemTypesID, INDEX_HEADER_TOP, INDEX_HEADER
+    GREEN, modaltStyle, ItemTypes, ItemTypesID, INDEX_HEADER_TOP, INDEX_HEADER
 } from '../../../helpers/constants';
 import RateImage from './RateImage';
 
+const defaultValue = {
+    questionID: 0,
+    questionNumber: 0,
+    selectedAnswer: '\0',
+    isCorrectAnswer: false
+}
 
-class MultiAttributeDemoV3 extends React.Component {
+export default class MultiAttributeDemoConditional1 extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedOption: [],
+            selectedOption: [defaultValue],
             counter: 0,
             showMissingResultsIndicator: false,
             modalOpen: false,
@@ -57,15 +63,19 @@ class MultiAttributeDemoV3 extends React.Component {
     handleKeyDownEvent = (event) => {
         if (event.keyCode === SPACE_KEY_CODE) {
             const { selectedOption, counter } = this.state
-            const isOptionWasSelectedInThisRound = selectedOption.length === (counter + 1)
+            const isOptionWasSelectedInThisRound = selectedOption.length === (counter + 1) && selectedOption[counter].selectedAnswer !== '\0'
             const completedTask = this.controlIfAllOptionsAreSelected()
+            let currentSelectedAnswer = selectedOption[counter]
 
             if (isOptionWasSelectedInThisRound) {
                 if (completedTask) {
-                    if (attributeListsForDemo.length === selectedOption.length) {
-                        this.props.action(selectedOption);
-                    } else {
+                    if (this.props.data.length === selectedOption.length) {
+                        this.props.action(selectedOption, currentSelectedAnswer);
+                    } else if (selectedOption.length === (counter + 1)) {
+                        selectedOption.push(defaultValue)
+
                         this.setState({
+                            selectedOption: selectedOption,
                             counter: (counter + 1),
                             showMissingResultsIndicator: false,
                             modalOpen: false,
@@ -74,7 +84,7 @@ class MultiAttributeDemoV3 extends React.Component {
                             imageRating: 0,
                             multiAttributeResults: { p1: [INDEX_HEADER_TOP], p2: [INDEX_HEADER_TOP], p3: [INDEX_HEADER_TOP] }
                         }, () => {
-                            console.log("NEXT ROUND")
+                            this.props.action(selectedOption, currentSelectedAnswer)
                         })
                     }
                 }
@@ -84,7 +94,7 @@ class MultiAttributeDemoV3 extends React.Component {
 
     controlIfAllOptionsAreSelected() {
         const { multiAttributeResults, counter } = this.state
-        const data = attributeListsForDemo[counter]
+        const data = this.props.data[counter]
 
         if (multiAttributeResults.length === 0) return false
 
@@ -127,16 +137,17 @@ class MultiAttributeDemoV3 extends React.Component {
 
     optionClicked = (evt) => {
         const { selectedOption, counter } = this.state
-        const isOptionWasSelectedInThisRound = selectedOption.length === (counter + 1)
+        const currentAnswer = this.props.data[counter]
 
         let selectedValue = evt.target.value
 
         evt.target.blur() //remove focus of selected button
 
-        if (selectedOption.length === 0 || selectedOption.length < (counter + 1)) {
-            selectedOption.push(selectedValue)
-        } else if (isOptionWasSelectedInThisRound) {
-            selectedOption[counter] = selectedValue
+        selectedOption[counter] = {
+            questionID: currentAnswer.id,
+            questionNumber: counter + 1,
+            selectedAnswer: selectedValue,
+            isCorrectAnswer: selectedValue === currentAnswer.correctAnswer.toString(),
         }
 
         // this.props.action(selectedValue);
@@ -208,12 +219,13 @@ class MultiAttributeDemoV3 extends React.Component {
     render() {
         const { counter, selectedOption, modalOpen, visibility, imageRating, coordinatesImage,
             multiAttributeResults, showMissingResultsIndicator } = this.state
-        const data = attributeListsForDemo[counter]
+        const data = this.props.data[counter]
         const showFeedback = data.showFeedback
         const showFeedbackCorrectAnswer = selectedOption[counter] === data.correctAnswer
         const completedTask = this.controlIfAllOptionsAreSelected()
         return (
             <Container key={"KEY_" + counter}>
+                <div className="instr-h3">{this.props.text}</div>
                 <Modal isOpen={modalOpen} toggle={this.modalToggle} style={modaltStyle}>
                     {getModalText(showFeedback, showFeedbackCorrectAnswer, completedTask)}
                 </Modal>
@@ -254,7 +266,7 @@ class MultiAttributeDemoV3 extends React.Component {
 function getModalText(showFeedback, showFeedbackCorrectAnswer, completedTask) {
     return (<ModalHeader style={{ padding: "4em" }}>
         {completedTask ? getModalFeedback(showFeedback, showFeedbackCorrectAnswer) :
-            <div><h4>You did not finished yet. Please complete the stacks.</h4></div>}
+            <div><h4>Nie dokończyłeś robienia słupków. Dokończ wszystkie słupki</h4></div>}
     </ModalHeader>)
 }
 
@@ -454,5 +466,3 @@ function getRatingStarBarTable(data) {
         </Table>
     );
 }
-
-export default MultiAttributeDemoV3;

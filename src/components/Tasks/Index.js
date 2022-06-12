@@ -30,14 +30,16 @@ import VisualPatternDemoTask from "./VisualPatternDemoTask";
 import PSForm from "./PSForm";
 import BargainTask from "./BargainTask/BargainTask";
 import BargainDemoTask from "./BargainTask/BargainDemoTask";
-import MultiAttribute from "./MultiAttribute";
-import MultiAttributeDemo from "./MultiAttributeDemo/MultiAttributeDemoV3";
+import MultiAttributeSimple from "./MultiAttribute/MultiAttributeSimple";
+import MultiAttributeWithBars from "./MultiAttribute/MultiAttributeWithBars";
 import RatingTask from "./RatingTask";
 import BrandTask from "./BrandTask";
 import InputTask from "./InputTask";
 import PreferenceTask from "./PreferenceTask";
 import RatingPreferenceTask from "./RatingPreferenceTask";
 import RewardScreen from "./RewardScreen";
+import MultiAttributeWithHelpBars from "./MultiAttribute/MultiAttributeWithHelpBars";
+import MultiAttributeOptionalBars from "./MultiAttribute/MultiAttributeOptionalBars";
 
 const DEBUG = (process.env.REACT_APP_DEBUG_LOG === "true") ? true : false;
 const PROLIFIC_REDIRECT_REJECT = process.env.REACT_APP_PROLIFIC_REDIRECT_REJECT;
@@ -809,15 +811,6 @@ class Index extends Component {
      * 
      * @param {*} selectedOptionsResult 
      */
-    multiAttributeTestHandler = (selectedOptionsResult) => {
-        //we simulate a space btn pressed because multiAttribute already finishes with a space btn pressed
-        this._validateToNextPage()
-    }
-
-    /**
-     * 
-     * @param {*} selectedOptionsResult 
-     */
     multiAttributeHandler = (allSelectedOptionsResult, selectedOption) => {
         //we simulate a space btn pressed because multiAttribute already finishes with a space btn pressed
         const { inputAttributes, outputAttribute, generalOutput, userID } = this.state;
@@ -850,9 +843,9 @@ class Index extends Component {
     }
 
     /**
-     * 
-     * @param {*} selectedOptionsResult 
-     */
+ * 
+ * @param {*} selectedOptionsResult 
+ */
     multiAttributeDemoHandler = (allSelectedOptionsResult, selectedOption) => {
         //we simulate a space btn pressed because multiAttribute already finishes with a space btn pressed
         const { inputAttributes, outputAttribute, generalOutput, userID } = this.state;
@@ -882,6 +875,153 @@ class Index extends Component {
                 this._checkSyncGeneralData()
             })
         }
+    }
+
+    /**
+     * 
+     * @param {*} allSelectedOptionsResult 
+     * @param {*} selectedOption 
+     */
+    multiAttributeConditional11Handler = (allSelectedOptionsResult, selectedOption) => {
+        //we simulate a space btn pressed because multiAttribute already finishes with a space btn pressed
+        const { inputAttributes, outputAttribute, generalOutput, userID } = this.state;
+        const tasks = inputAttributes.task.slice(0, 16)
+
+        console.log(this.state)
+        generalOutput.push({
+            userID: userID,
+            task: constant.PRALNIA_TASK_CONDITIONAL1_SCREEN,
+            data: selectedOption,
+            sync: constant.STATE_NOT_SYNC
+        })
+
+        if (tasks.length === allSelectedOptionsResult.length && allSelectedOptionsResult[allSelectedOptionsResult.length - 1].selectedAnswer !== '\0') {
+            allSelectedOptionsResult.forEach((value, i) => {
+                outputAttribute.task.push(value)
+            })
+
+            this.setState({
+                generalOutput: generalOutput,
+                outputAttribute: outputAttribute,
+            }, () => {
+                this._checkSyncGeneralData()
+                this._validateToNextPage()
+            })
+        } else {
+            this.setState({
+                generalOutput: generalOutput,
+            }, () => {
+                this._checkSyncGeneralData()
+            })
+        }
+    }
+
+    /**
+     * 
+     * @param {*} allSelectedOptionsResult 
+     * @param {*} selectedOption 
+     */
+    multiAttributeConditional12Handler = (allSelectedOptionsResult, selectedOption) => {
+        //we simulate a space btn pressed because multiAttribute already finishes with a space btn pressed
+        const { inputAttributes, outputAttribute, generalOutput, userID } = this.state;
+        const tasks = inputAttributes.task.slice(16, 48)
+
+        console.log(this.state)
+        generalOutput.push({
+            userID: userID,
+            task: constant.PRALNIA_TASK_CONDITIONAL1_SCREEN,
+            data: selectedOption,
+            sync: constant.STATE_NOT_SYNC
+        })
+
+        if (tasks.length === allSelectedOptionsResult.length && allSelectedOptionsResult[allSelectedOptionsResult.length - 1].selectedAnswer !== '\0') {
+            allSelectedOptionsResult.forEach((value, i) => {
+                outputAttribute.task.push(value)
+            })
+
+            this.setState({
+                generalOutput: generalOutput,
+                outputAttribute: outputAttribute,
+            }, () => {
+                this._checkSyncGeneralData()
+                this._validateToNextPage()
+            })
+        } else {
+            this.setState({
+                generalOutput: generalOutput,
+            }, () => {
+                this._checkSyncGeneralData()
+            })
+        }
+    }
+
+    /**
+     * 
+     * @param {*} allSelectedOptionsResult 
+     * @param {*} selectedOption 
+     */
+    multiAttributeConditional13Handler = (allSelectedOptionsResult, selectedOption) => {
+        //we simulate a space btn pressed because multiAttribute already finishes with a space btn pressed
+        const { inputAttributes, outputAttribute, generalOutput, userID } = this.state;
+        const tasks = inputAttributes.task.slice(48, 64)
+
+        console.log(this.state)
+        generalOutput.push({
+            userID: userID,
+            task: constant.PRALNIA_TASK_CONDITIONAL1_SCREEN,
+            data: selectedOption,
+            sync: constant.STATE_NOT_SYNC
+        })
+
+        if (tasks.length === allSelectedOptionsResult.length && allSelectedOptionsResult[allSelectedOptionsResult.length - 1].selectedAnswer !== '\0') {
+            allSelectedOptionsResult.forEach((value, i) => {
+                outputAttribute.task.push(value)
+            })
+
+            this.setState({
+                generalOutput: generalOutput,
+                outputAttribute: outputAttribute,
+            }, () => {
+                this._checkSyncGeneralData()
+                this._validateToNextPage()
+            })
+        } else {
+            this.setState({
+                generalOutput: generalOutput,
+            }, () => {
+                this._checkSyncGeneralData()
+            })
+        }
+    }
+
+    /**
+     * 
+     * @param {*} allSelectedOptionsResult 
+     * @param {*} selectedOption 
+     */
+    multiAttributeDemoConditional1Handler = (allSelectedOptionsResult, selectedOption) => {
+        //we simulate a space btn pressed because multiAttribute already finishes with a space btn pressed
+        const { outputAttribute, generalOutput, userID } = this.state;
+        console.log(this.state)
+
+        generalOutput.push({
+            userID: userID,
+            task: constant.PRALNIA_TASK_CONDITIONAL1_DEMO_SCREEN,
+            data: selectedOption,
+            sync: constant.STATE_NOT_SYNC
+        })
+
+        allSelectedOptionsResult.forEach((value, i) => {
+            outputAttribute.demo.push(value)
+        })
+
+        this.setState({
+            generalOutput: generalOutput,
+            outputAttribute: outputAttribute,
+        }, () => {
+            this._checkSyncGeneralData()
+            this._validateToNextPage()
+        })
     }
 
     /**
@@ -1165,15 +1305,21 @@ class Index extends Component {
             } else if (screen === constant.BARGAIN_SCREEN) {
                 let data = this.validateBargainTask();
                 if (data.isValid) this._goToNextTaskInInputNavigation();
-            } else if (screen === constant.MULTRIATTRIBUTE_DEMO_SCREEN ||
-                screen === constant.PRALNIA_TASK_SCREEN ||
+            } else if (screen === constant.PRALNIA_TASK_SCREEN ||
+                screen === constant.PRALNIA_TASK_DEMO_SCREEN ||
+                screen === constant.PRALNIA_TASK_CONDITIONAL1_1_SCREEN ||
+                screen === constant.PRALNIA_TASK_CONDITIONAL1_2_SCREEN ||
+                screen === constant.PRALNIA_TASK_CONDITIONAL1_3_SCREEN ||
+                screen === constant.PRALNIA_TASK_CONDITIONAL1_1_DEMO_SCREEN ||
+                screen === constant.PRALNIA_TASK_CONDITIONAL1_2_DEMO_SCREEN ||
+                screen === constant.PRALNIA_TASK_CONDITIONAL1_3_DEMO_SCREEN ||
+                screen === constant.PRALNIA_TASK_CONDITIONAL1_4_DEMO_SCREEN ||
                 screen === constant.RATING_TASK_SCREEN ||
                 screen === constant.BRAND_TASK_SCREEN ||
                 screen === constant.INPUT_TASK_SCREEN ||
                 screen === constant.PREFERENCE_TASK_SCREEN ||
                 screen === constant.RATING_PREFERENCE_TASK_SCREEN ||
-                screen === constant.REWARD_TASK_SCREEN ||
-                screen === constant.PRALNIA_TASK_DEMO_SCREEN) {
+                screen === constant.REWARD_TASK_SCREEN) {
                 this._goToNextTaskInInputNavigation();
             } else if (screen === constant.USER_FORM_SCREEN) {
                 this.setState({ loading: true }, () => {
@@ -1473,16 +1619,50 @@ function changePages(state, context) {
             action={context.bargainTaskHandler}
             data={inputStores}
             typeTask={typeTask} />;
-    } else if (screen === constant.MULTRIATTRIBUTE_DEMO_SCREEN) {
-        return <MultiAttributeDemo
-            action={context.multiAttributeTestHandler} />;
+    } else if (screen === constant.PRALNIA_TASK_CONDITIONAL1_1_SCREEN) {
+        console.log(constant.PRALNIA_TASK_CONDITIONAL1_1_SCREEN)
+        console.log(inputAttributes.task.slice(0, 16))
+        return <MultiAttributeWithHelpBars
+            action={context.multiAttributeConditional11Handler}
+            data={inputAttributes.task.slice(0, 16)}
+            text={outputFormData.sex === constant.MALE_VALUE ? constant.PRALNIA_TASK_TITLE_M : constant.PRALNIA_TASK_TITLE_F} />;
+    } else if (screen === constant.PRALNIA_TASK_CONDITIONAL1_2_SCREEN) {
+        return <MultiAttributeOptionalBars
+            action={context.multiAttributeConditional12Handler}
+            data={inputAttributes.task.slice(16, 48)}
+            text={outputFormData.sex === constant.MALE_VALUE ? constant.PRALNIA_TASK_TITLE_M : constant.PRALNIA_TASK_TITLE_F} />;
+    } else if (screen === constant.PRALNIA_TASK_CONDITIONAL1_3_SCREEN) {
+        return <MultiAttributeSimple
+            action={context.multiAttributeConditional13Handler}
+            data={inputAttributes.task.slice(48, 64)}
+            text={outputFormData.sex === constant.MALE_VALUE ? constant.PRALNIA_TASK_TITLE_M : constant.PRALNIA_TASK_TITLE_F} />;
+    } else if (screen === constant.PRALNIA_TASK_CONDITIONAL1_1_DEMO_SCREEN) {
+        return <MultiAttributeWithBars
+            action={context.multiAttributeDemoConditional1Handler}
+            data={[inputAttributes.demo[0]]}
+            text={outputFormData.sex === constant.MALE_VALUE ? constant.PRALNIA_TASK_TITLE_M : constant.PRALNIA_TASK_TITLE_F} />;
+    } else if (screen === constant.PRALNIA_TASK_CONDITIONAL1_2_DEMO_SCREEN) {
+        return <MultiAttributeWithBars
+            action={context.multiAttributeDemoConditional1Handler}
+            data={[inputAttributes.demo[1]]}
+            text={outputFormData.sex === constant.MALE_VALUE ? constant.PRALNIA_TASK_TITLE_M : constant.PRALNIA_TASK_TITLE_F} />;
+    } else if (screen === constant.PRALNIA_TASK_CONDITIONAL1_3_DEMO_SCREEN) {
+        return <MultiAttributeWithBars
+            action={context.multiAttributeDemoConditional1Handler}
+            data={[inputAttributes.demo[2]]}
+            text={outputFormData.sex === constant.MALE_VALUE ? constant.PRALNIA_TASK_TITLE_M : constant.PRALNIA_TASK_TITLE_F} />;
+    } else if (screen === constant.PRALNIA_TASK_CONDITIONAL1_4_DEMO_SCREEN) {
+        return <MultiAttributeWithBars
+            action={context.multiAttributeDemoConditional1Handler}
+            data={[inputAttributes.demo[3]]}
+            text={outputFormData.sex === constant.MALE_VALUE ? constant.PRALNIA_TASK_TITLE_M : constant.PRALNIA_TASK_TITLE_F} />;
     } else if (screen === constant.PRALNIA_TASK_SCREEN) {
-        return <MultiAttribute
+        return <MultiAttributeSimple
             action={context.multiAttributeHandler}
             data={inputAttributes.task}
             text={outputFormData.sex === constant.MALE_VALUE ? constant.PRALNIA_TASK_TITLE_M : constant.PRALNIA_TASK_TITLE_F} />;
     } else if (screen === constant.PRALNIA_TASK_DEMO_SCREEN) {
-        return <MultiAttribute
+        return <MultiAttributeSimple
             action={context.multiAttributeDemoHandler}
             data={inputAttributes.demo}
             text={outputFormData.sex === constant.MALE_VALUE ? constant.PRALNIA_TASK_DEMO_M : constant.PRALNIA_TASK_DEMO_F} />;

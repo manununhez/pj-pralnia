@@ -10,27 +10,38 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faSmile, faFrown } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ImageMapperRating } from './verticalRateImage';
+import { Box } from "./Box";
+import DemoContainer from './DemoContainer'
+import RateImage from './RateImage';
+
+import "../style.css"
 
 import {
     FIRST_TASK_PROPERTIES_TOTAL, FIRST_RADIO_VALUE, SECOND_RADIO_VALUE, WHITE, BLACK,
     THIRD_RADIO_VALUE, TEXT_FOOTER, SHOW_FEEDBACK_TRUE, SPACE_KEY_CODE, EVENT_KEY_DOWN,
-    GREEN, modaltStyle, ItemTypes, attributeListsForDemo, ItemTypesID
+    GREEN, modaltStyle, ItemTypes, ItemTypesID, INDEX_HEADER_TOP, INDEX_HEADER
 } from '../../../helpers/constants';
-import RateImage from './RateImage';
 
+const defaultValue = {
+    questionID: 0,
+    questionNumber: 0,
+    selectedAnswer: '\0',
+    isCorrectAnswer: false
+}
 
-class MultiAttributeDemoV2 extends React.Component {
+export default class MultiAttributeWithBars extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedOption: [],
+            selectedOption: [defaultValue],
             counter: 0,
             showMissingResultsIndicator: false,
             modalOpen: false,
             visibility: 0,
-            coordinatesImage: { x: 0, y: 0 },
+            coordinatesImage: { leftX: 0, leftY: 0, y: 0 },
             imageRating: 0,
-            multiAttributeResults: { p1: [], p2: [], p3: [] }
+            multiAttributeResults: { p1: [INDEX_HEADER_TOP], p2: [INDEX_HEADER_TOP], p3: [INDEX_HEADER_TOP] },
+            multiAttributeResultsTmp: { p1: [INDEX_HEADER_TOP], p2: [INDEX_HEADER_TOP], p3: [INDEX_HEADER_TOP] }
         }
     }
 
@@ -53,24 +64,28 @@ class MultiAttributeDemoV2 extends React.Component {
     handleKeyDownEvent = (event) => {
         if (event.keyCode === SPACE_KEY_CODE) {
             const { selectedOption, counter } = this.state
-            const isOptionWasSelectedInThisRound = selectedOption.length === (counter + 1)
+            const isOptionWasSelectedInThisRound = selectedOption.length === (counter + 1) && selectedOption[counter].selectedAnswer !== '\0'
             const completedTask = this.controlIfAllOptionsAreSelected()
+            let currentSelectedAnswer = selectedOption[counter]
 
             if (isOptionWasSelectedInThisRound) {
                 if (completedTask) {
-                    if (attributeListsForDemo.length === selectedOption.length) {
-                        this.props.action(selectedOption);
-                    } else {
+                    if (this.props.data.length === selectedOption.length) {
+                        this.props.action(selectedOption, currentSelectedAnswer);
+                    } else if (selectedOption.length === (counter + 1)) {
+                        selectedOption.push(defaultValue)
+
                         this.setState({
+                            selectedOption: selectedOption,
                             counter: (counter + 1),
                             showMissingResultsIndicator: false,
                             modalOpen: false,
                             visibility: 0,
-                            coordinatesImage: { x: 0, y: 0 },
+                            coordinatesImage: { leftX: 0, leftY: 0, y: 0 },
                             imageRating: 0,
-                            multiAttributeResults: { p1: [], p2: [], p3: [] }
+                            multiAttributeResults: { p1: [INDEX_HEADER_TOP], p2: [INDEX_HEADER_TOP], p3: [INDEX_HEADER_TOP] }
                         }, () => {
-                            console.log("NEXT ROUND")
+                            this.props.action(selectedOption, currentSelectedAnswer)
                         })
                     }
                 }
@@ -80,9 +95,7 @@ class MultiAttributeDemoV2 extends React.Component {
 
     controlIfAllOptionsAreSelected() {
         const { multiAttributeResults, counter } = this.state
-        const data = attributeListsForDemo[counter]
-
-        console.log(multiAttributeResults)
+        const data = this.props.data[counter]
 
         if (multiAttributeResults.length === 0) return false
 
@@ -125,16 +138,17 @@ class MultiAttributeDemoV2 extends React.Component {
 
     optionClicked = (evt) => {
         const { selectedOption, counter } = this.state
-        const isOptionWasSelectedInThisRound = selectedOption.length === (counter + 1)
+        const currentAnswer = this.props.data[counter]
 
         let selectedValue = evt.target.value
 
         evt.target.blur() //remove focus of selected button
 
-        if (selectedOption.length === 0 || selectedOption.length < (counter + 1)) {
-            selectedOption.push(selectedValue)
-        } else if (isOptionWasSelectedInThisRound) {
-            selectedOption[counter] = selectedValue
+        selectedOption[counter] = {
+            questionID: currentAnswer.id,
+            questionNumber: counter + 1,
+            selectedAnswer: selectedValue,
+            isCorrectAnswer: selectedValue === currentAnswer.correctAnswer.toString(),
         }
 
         // this.props.action(selectedValue);
@@ -147,64 +161,96 @@ class MultiAttributeDemoV2 extends React.Component {
 
     onDoubleClickImage = (rating, productType, evt) => {
         const { multiAttributeResults } = this.state
-        let productId = ""
+        let multiAttributeResultsLocal = {  //local results in order to wait until rate image animation ends to update the cointainer
+            p1: [...multiAttributeResults.p1],
+            p2: [...multiAttributeResults.p2],
+            p3: [...multiAttributeResults.p3]
+        }
+        let coordsY = 0
+        if (productType === ItemTypesID.PRODUCT_1) {
+            multiAttributeResultsLocal.p1.pop()
+            multiAttributeResultsLocal.p1.push(rating)
+            multiAttributeResultsLocal.p1.push(INDEX_HEADER_TOP)
 
-        if (productType === ItemTypes.PRODUCT_1) {
-            productId = ItemTypesID.PRODUCT_1
-            multiAttributeResults.p1.push(rating)
-        } else if (productType === ItemTypes.PRODUCT_2) {
-            productId = ItemTypesID.PRODUCT_2
-            multiAttributeResults.p2.push(rating)
-        } else if (productType === ItemTypes.PRODUCT_3) {
-            productId = ItemTypesID.PRODUCT_3
-            multiAttributeResults.p3.push(rating)
+            coordsY = document.getElementById(INDEX_HEADER.PRODUCT_1).getBoundingClientRect().top - (rating * 25)
+        } else if (productType === ItemTypesID.PRODUCT_2) {
+            multiAttributeResultsLocal.p2.pop()
+            multiAttributeResultsLocal.p2.push(rating)
+            multiAttributeResultsLocal.p2.push(INDEX_HEADER_TOP)
+
+            coordsY = document.getElementById(INDEX_HEADER.PRODUCT_2).getBoundingClientRect().top - (rating * 25)
+        } else if (productType === ItemTypesID.PRODUCT_3) {
+            multiAttributeResultsLocal.p3.pop()
+            multiAttributeResultsLocal.p3.push(rating)
+            multiAttributeResultsLocal.p3.push(INDEX_HEADER_TOP)
+
+            coordsY = document.getElementById(INDEX_HEADER.PRODUCT_3).getBoundingClientRect().top - (rating * 25)
         }
 
-        document.getElementById(productId).style.backgroundColor = GREEN
+        document.getElementById(productType).style.backgroundColor = GREEN
 
-        this.setState({ showMissingResultsIndicator: false, visibility: 1, imageRating: rating, coordinatesImage: { x: evt.clientX, y: evt.clientY }, multiAttributeResults: multiAttributeResults })
+        this.setState({
+            showMissingResultsIndicator: false,
+            visibility: 1,
+            imageRating: rating,
+            coordinatesImage: { leftX: evt.clientX, leftY: evt.clientY, y: coordsY },
+            multiAttributeResultsTmp: multiAttributeResultsLocal
+        })
     }
 
-    onAnimationRateImageEnd = (isAnimationEnd) => {
-        if (isAnimationEnd) {
-            document.getElementById(ItemTypesID.PRODUCT_1).style.backgroundColor = WHITE
-            document.getElementById(ItemTypesID.PRODUCT_2).style.backgroundColor = WHITE
-            document.getElementById(ItemTypesID.PRODUCT_3).style.backgroundColor = WHITE
-            this.setState({ visibility: 0 })
-        }
+    onAnimationRateImageEnd = () => {
+        const { multiAttributeResultsTmp } = this.state
+
+        document.getElementById(ItemTypesID.PRODUCT_1).style.backgroundColor = WHITE
+        document.getElementById(ItemTypesID.PRODUCT_2).style.backgroundColor = WHITE
+        document.getElementById(ItemTypesID.PRODUCT_3).style.backgroundColor = WHITE
+        this.setState({
+            visibility: 0,
+            multiAttributeResults: multiAttributeResultsTmp //now we update the table after the animation ends
+        })
+    }
+
+    multiAttributeResultsHandler = (attributeResults) => {
+        this.setState({
+            multiAttributeResults: attributeResults.results,
+            showMissingResultsIndicator: false
+        })
     }
 
     render() {
         const { counter, selectedOption, modalOpen, visibility, imageRating, coordinatesImage,
             multiAttributeResults, showMissingResultsIndicator } = this.state
-        const data = attributeListsForDemo[counter]
+        const data = this.props.data[counter]
         const showFeedback = data.showFeedback
         const showFeedbackCorrectAnswer = selectedOption[counter] === data.correctAnswer
         const completedTask = this.controlIfAllOptionsAreSelected()
         return (
             <Container key={"KEY_" + counter}>
+                <div className="instr-h3">{this.props.text}</div>
                 <Modal isOpen={modalOpen} toggle={this.modalToggle} style={modaltStyle}>
                     {getModalText(showFeedback, showFeedbackCorrectAnswer, completedTask)}
                 </Modal>
-                <Row className="justify-content-center">
+                {/* Row style to avoid 'layout of all three panes should be fixed, not floating (when window is resized, panes change their layout)' */}
+                <Row className="justify-content-center" style={{ display: 'inline-flex', position: 'fixed', flexWrap: 'nowrap' }}>
                     <Card body style={{ marginTop: "20px" }}>
                         <div>{getRatingStarBarTable(data)}</div>
                     </Card>
                     <Card body style={{ marginTop: "20px" }}>
-                        <div>{getTable(selectedOption[counter], data, this.optionClicked, this.onDoubleClickImage, showMissingResultsIndicator, multiAttributeResults)}</div>
+                        <div>{getTable(selectedOption[counter], data, this.optionClicked,
+                            this.onDoubleClickImage, showMissingResultsIndicator, multiAttributeResults)}</div>
                     </Card>
                     <Card id="cardStackVisual" body style={{ marginTop: "20px" }}>
-                        <div>{getTableVisualization(multiAttributeResults)}</div>
+                        <DemoContainer action={this.multiAttributeResultsHandler} currentResult={multiAttributeResults} />
                     </Card>
                 </Row>
                 <RateImage
                     image={ImageMapperRating(imageRating)}
                     visibility={visibility}
-                    style={{
-                        position: "absolute",
-                        left: coordinatesImage.x + 'px',
-                        top: coordinatesImage.y + 'px'
-                    }}
+                    x1={coordinatesImage.leftX}
+                    x2={coordinatesImage.leftX + 300}
+                    y1={coordinatesImage.leftY}
+                    y2={coordinatesImage.y}
+                    style={{ position: "absolute", top: '0px', left: '0px' }}
                     action={this.onAnimationRateImageEnd} />
             </Container>
         );
@@ -221,7 +267,7 @@ class MultiAttributeDemoV2 extends React.Component {
 function getModalText(showFeedback, showFeedbackCorrectAnswer, completedTask) {
     return (<ModalHeader style={{ padding: "4em" }}>
         {completedTask ? getModalFeedback(showFeedback, showFeedbackCorrectAnswer) :
-            <div><h4>You did not finished yet. Please complete the stacks.</h4></div>}
+            <div><h4>Nie dokończyłeś robienia słupków. Dokończ wszystkie słupki</h4></div>}
     </ModalHeader>)
 }
 
@@ -243,27 +289,6 @@ function getModalFeedback(showFeedback, showFeedbackCorrectAnswer) {
             <br /><div><h4>{TEXT_FOOTER}</h4></div>
         </>
     )
-}
-
-/**
- * 
- * @param {*} data 
- * @returns 
- */
-function getTableVisualization(data) {
-    return (<Table borderless responsive style={{ textAlign: 'center', height: '600px' }}>
-        <thead>
-            <tr>
-                <th><h5>Pralka 1</h5></th>
-                <th><h5>Pralka 2</h5></th>
-                <th><h5>Pralka 3</h5></th>
-            </tr>
-
-        </thead>
-        <tbody>
-            {getTableVisualizationBody(data)}
-        </tbody>
-    </Table>)
 }
 
 /**
@@ -312,72 +337,6 @@ function getTable(selectedValue, data, onClick, onDoubleClick, showMissingResult
     );
 }
 
-/**
- * 
- * @param {*} data 
- * @returns 
- */
-function getTableVisualizationBody(data) {
-    return (<tr>
-        <td id={ItemTypesID.PRODUCT_1} style={{ verticalAlign: 'bottom' }}>
-            <Table responsive borderless>
-                <thead></thead>
-                <tbody>
-                    {getPropertiesTableVizualizationBodyProduct(data.p1)}
-                </tbody>
-            </Table>
-        </td>
-        <td id={ItemTypesID.PRODUCT_2} style={{ verticalAlign: 'bottom' }}>
-            <Table responsive borderless>
-                <thead></thead>
-                <tbody>
-                    {getPropertiesTableVizualizationBodyProduct(data.p2)}
-                </tbody>
-            </Table>
-        </td>
-        <td id={ItemTypesID.PRODUCT_3} style={{ verticalAlign: 'bottom' }}>
-            <Table responsive borderless>
-                <thead></thead>
-                <tbody>
-                    {getPropertiesTableVizualizationBodyProduct(data.p3)}
-                </tbody>
-            </Table>
-        </td>
-    </tr>
-    );
-}
-
-/**
- * 
- * @param {*} listSelectedRating 
- * @returns 
- */
-function getPropertiesTableVizualizationBodyProduct(listSelectedRating) {
-    return [...listSelectedRating].reverse().map(rating => {
-        return (<tr style={{ border: '1px solid black', textAlign: '-webkit-center', fontSize: '1.3em', display: 'block ruby' }}>
-            {getPropertiesVerticalRating(rating)}
-        </tr>)
-    })
-}
-
-/**
- * 
- * @param {*} value 
- * @returns 
- */
-function getPropertiesVerticalRating(value) {
-    let children = []
-    for (let i = 0; i < value; i++) {
-        children.push(
-            <tr>
-                <td style={{ padding: '0' }}>
-                    <FontAwesomeIcon icon={faPlus} />
-                </td>
-            </tr>
-        )
-    }
-    return children
-}
 
 /**
  * 
@@ -416,9 +375,12 @@ function getTableBody(data, onDoubleClick, showMissingResultsIndicator, multiAtt
 
         children.push(
             <tr key={i}>
-                <td style={{ fontSize: '1.3em' }}>{boldStyle(isAttributeP1Bold, data.attributes[i].valueP1, ItemTypes.PRODUCT_1, rating, showIndicatorP1, isCurrentValueP1NotDroppedYet, onDoubleClick)}</td>
-                <td style={{ fontSize: '1.3em' }}>{boldStyle(isAttributeP2Bold, data.attributes[i].valueP2, ItemTypes.PRODUCT_2, rating, showIndicatorP2, isCurrentValueP2NotDroppedYet, onDoubleClick)}</td>
-                <td style={{ fontSize: '1.3em' }}>{boldStyle(isAttributeP3Bold, data.attributes[i].valueP3, ItemTypes.PRODUCT_3, rating, showIndicatorP3, isCurrentValueP3NotDroppedYet, onDoubleClick)}</td>
+                <td style={{ fontSize: '1.3em' }}>{boldStyle(isAttributeP1Bold, data.attributes[i].valueP1,
+                    ItemTypes.PRODUCT_1, rating, showIndicatorP1, isCurrentValueP1NotDroppedYet, onDoubleClick, ItemTypesID.PRODUCT_1)}</td>
+                <td style={{ fontSize: '1.3em' }}>{boldStyle(isAttributeP2Bold, data.attributes[i].valueP2,
+                    ItemTypes.PRODUCT_2, rating, showIndicatorP2, isCurrentValueP2NotDroppedYet, onDoubleClick, ItemTypesID.PRODUCT_2)}</td>
+                <td style={{ fontSize: '1.3em' }}>{boldStyle(isAttributeP3Bold, data.attributes[i].valueP3,
+                    ItemTypes.PRODUCT_3, rating, showIndicatorP3, isCurrentValueP3NotDroppedYet, onDoubleClick, ItemTypesID.PRODUCT_3)}</td>
             </tr>
         );
     }
@@ -437,13 +399,13 @@ function getTableBody(data, onDoubleClick, showMissingResultsIndicator, multiAtt
  * @param {*} onDoubleClick 
  * @returns 
  */
-function boldStyle(isBold, data, productType, rating, showIndicator, isDragActive, onDoubleClick) {
+function boldStyle(isBold, data, productType, rating, showIndicator, isDragActive, onDoubleClick, columnType) {
     if (isBold && isDragActive)
-        return (<strong style={{ padding: "5px", border: showIndicator ? '1px solid green' : '' }}
-            onDoubleClick={onDoubleClick.bind(this, rating, productType)}>{data}</strong>)
+        return (<Box name={data} type={productType} key={rating} index={rating} showIndicator={showIndicator}
+            onDoubleClick={onDoubleClick} columnType={columnType} />)
     else if (!isDragActive)
-        return <strong>{data}</strong>
-    else return data
+        return <strong className='cursor-normal-text'>{data}</strong>
+    else return <div className='cursor-normal-text'>{data}</div>
 }
 
 /**
@@ -505,5 +467,3 @@ function getRatingStarBarTable(data) {
         </Table>
     );
 }
-
-export default MultiAttributeDemoV2;

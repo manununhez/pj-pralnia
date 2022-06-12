@@ -38,39 +38,6 @@ export const ItemTypesID = {
     PRODUCT_3: "columnProduct3"
 };
 
-export const attributeListsForDemo = [
-    {
-        id: 31, showFeedback: "YES", showVisualStack: "YES", correctAnswer: "3", attributes: [
-            { id: "A3", p1: 0, p2: 0, p3: 1, name: "Klasa energetyczna", valueP1: "A+", valueP2: "A+", valueP3: "A++" },
-            { id: "A5", p1: 1, p2: 0, p3: 0, name: "Zużycie wody", valueP1: "40", valueP2: "50", valueP3: "50" },
-            { id: "A4", p1: 0, p2: 1, p3: 1, name: "Poziom hałasu", valueP1: "50", valueP2: "45", valueP3: "45" },
-            { id: "A6", p1: 0, p2: 1, p3: 0, name: "Program szybki", valueP1: "brak", valueP2: "jest", valueP3: "brak" },
-            { id: "A2", p1: 0, p2: 1, p3: 1, name: "Pojemność bębna", valueP1: "4", valueP2: "10", valueP3: "10" },
-            { id: "A1", p1: 1, p2: 0, p3: 1, name: "Maksymalne obroty", valueP1: "1400", valueP2: "1200", valueP3: "1400" },
-        ]
-    },
-    {
-        id: 32, showFeedback: "YES", showVisualStack: "YES", correctAnswer: "1", attributes: [
-            { id: "A3", p1: 0, p2: 0, p3: 1, name: "Klasa energetyczna", valueP1: "A", valueP2: "A", valueP3: "A++" },
-            { id: "A5", p1: 1, p2: 1, p3: 0, name: "Zużycie wody", valueP1: "45", valueP2: "45", valueP3: "65" },
-            { id: "A4", p1: 1, p2: 0, p3: 1, name: "Poziom hałasu", valueP1: "60", valueP2: "70", valueP3: "60" },
-            { id: "A6", p1: 1, p2: 0, p3: 0, name: "Program szybki", valueP1: "jest", valueP2: "brak", valueP3: "brak" },
-            { id: "A2", p1: 0, p2: 0, p3: 0, name: "Pojemność bębna", valueP1: "4", valueP2: "4", valueP3: "4" },
-            { id: "A1", p1: 0, p2: 1, p3: 0, name: "Maksymalne obroty", valueP1: "1000", valueP2: "1400", valueP3: "1000" },
-        ]
-    },
-    {
-        id: 33, showFeedback: "YES", showVisualStack: "NO", correctAnswer: "3", attributes: [
-            { id: "A3", p1: 0, p2: 0, p3: 1, name: "Klasa energetyczna", valueP1: "A", valueP2: "A", valueP3: "A++" },
-            { id: "A5", p1: 1, p2: 0, p3: 0, name: "Zużycie wody", valueP1: "45", valueP2: "65", valueP3: "65" },
-            { id: "A4", p1: 0, p2: 1, p3: 1, name: "Poziom hałasu", valueP1: "70", valueP2: "60", valueP3: "60" },
-            { id: "A6", p1: 0, p2: 1, p3: 0, name: "Program szybki", valueP1: "brak", valueP2: "jest", valueP3: "brak" },
-            { id: "A2", p1: 1, p2: 1, p3: 0, name: "Pojemność bębna", valueP1: "8", valueP2: "8", valueP3: "4" },
-            { id: "A1", p1: 1, p2: 0, p3: 1, name: "Maksymalne obroty", valueP1: "1400", valueP2: "1000", valueP3: "1400" },
-        ]
-    }
-];
-
 //PreferenceTask
 export const ATTRIBUTE = {
     data:
@@ -245,9 +212,17 @@ export const BARGAIN_DEMO_SCREEN = "BargainDemoTask";
 export const BARGAIN_DEMO_INSTRUCTION_BEFORE_FINISH = "BargainDemoTaskInstructionBeforeFinish";
 export const BARGAIN_DEMO_FINISH_INSTRUCTION = "BargainDemoTaskInstructionFinish";
 export const BARGAIN_SCREEN = "BargainTask";
-export const MULTRIATTRIBUTE_DEMO_SCREEN = "MultiAttributeTaskDemo";
 export const PRALNIA_TASK_SCREEN = "PralniaTask";
 export const PRALNIA_TASK_DEMO_SCREEN = "PralniaTaskDemo";
+export const PRALNIA_TASK_CONDITIONAL1_DEMO_SCREEN = "PralniaTaskDemoConditional1";
+export const PRALNIA_TASK_CONDITIONAL1_1_DEMO_SCREEN = "PralniaTaskDemoConditional1-1";
+export const PRALNIA_TASK_CONDITIONAL1_2_DEMO_SCREEN = "PralniaTaskDemoConditional1-2";
+export const PRALNIA_TASK_CONDITIONAL1_3_DEMO_SCREEN = "PralniaTaskDemoConditional1-3";
+export const PRALNIA_TASK_CONDITIONAL1_4_DEMO_SCREEN = "PralniaTaskDemoConditional1-4";
+export const PRALNIA_TASK_CONDITIONAL1_SCREEN = "PralniaTaskConditional1";
+export const PRALNIA_TASK_CONDITIONAL1_1_SCREEN = "PralniaTaskConditional1-1";
+export const PRALNIA_TASK_CONDITIONAL1_2_SCREEN = "PralniaTaskConditional1-2";
+export const PRALNIA_TASK_CONDITIONAL1_3_SCREEN = "PralniaTaskConditional1-3";
 export const RATING_TASK_SCREEN = "RatingTask";
 export const BRAND_TASK_SCREEN = "BrandTask";
 export const INPUT_TASK_SCREEN = "InputTask";
@@ -327,3 +302,5 @@ export const PREFERENCE_TASK_TITLE_M = "Dodatkowo prosimy o wskazanie akceptowal
 
 export const RATING_PREFERENCE_TASK_TITLE_F = "Jesteśmy ciekawi na co zwróciłaby Pani uwagę przy zakupie telefonu komórkowego.\n Prosimy o ocenienie ważności właściwości telefonów komórkowych posługując się plusami. Im większa liczba plusów, tym ważniejsza jest dla Pani dana właściwość. Może Pani przyznać tę samą liczbę plusów kilku właściwościom. Każda właściwość musi mieć co najmniej jeden plus i żadna właściwość nie może mieć więcej niż sześć plusów.\n Nie ma tu dobrych ani złych odpowiedzi, proszę się kierować własnymi preferencjami."
 export const RATING_PREFERENCE_TASK_TITLE_M = "Jesteśmy ciekawi na co zwróciłby Pan uwagę przy zakupie telefonu komórkowego.\n Prosimy o ocenienie ważności właściwości telefonów komórkowych posługując się plusami. Im większa liczba plusów, tym ważniejsza jest dla Pana dana właściwość. Może Pan przyznać tę samą liczbę plusów kilku właściwościom. Każda właściwość musi mieć co najmniej jeden plus i żadna właściwość nie może mieć więcej niż sześć plusów.\n Nie ma tu dobrych ani złych odpowiedzi, proszę się kierować własnymi preferencjami."
+
+
