@@ -231,7 +231,7 @@ export default class MultiAttributeWithBars extends React.Component {
                     {getModalText(showFeedback, showFeedbackCorrectAnswer, completedTask)}
                 </Modal>
                 {/* Row style to avoid 'layout of all three panes should be fixed, not floating (when window is resized, panes change their layout)' */}
-                <Row className="justify-content-center" style={{ display: 'inline-flex', position: 'fixed', flexWrap: 'nowrap' }}>
+                <Row className="justify-content-center" style={{ flexWrap: 'nowrap' }}>
                     <Card body style={{ marginTop: "20px" }}>
                         <div>{getRatingStarBarTable(data)}</div>
                     </Card>
@@ -309,21 +309,20 @@ function getTable(selectedValue, data, onClick, onDoubleClick, showMissingResult
                     <th>
                         <button color="primary" id={"btn_" + FIRST_RADIO_VALUE}
                             className={selectedValue === FIRST_RADIO_VALUE ? "btn btn-warning" : "btn btn-primary"} //Values from 1 to length
-                            style={{ marginTop: "0px", marginBottom: "0px", fontSize: "0.9em" }}
                             onClick={onClick} value={FIRST_RADIO_VALUE}>
                             Pralka 1
                         </button>
                     </th>
                     <th>
                         <button color="primary" id={"btn_" + SECOND_RADIO_VALUE}
-                            className={selectedValue === SECOND_RADIO_VALUE ? "btn btn-warning" : "btn btn-primary"} //Values from 1 to length style={{ marginTop: "0px", marginBottom: "0px", fontSize: "0.9em" }}
+                            className={selectedValue === SECOND_RADIO_VALUE ? "btn btn-warning" : "btn btn-primary"} //Values from 1 to length 
                             onClick={onClick} value={SECOND_RADIO_VALUE}>
                             Pralka 2
                         </button>
                     </th>
                     <th>
                         <button color="primary" id={"btn_" + THIRD_RADIO_VALUE}
-                            className={selectedValue === THIRD_RADIO_VALUE ? "btn btn-warning" : "btn btn-primary"} //Values from 1 to length style={{ marginTop: "0px", marginBottom: "0px", fontSize: "0.9em" }}
+                            className={selectedValue === THIRD_RADIO_VALUE ? "btn btn-warning" : "btn btn-primary"} //Values from 1 to length 
                             onClick={onClick} value={THIRD_RADIO_VALUE}>
                             Pralka 3
                         </button>
@@ -420,7 +419,7 @@ function getPropertiesTableBody(data) {
         children.push(
             <tr key={i}>
                 <td style={{ textAlign: 'left', fontSize: '1.0em', padding: '1.0em', verticalAlign: 'middle' }}>{data.attributes[i].name}</td>
-                <td style={{ border: '1px solid black', padding: '0' }} className="align-middle">{RatingBar(rating)}</td>
+                <td style={{ border: '1px solid black', display: 'table', paddingLeft: '0px', paddingRight: '5px', paddingTop: '10px', paddingBottom: '10px' }} className="align-middle">{RatingBar(rating)}</td>
             </tr>
         );
         rating--;
