@@ -121,7 +121,6 @@ export const FIRST_TASK_PROPERTIES_TOTAL = 6;
 export const FIRST_RADIO_VALUE = "1";
 export const SECOND_RADIO_VALUE = "2";
 export const THIRD_RADIO_VALUE = "3";
-export const SHOW_FEEDBACK_TRUE = "YES";
 
 //Visual Pattern
 export const VISUAL_PATTERN = "VisualPattern"
@@ -214,6 +213,7 @@ export const BARGAIN_DEMO_FINISH_INSTRUCTION = "BargainDemoTaskInstructionFinish
 export const BARGAIN_SCREEN = "BargainTask";
 export const PRALNIA_TASK_SCREEN = "PralniaTask";
 export const PRALNIA_TASK_DEMO_SCREEN = "PralniaTaskDemo";
+
 export const PRALNIA_TASK_CONDITIONAL1_DEMO_SCREEN = "PralniaTaskDemoConditional1";
 export const PRALNIA_TASK_CONDITIONAL1_1_DEMO_SCREEN = "PralniaTaskDemoConditional1-1";
 export const PRALNIA_TASK_CONDITIONAL1_2_DEMO_SCREEN = "PralniaTaskDemoConditional1-2";
@@ -223,6 +223,17 @@ export const PRALNIA_TASK_CONDITIONAL1_SCREEN = "PralniaTaskConditional1";
 export const PRALNIA_TASK_CONDITIONAL1_1_SCREEN = "PralniaTaskConditional1-1";
 export const PRALNIA_TASK_CONDITIONAL1_2_SCREEN = "PralniaTaskConditional1-2";
 export const PRALNIA_TASK_CONDITIONAL1_3_SCREEN = "PralniaTaskConditional1-3";
+
+export const PRALNIA_TASK_CONDITIONAL2_DEMO_SCREEN = "PralniaTaskDemoConditional2";
+export const PRALNIA_TASK_CONDITIONAL2_1_DEMO_SCREEN = "PralniaTaskDemoConditional2-1";
+export const PRALNIA_TASK_CONDITIONAL2_2_DEMO_SCREEN = "PralniaTaskDemoConditional2-2";
+export const PRALNIA_TASK_CONDITIONAL2_3_DEMO_SCREEN = "PralniaTaskDemoConditional2-3";
+export const PRALNIA_TASK_CONDITIONAL2_4_DEMO_SCREEN = "PralniaTaskDemoConditional2-4";
+export const PRALNIA_TASK_CONDITIONAL2_SCREEN = "PralniaTaskConditional2";
+export const PRALNIA_TASK_CONDITIONAL2_1_SCREEN = "PralniaTaskConditional2-1";
+export const PRALNIA_TASK_CONDITIONAL2_2_SCREEN = "PralniaTaskConditional2-2";
+export const PRALNIA_TASK_CONDITIONAL2_3_SCREEN = "PralniaTaskConditional2-3";
+
 export const RATING_TASK_SCREEN = "RatingTask";
 export const BRAND_TASK_SCREEN = "BrandTask";
 export const INPUT_TASK_SCREEN = "InputTask";

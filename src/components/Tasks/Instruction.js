@@ -6,6 +6,8 @@ import ReactStars from "react-rating-stars-component";
 // get our fontawesome imports
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ReactPlayer from 'react-player'
+import videoUrl from './video/sample.mkv';
 
 import "./style.css";
 import * as constant from '../../helpers/constants';
@@ -52,8 +54,6 @@ class Instruction extends React.Component {
     }
 
     render() {
-        // const text = getTextForCurrentScreen(this.props.text, this.props.name);
-
         return (
             <Container fluid="md">
                 <Row className="justify-content-md-center">
@@ -64,6 +64,17 @@ class Instruction extends React.Component {
                         {this.props.name === "PralniaTaskSecondInstruction" ? getRatingStarBarTable() : <></>}
                     </Col>
                 </Row>
+                {this.props.name.includes("ShowVideo") ?
+                    <Row className="justify-content-md-center">
+                        <ReactPlayer
+                            className='react-player'
+                            url={videoUrl}
+                            height='500px'
+                            width='900px'
+                            controls={true}
+                        />
+                    </Row>
+                    : <></>}
                 <br />
                 <br />
                 {this.props.name.includes("BeforeFinish") ?

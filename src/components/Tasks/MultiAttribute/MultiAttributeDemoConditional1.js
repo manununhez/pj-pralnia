@@ -16,7 +16,7 @@ import "./style.css"
 
 import {
     FIRST_TASK_PROPERTIES_TOTAL, FIRST_RADIO_VALUE, SECOND_RADIO_VALUE, WHITE, BLACK,
-    THIRD_RADIO_VALUE, TEXT_FOOTER, SHOW_FEEDBACK_TRUE, SPACE_KEY_CODE, EVENT_KEY_DOWN,
+    THIRD_RADIO_VALUE, TEXT_FOOTER, SPACE_KEY_CODE, EVENT_KEY_DOWN,
     GREEN, modaltStyle, ItemTypes, ItemTypesID, INDEX_HEADER_TOP, INDEX_HEADER
 } from '../../../helpers/constants';
 import RateImage from './RateImage';
@@ -279,7 +279,7 @@ function getModalText(showFeedback, showFeedbackCorrectAnswer, completedTask) {
 function getModalFeedback(showFeedback, showFeedbackCorrectAnswer) {
     return (
         <>
-            {(showFeedback === SHOW_FEEDBACK_TRUE) ?
+            {(showFeedback) ?
                 <div style={{ textAlign: "center" }}>
                     {showFeedbackCorrectAnswer ? <FontAwesomeIcon color="green" icon={faSmile} size="4x" />
                         : <FontAwesomeIcon color="red" icon={faFrown} size="4x" />}

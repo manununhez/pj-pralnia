@@ -475,7 +475,7 @@ const usergeneraldata = (data, studyParams) => {
                 constant.TEXT_EMPTY,
                 constant.TEXT_EMPTY
             ]);
-        } else if (output.task === constant.PRALNIA_TASK_CONDITIONAL1_DEMO_SCREEN) {
+        } else if (output.task === constant.PRALNIA_TASK_CONDITIONAL1_DEMO_SCREEN || output.task === constant.PRALNIA_TASK_CONDITIONAL2_DEMO_SCREEN) {
             result.push([
                 output.userID,
                 output.task,
@@ -491,7 +491,7 @@ const usergeneraldata = (data, studyParams) => {
                 constant.TEXT_EMPTY,
                 constant.TEXT_EMPTY
             ]);
-        } else if (output.task === constant.PRALNIA_TASK_CONDITIONAL1_SCREEN) {
+        } else if (output.task === constant.PRALNIA_TASK_CONDITIONAL1_SCREEN || output.task === constant.PRALNIA_TASK_CONDITIONAL2_SCREEN) {
             result.push([
                 output.userID,
                 output.task,
