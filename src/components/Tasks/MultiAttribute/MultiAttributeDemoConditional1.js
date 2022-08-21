@@ -63,11 +63,10 @@ export default class MultiAttributeDemoConditional1 extends React.Component {
     handleKeyDownEvent = (event) => {
         if (event.keyCode === SPACE_KEY_CODE) {
             const { selectedOption, counter } = this.state
-            const isOptionWasSelectedInThisRound = selectedOption.length === (counter + 1) && selectedOption[counter].selectedAnswer !== '\0'
             const completedTask = this.controlIfAllOptionsAreSelected()
             let currentSelectedAnswer = selectedOption[counter]
 
-            if (isOptionWasSelectedInThisRound) {
+            if (this.isOptionWasSelectedInThisRound()) {
                 if (completedTask) {
                     if (this.props.data.length === selectedOption.length) {
                         this.props.action(selectedOption, currentSelectedAnswer);
@@ -216,12 +215,19 @@ export default class MultiAttributeDemoConditional1 extends React.Component {
         })
     }
 
+    isOptionWasSelectedInThisRound = () => {
+        const { selectedOption, counter } = this.state
+        const currentSelectedAnswer = selectedOption[counter]
+
+        return selectedOption.length === (counter + 1) && currentSelectedAnswer.selectedAnswer !== '\0'
+    }
+
     render() {
         const { counter, selectedOption, modalOpen, visibility, imageRating, coordinatesImage,
             multiAttributeResults, showMissingResultsIndicator } = this.state
         const data = this.props.data[counter]
         const showFeedback = data.showFeedback
-        const showFeedbackCorrectAnswer = selectedOption[counter] === data.correctAnswer
+        const showFeedbackCorrectAnswer = this.isOptionWasSelectedInThisRound() ? selectedOption[counter].isCorrectAnswer : false
         const completedTask = this.controlIfAllOptionsAreSelected()
         return (
             <Container key={"KEY_" + counter}>

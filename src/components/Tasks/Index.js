@@ -930,7 +930,7 @@ class Index extends Component {
         console.log(this.state)
         generalOutput.push({
             userID: userID,
-            task: constant.PRALNIA_TASK_CONDITIONAL1_SCREEN,
+            task: constant.PRALNIA_TASK_CONDITIONAL2_SCREEN,
             data: selectedOption,
             sync: constant.STATE_NOT_SYNC
         })
@@ -1008,7 +1008,7 @@ class Index extends Component {
         console.log(this.state)
         generalOutput.push({
             userID: userID,
-            task: constant.PRALNIA_TASK_CONDITIONAL1_SCREEN,
+            task: constant.PRALNIA_TASK_CONDITIONAL2_SCREEN,
             data: selectedOption,
             sync: constant.STATE_NOT_SYNC
         })
@@ -1048,6 +1048,45 @@ class Index extends Component {
         generalOutput.push({
             userID: userID,
             task: constant.PRALNIA_TASK_CONDITIONAL1_SCREEN,
+            data: selectedOption,
+            sync: constant.STATE_NOT_SYNC
+        })
+
+        if (tasks.length === allSelectedOptionsResult.length && allSelectedOptionsResult[allSelectedOptionsResult.length - 1].selectedAnswer !== '\0') {
+            allSelectedOptionsResult.forEach((value, i) => {
+                outputAttribute.task.push(value)
+            })
+
+            this.setState({
+                generalOutput: generalOutput,
+                outputAttribute: outputAttribute,
+            }, () => {
+                this._checkSyncGeneralData()
+                this._validateToNextPage()
+            })
+        } else {
+            this.setState({
+                generalOutput: generalOutput,
+            }, () => {
+                this._checkSyncGeneralData()
+            })
+        }
+    }
+
+    /**
+  * 
+  * @param {*} allSelectedOptionsResult 
+  * @param {*} selectedOption 
+  */
+    multiAttributeConditional23Handler = (allSelectedOptionsResult, selectedOption) => {
+        //we simulate a space btn pressed because multiAttribute already finishes with a space btn pressed
+        const { inputAttributes, outputAttribute, generalOutput, userID } = this.state;
+        const tasks = inputAttributes.task.slice(48, 64)
+
+        console.log(this.state)
+        generalOutput.push({
+            userID: userID,
+            task: constant.PRALNIA_TASK_CONDITIONAL2_SCREEN,
             data: selectedOption,
             sync: constant.STATE_NOT_SYNC
         })
@@ -1423,6 +1462,13 @@ class Index extends Component {
                 screen === constant.PRALNIA_TASK_CONDITIONAL1_2_DEMO_SCREEN ||
                 screen === constant.PRALNIA_TASK_CONDITIONAL1_3_DEMO_SCREEN ||
                 screen === constant.PRALNIA_TASK_CONDITIONAL1_4_DEMO_SCREEN ||
+                screen === constant.PRALNIA_TASK_CONDITIONAL2_1_SCREEN ||
+                screen === constant.PRALNIA_TASK_CONDITIONAL2_2_SCREEN ||
+                screen === constant.PRALNIA_TASK_CONDITIONAL2_3_SCREEN ||
+                screen === constant.PRALNIA_TASK_CONDITIONAL2_1_DEMO_SCREEN ||
+                screen === constant.PRALNIA_TASK_CONDITIONAL2_2_DEMO_SCREEN ||
+                screen === constant.PRALNIA_TASK_CONDITIONAL2_3_DEMO_SCREEN ||
+                screen === constant.PRALNIA_TASK_CONDITIONAL2_4_DEMO_SCREEN ||
                 screen === constant.RATING_TASK_SCREEN ||
                 screen === constant.BRAND_TASK_SCREEN ||
                 screen === constant.INPUT_TASK_SCREEN ||

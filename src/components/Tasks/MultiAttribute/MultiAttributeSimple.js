@@ -52,10 +52,9 @@ export default class MultiAttributeSimple extends React.Component {
     handleKeyDownEvent = (event) => {
         if (event.keyCode === SPACE_KEY_CODE) {
             const { selectedOption, counter } = this.state
-            const isOptionWasSelectedInThisRound = selectedOption.length === (counter + 1) && selectedOption[counter].selectedAnswer !== '\0'
             let currentSelectedAnswer = selectedOption[counter]
 
-            if (isOptionWasSelectedInThisRound) {
+            if (this.isOptionWasSelectedInThisRound()) {
                 if (this.props.data.length === selectedOption.length) {
                     this.props.action(selectedOption, currentSelectedAnswer);
                 } else if (selectedOption.length === (counter + 1)) {
@@ -96,6 +95,13 @@ export default class MultiAttributeSimple extends React.Component {
             })
     }
 
+    isOptionWasSelectedInThisRound = () => {
+        const { selectedOption, counter } = this.state
+        const currentSelectedAnswer = selectedOption[counter]
+
+        return selectedOption.length === (counter + 1) && currentSelectedAnswer.selectedAnswer !== '\0'
+    }
+
 
     render() {
         const { counter, selectedOption, modalOpen } = this.state
@@ -103,9 +109,7 @@ export default class MultiAttributeSimple extends React.Component {
         const showFeedback = data.showFeedback
         const showError = false
         const textError = "TEXT ERROR"
-        const isOptionWasSelected = selectedOption[counter].selectedAnswer !== '\0'
-        const showFeedbackCorrectAnswer = selectedOption[counter].selectedAnswer === data.correctAnswer.toString()
-        console.log(data.showVisualStack)
+        const showFeedbackCorrectAnswer = this.isOptionWasSelectedInThisRound() ? selectedOption[counter].isCorrectAnswer : false
         return (
             <Container key={"KEY_" + counter}>
                 <div className="instr-h3">{this.props.text}</div>
@@ -137,7 +141,7 @@ export default class MultiAttributeSimple extends React.Component {
                         <div>{getTable(selectedOption[counter].selectedAnswer, data, this.optionClicked)}</div>
                     </Card>
                 </Row>
-                {isOptionWasSelected ? <div style={{ 'marginTop': '25px' }}><Footer text={TEXT_FOOTER} /></div> : <></>}
+                {this.isOptionWasSelectedInThisRound() ? <div style={{ 'marginTop': '25px' }}><Footer text={TEXT_FOOTER} /></div> : <></>}
             </Container>
         );
     }
