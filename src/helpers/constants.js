@@ -293,8 +293,8 @@ export const TOUR_BARGAIN_CRITERIA = "A bargain is a product with a discount >= 
 export const TOUR_BARGAIN_SELECTION = "Select the bargain by clicking the left mouse button."
 
 
-export const PRALNIA_TASK_TITLE_M = "Wybierz najlepszą pralkę, korzystając z myszy i zaznaczając jedną z pralek."
-export const PRALNIA_TASK_TITLE_F = "Wybierz najlepszą pralkę, korzystając z myszy i zaznaczając jedną z pralek."
+export const PRALNIA_TASK_TITLE_M = "Proszę wybrać najlepszą pralkę, korzystając z myszy i zaznaczając jedną z pralek."
+export const PRALNIA_TASK_TITLE_F = "Proszę wybrać najlepszą pralkę, korzystając z myszy i zaznaczając jedną z pralek."
 
 export const PRALNIA_TASK_DEMO_F = "Wybierz najlepszą pralkę i kliknij na nią lewym przyciskiem myszy."
 export const PRALNIA_TASK_DEMO_M = "Wybierz najlepszą pralkę i kliknij na nią lewym przyciskiem myszy."
