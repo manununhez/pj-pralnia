@@ -293,7 +293,7 @@ export default class MultiAttributeOptionalArrangeAndReadyBars extends React.Com
                         {this.readyBarsShown()
                             ?
                             (<Button color="info" id="btnShowStack" style={{ width: "fit-content", alignSelf: "center" }}
-                                onClick={() => this._stackDisplay()}>Gotowe słupki'</Button>)
+                                onClick={() => this._stackDisplay()}>Gotowe słupki</Button>)
                             :
                             (<Button color="info" id="btnShowArrangeStack" style={{ width: "fit-content", alignSelf: "center" }}
                                 onClick={() => this._arrangeStackDisplay()}>Sam robię słupki</Button>)}
