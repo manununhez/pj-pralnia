@@ -38,7 +38,7 @@ class NavbarCustom extends React.Component {
           <Nav className="mr-auto" navbar>
             {getDropdownMenuItems(this.props.versions)}
             <NavItem>
-              <NavLink href="/bargain-results">Results</NavLink>
+              <NavLink href="/results">Results</NavLink>
             </NavItem>
           </Nav>
           <NavbarText>v1.0</NavbarText>
