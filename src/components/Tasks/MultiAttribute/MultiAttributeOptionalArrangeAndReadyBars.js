@@ -24,20 +24,22 @@ const defaultValue = {
     isCorrectAnswer: false
 }
 
+const initStateValue = {
+    selectedOption: [defaultValue],
+    counter: 0,
+    showMissingResultsIndicator: false,
+    modalOpen: false,
+    visibility: 0,
+    coordinatesImage: { leftX: 0, leftY: 0, y: 0 },
+    imageRating: 0,
+    multiAttributeResults: { p1: [INDEX_HEADER_TOP], p2: [INDEX_HEADER_TOP], p3: [INDEX_HEADER_TOP] },
+    multiAttributeResultsTmp: { p1: [INDEX_HEADER_TOP], p2: [INDEX_HEADER_TOP], p3: [INDEX_HEADER_TOP] }
+}
+
 export default class MultiAttributeOptionalArrangeAndReadyBars extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            selectedOption: [defaultValue],
-            counter: 0,
-            showMissingResultsIndicator: false,
-            modalOpen: false,
-            visibility: 0,
-            coordinatesImage: { leftX: 0, leftY: 0, y: 0 },
-            imageRating: 0,
-            multiAttributeResults: { p1: [INDEX_HEADER_TOP], p2: [INDEX_HEADER_TOP], p3: [INDEX_HEADER_TOP] },
-            multiAttributeResultsTmp: { p1: [INDEX_HEADER_TOP], p2: [INDEX_HEADER_TOP], p3: [INDEX_HEADER_TOP] }
-        }
+        this.state = initStateValue
     }
 
     componentDidMount() {
@@ -68,7 +70,9 @@ export default class MultiAttributeOptionalArrangeAndReadyBars extends React.Com
                     const completedTask = this.controlIfAllOptionsAreSelected()
                     if (completedTask) {
                         if (this.props.data.length === selectedOption.length) {
-                            this.props.action(selectedOption, currentSelectedAnswer);
+                            this.setState(initStateValue, () => {
+                                this.props.action(selectedOption, currentSelectedAnswer)
+                            })
                         } else if (selectedOption.length === (counter + 1)) {
                             selectedOption.push(defaultValue)
 

@@ -23,14 +23,16 @@ const defaultValue = {
     isCorrectAnswer: false
 }
 
+const initStateValue = {
+    selectedOption: [defaultValue],
+    counter: 0,
+    modalOpen: false
+}
+
 export default class MultiAttributeSimple extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            selectedOption: [defaultValue],
-            counter: 0,
-            modalOpen: false
-        }
+        this.state = initStateValue
     }
 
     componentDidMount() {
@@ -56,7 +58,9 @@ export default class MultiAttributeSimple extends React.Component {
 
             if (this.isOptionWasSelectedInThisRound()) {
                 if (this.props.data.length === selectedOption.length) {
-                    this.props.action(selectedOption, currentSelectedAnswer);
+                    this.setState(initStateValue, () => {
+                        this.props.action(selectedOption, currentSelectedAnswer)
+                    })
                 } else if (selectedOption.length === (counter + 1)) {
                     selectedOption.push(defaultValue)
 
