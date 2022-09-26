@@ -19,7 +19,8 @@ const defaultValue = {
     questionID: 0,
     questionNumber: 0,
     selectedAnswer: '\0',
-    isCorrectAnswer: false
+    isCorrectAnswer: false,
+    supportType: 1
 }
 
 const initStateValue = {
@@ -89,6 +90,7 @@ export default class MultiAttributeWithReadyBars extends React.Component {
             questionID: currentAnswer.id,
             questionNumber: counter + 1,
             selectedAnswer: selectedValue,
+            supportType: 1,
             isCorrectAnswer: selectedValue === currentAnswer.correctAnswer.toString(),
         }
 

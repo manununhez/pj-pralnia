@@ -467,7 +467,7 @@ const usergeneraldata = (data, studyParams) => {
                 output.data.questionNumber,
                 output.data.selectedAnswer,
                 output.data.isCorrectAnswer,
-                constant.TEXT_EMPTY,
+                output.data.supportType,
                 constant.TEXT_EMPTY,
                 constant.TEXT_EMPTY,
                 constant.TEXT_EMPTY,
@@ -483,7 +483,7 @@ const usergeneraldata = (data, studyParams) => {
                 output.data.questionNumber,
                 output.data.selectedAnswer,
                 output.data.isCorrectAnswer,
-                constant.TEXT_EMPTY,
+                output.data.supportType,
                 constant.TEXT_EMPTY,
                 constant.TEXT_EMPTY,
                 constant.TEXT_EMPTY,
@@ -499,7 +499,7 @@ const usergeneraldata = (data, studyParams) => {
                 output.data.questionNumber,
                 output.data.selectedAnswer,
                 output.data.isCorrectAnswer,
-                constant.TEXT_EMPTY,
+                output.data.supportType,
                 constant.TEXT_EMPTY,
                 constant.TEXT_EMPTY,
                 constant.TEXT_EMPTY,
@@ -515,7 +515,7 @@ const usergeneraldata = (data, studyParams) => {
                 output.data.questionNumber,
                 output.data.selectedAnswer,
                 output.data.isCorrectAnswer,
-                constant.TEXT_EMPTY,
+                output.data.supportType,
                 constant.TEXT_EMPTY,
                 constant.TEXT_EMPTY,
                 constant.TEXT_EMPTY,
@@ -778,7 +778,8 @@ function userattributes(data) {
             outputAttribute.demo[i].questionID,
             outputAttribute.demo[i].questionNumber,
             outputAttribute.demo[i].selectedAnswer,
-            outputAttribute.demo[i].isCorrectAnswer
+            outputAttribute.demo[i].isCorrectAnswer,
+            outputAttribute.demo[i].supportType
         ]);
     }
 
@@ -789,7 +790,8 @@ function userattributes(data) {
             outputAttribute.task[i].questionID,
             outputAttribute.task[i].questionNumber,
             outputAttribute.task[i].selectedAnswer,
-            outputAttribute.task[i].isCorrectAnswer
+            outputAttribute.task[i].isCorrectAnswer,
+            outputAttribute.task[i].supportType
         ]);
     }
 

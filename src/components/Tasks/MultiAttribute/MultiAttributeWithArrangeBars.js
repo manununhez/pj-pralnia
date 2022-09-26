@@ -26,7 +26,8 @@ const defaultValue = {
     questionID: 0,
     questionNumber: 0,
     selectedAnswer: '\0',
-    isCorrectAnswer: false
+    isCorrectAnswer: false,
+    supportType: 2
 }
 
 const initStateValue = {
@@ -151,6 +152,7 @@ export default class MultiAttributeWithArrangeBars extends React.Component {
             questionID: currentAnswer.id,
             questionNumber: counter + 1,
             selectedAnswer: selectedValue,
+            supportType: 2,
             isCorrectAnswer: selectedValue === currentAnswer.correctAnswer.toString(),
         }
 

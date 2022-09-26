@@ -20,13 +20,15 @@ const defaultValue = {
     questionID: 0,
     questionNumber: 0,
     selectedAnswer: '\0',
-    isCorrectAnswer: false
+    isCorrectAnswer: false,
+    supportType: 0
 }
 
 const initStateValue = {
     selectedOption: [defaultValue],
     counter: 0,
-    modalOpen: false
+    modalOpen: false,
+    supportType: 0
 }
 
 export default class MultiAttributeOptionalReadyBars extends React.Component {
@@ -64,7 +66,7 @@ export default class MultiAttributeOptionalReadyBars extends React.Component {
                 } else if (selectedOption.length === (counter + 1)) {
                     selectedOption.push(defaultValue)
 
-                    this.setState({ counter: (counter + 1), modalOpen: false, selectedOption: selectedOption }, () => {
+                    this.setState({ counter: (counter + 1), modalOpen: false, supportType: 0, selectedOption: selectedOption }, () => {
                         this.props.action(selectedOption, currentSelectedAnswer)
                     })
                 }
@@ -80,7 +82,7 @@ export default class MultiAttributeOptionalReadyBars extends React.Component {
     }
 
     optionClicked = (evt) => {
-        const { selectedOption, counter } = this.state
+        const { selectedOption, counter, supportType } = this.state
         const currentAnswer = this.props.data[counter]
 
         let selectedValue = evt.target.value
@@ -90,6 +92,7 @@ export default class MultiAttributeOptionalReadyBars extends React.Component {
             questionID: currentAnswer.id,
             questionNumber: counter + 1,
             selectedAnswer: selectedValue,
+            supportType: supportType,
             isCorrectAnswer: selectedValue === currentAnswer.correctAnswer.toString(),
         }
 
@@ -100,8 +103,10 @@ export default class MultiAttributeOptionalReadyBars extends React.Component {
     }
 
     _stackDisplay() {
-        document.getElementById("cardStackVisual").style.display = "";
-        document.getElementById("btnShowStack").style.display = "none";
+        this.setState({ supportType: 1 }, () => {
+            document.getElementById("cardStackVisual").style.display = "";
+            document.getElementById("btnShowStack").style.display = "none";
+        })
     }
 
     isOptionWasSelectedInThisRound = () => {
