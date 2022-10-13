@@ -5,7 +5,7 @@ import RateImage from './RateImage';
 
 import "../style.css"
 
-import { Card, Container, Row, Col, Table, Modal, ModalHeader, Button } from "reactstrap";
+import { Card, Container, Row, Table, Modal, ModalHeader, Button } from "reactstrap";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faSmile, faFrown } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -25,7 +25,7 @@ const defaultValue = {
     supportType: 0
 }
 
-export default class MultiAttributeOptionalArrangeAndReadyBars extends React.Component {
+export default class MultiAttributeRandomOptionalArrangeAndReadyBars extends React.Component {
     constructor(props) {
         super(props);
         this.state = this.initStateValue()
@@ -50,6 +50,7 @@ export default class MultiAttributeOptionalArrangeAndReadyBars extends React.Com
     initStateValue = () => {
         let selectedOption = []
         selectedOption.push(defaultValue)
+
         return {
             selectedOption: selectedOption,
             counter: 0,
@@ -70,7 +71,9 @@ export default class MultiAttributeOptionalArrangeAndReadyBars extends React.Com
             const currentSelectedAnswer = selectedOption[counter]
 
             if (this.isOptionWasSelectedInThisRound()) {
-                if (this.optionalArrangeButtonWasPressed()) { //Arranged bars shown AND optional button was pressed
+                if (this.readyBarsShown()) {
+                    this.simplyHandleKeyDownEvent()
+                } else if (this.optionalArrangeButtonWasPressed()) { //Arranged bars shown AND optional button was pressed
                     const completedTask = this.controlIfAllOptionsAreSelected()
                     if (completedTask) {
                         if (this.props.data.length === selectedOption.length) {
@@ -88,7 +91,7 @@ export default class MultiAttributeOptionalArrangeAndReadyBars extends React.Com
                                 visibility: 0,
                                 coordinatesImage: { leftX: 0, leftY: 0, y: 0 },
                                 imageRating: 0,
-                                supportType: 0,
+                                supportType: this.readyBarsShown() ? 1 : 2,
                                 multiAttributeResults: { p1: [INDEX_HEADER_TOP], p2: [INDEX_HEADER_TOP], p3: [INDEX_HEADER_TOP] }
                             }, () => {
                                 this.props.action(selectedOption, currentSelectedAnswer)
@@ -157,7 +160,11 @@ export default class MultiAttributeOptionalArrangeAndReadyBars extends React.Com
     modalToggle = () => {
         const { selectedOption } = this.state
 
-        if (this.optionalArrangeButtonWasPressed()) {
+        if (this.readyBarsShown()) {
+            this.setState({
+                modalOpen: !this.state.modalOpen
+            })
+        } else if (this.optionalArrangeButtonWasPressed()) {
             const completedTask = this.controlIfAllOptionsAreSelected()
 
             if (completedTask) {
@@ -274,6 +281,11 @@ export default class MultiAttributeOptionalArrangeAndReadyBars extends React.Com
         })
     }
 
+    readyBarsShown = () => {
+        const { counter } = this.state
+        return (counter === 0 || counter === 1 || counter === 4 || counter === 6 || counter === 8 || counter === 9 || counter === 13 || counter === 14)
+    }
+
     render() {
         const { counter, selectedOption, modalOpen, visibility, imageRating, coordinatesImage,
             multiAttributeResults, showMissingResultsIndicator, supportType } = this.state
@@ -281,7 +293,7 @@ export default class MultiAttributeOptionalArrangeAndReadyBars extends React.Com
         const showFeedback = data.showFeedback
         const showFeedbackCorrectAnswer = this.isOptionWasSelectedInThisRound() ? selectedOption[counter].isCorrectAnswer : false
         const selectedValue = this.isOptionWasSelectedInThisRound() ? selectedOption[counter].selectedAnswer : false
-        const completedTask = this.optionalArrangeButtonWasPressed() ? this.controlIfAllOptionsAreSelected() : true
+        const completedTask = this.readyBarsShown() ? true : (this.optionalArrangeButtonWasPressed() ? this.controlIfAllOptionsAreSelected() : true)
 
         return (
             <Container key={"KEY_" + counter}>
@@ -294,36 +306,38 @@ export default class MultiAttributeOptionalArrangeAndReadyBars extends React.Com
                         <div>{getRatingStarBarTable(data)}</div>
                     </Card>
                     <Card body style={{ marginTop: "20px" }}>
-                        <div>{getTable(supportType, selectedValue, data, this.optionClicked,
+                        <div>{getTable(this.readyBarsShown(), selectedValue, data, this.optionClicked,
                             this.onDoubleClickImage, showMissingResultsIndicator, multiAttributeResults)}</div>
-                        <Row className="justify-content-center">
-                            <Button color="info" id="btnShowStack" style={{ width: "fit-content", alignSelf: "center", marginRight: "10px" }}
-                                onClick={() => this._stackDisplay()}>Gotowe słupki</Button>
-                            <Button color="info" id="btnShowArrangeStack" style={{ width: "fit-content", alignSelf: "center" }}
-                                onClick={() => this._arrangeStackDisplay()}>Sam robię słupki</Button></Row>
+
+                        {/* {this.readyBarsShown()
+                            ?
+                            (<Button color="info" id="btnShowStack" style={{ width: "fit-content", alignSelf: "center" }}
+                                onClick={() => this._stackDisplay()}>Gotowe słupki</Button>)
+                            :
+                            (<Button color="info" id="btnShowArrangeStack" style={{ width: "fit-content", alignSelf: "center" }}
+                                onClick={() => this._arrangeStackDisplay()}>Sam robię słupki</Button>)} */}
 
                     </Card>
-                    <Card id="cardStackVisual" body style={{ marginTop: "20px", display: 'none' }}>
-                        <div>{getTableVisualization(data)}</div>
-                    </Card>
-                    <Card id="cardArrangeStack" body style={{ marginTop: "20px", display: 'none' }}>
-                        <DemoContainer action={this.multiAttributeResultsHandler} currentResult={multiAttributeResults} />
-                    </Card>
+                    {this.readyBarsShown() ?
+                        <Card id="cardStackVisual" body style={{ marginTop: "20px" }}>
+                            <div>{getTableVisualization(data)}</div>
+                        </Card> :
+                        <Card id="cardArrangeStack" body style={{ marginTop: "20px" }}>
+                            <DemoContainer action={this.multiAttributeResultsHandler} currentResult={multiAttributeResults} />
+                        </Card>}
                 </Row>
-                {
-                    supportType == 2
-                        ?
-                        <RateImage
-                            image={ImageMapperRating(imageRating)}
-                            visibility={visibility}
-                            x1={coordinatesImage.leftX}
-                            x2={coordinatesImage.leftX + 300}
-                            y1={coordinatesImage.leftY}
-                            y2={coordinatesImage.y}
-                            style={{ position: "absolute", top: '0px', left: '0px' }}
-                            action={this.onAnimationRateImageEnd} /> : <></>
-                }
-            </Container >
+                {this.readyBarsShown() ? <></>
+                    :
+                    <RateImage
+                        image={ImageMapperRating(imageRating)}
+                        visibility={visibility}
+                        x1={coordinatesImage.leftX}
+                        x2={coordinatesImage.leftX + 300}
+                        y1={coordinatesImage.leftY}
+                        y2={coordinatesImage.y}
+                        style={{ position: "absolute", top: '0px', left: '0px' }}
+                        action={this.onAnimationRateImageEnd} />}
+            </Container>
         );
     }
 }
@@ -504,7 +518,7 @@ function getModalFeedback(showFeedback, showFeedbackCorrectAnswer) {
  * @param {*} multiAttributeResults 
  * @returns 
  */
-function getTable(supportType, selectedValue, data, onClick, onDoubleClick, showMissingResultsIndicator, multiAttributeResults) {
+function getTable(readyTable, selectedValue, data, onClick, onDoubleClick, showMissingResultsIndicator, multiAttributeResults) {
     return (
         <Table responsive style={{ textAlign: 'center' }}>
             <thead>
@@ -533,7 +547,7 @@ function getTable(supportType, selectedValue, data, onClick, onDoubleClick, show
                 </tr>
             </thead>
             <tbody>
-                {(supportType == 0 || supportType == 1) ? getSimpleTableBody(data) : (supportType == 2 ? getTableBody(data, onDoubleClick, showMissingResultsIndicator, multiAttributeResults) : <></>)}
+                {readyTable ? getSimpleTableBody(data) : getTableBody(data, onDoubleClick, showMissingResultsIndicator, multiAttributeResults)}
             </tbody>
         </Table>
     );

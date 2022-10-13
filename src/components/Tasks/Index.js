@@ -41,6 +41,7 @@ import MultiAttributeOptionalReadyBars from "./MultiAttribute/MultiAttributeOpti
 import MultiAttributeSimple from "./MultiAttribute/MultiAttributeSimple";
 import MultiAttributeWithArrangeBars from "./MultiAttribute/MultiAttributeWithArrangeBars";
 import MultiAttributeOptionalArrangeAndReadyBars from "./MultiAttribute/MultiAttributeOptionalArrangeAndReadyBars";
+import MultiAttributeRandomOptionalArrangeAndReadyBars from "./MultiAttribute/MultiAttributeRandomOptionalArrangeAndReadyBars"
 
 const DEBUG = (process.env.REACT_APP_DEBUG_LOG === "true") ? true : false;
 const PROLIFIC_REDIRECT_REJECT = process.env.REACT_APP_PROLIFIC_REDIRECT_REJECT;
@@ -1845,7 +1846,7 @@ function changePages(state, context) {
         />;
     } else if (screen === constant.PRALNIA_TASK_CONDITIONAL2_1_SCREEN) {
         //TODO complete first task sequence
-        return <MultiAttributeWithReadyBars
+        return <MultiAttributeRandomOptionalArrangeAndReadyBars
             action={context.multiAttributeConditional21Handler}
             data={inputAttributes.task.slice(0, 16)}
             text={outputFormData.sex === constant.MALE_VALUE ? constant.PRALNIA_TASK_TITLE_M : constant.PRALNIA_TASK_TITLE_F} />;

@@ -30,22 +30,10 @@ const defaultValue = {
     supportType: 2
 }
 
-const initStateValue = {
-    selectedOption: [defaultValue],
-    counter: 0,
-    showMissingResultsIndicator: false,
-    modalOpen: false,
-    visibility: 0,
-    coordinatesImage: { leftX: 0, leftY: 0, y: 0 },
-    imageRating: 0,
-    multiAttributeResults: { p1: [INDEX_HEADER_TOP], p2: [INDEX_HEADER_TOP], p3: [INDEX_HEADER_TOP] },
-    multiAttributeResultsTmp: { p1: [INDEX_HEADER_TOP], p2: [INDEX_HEADER_TOP], p3: [INDEX_HEADER_TOP] }
-}
-
 export default class MultiAttributeWithArrangeBars extends React.Component {
     constructor(props) {
         super(props);
-        this.state = initStateValue
+        this.state = this.initStateValue()
     }
 
     componentDidMount() {
@@ -64,6 +52,22 @@ export default class MultiAttributeWithArrangeBars extends React.Component {
         document.removeEventListener(EVENT_KEY_DOWN, this.handleKeyDownEvent, false);
     }
 
+    initStateValue = () => {
+        let selectedOption = []
+        selectedOption.push(defaultValue)
+        return {
+            selectedOption: [defaultValue],
+            counter: 0,
+            showMissingResultsIndicator: false,
+            modalOpen: false,
+            visibility: 0,
+            coordinatesImage: { leftX: 0, leftY: 0, y: 0 },
+            imageRating: 0,
+            multiAttributeResults: { p1: [INDEX_HEADER_TOP], p2: [INDEX_HEADER_TOP], p3: [INDEX_HEADER_TOP] },
+            multiAttributeResultsTmp: { p1: [INDEX_HEADER_TOP], p2: [INDEX_HEADER_TOP], p3: [INDEX_HEADER_TOP] }
+        }
+    }
+
     handleKeyDownEvent = (event) => {
         if (event.keyCode === SPACE_KEY_CODE) {
             const { selectedOption, counter } = this.state
@@ -73,7 +77,7 @@ export default class MultiAttributeWithArrangeBars extends React.Component {
             if (this.isOptionWasSelectedInThisRound()) {
                 if (completedTask) {
                     if (this.props.data.length === selectedOption.length) {
-                        this.setState(initStateValue, () => {
+                        this.setState(this.initStateValue(), () => {
                             this.props.action(selectedOption, currentSelectedAnswer);
                         })
                     } else if (selectedOption.length === (counter + 1)) {

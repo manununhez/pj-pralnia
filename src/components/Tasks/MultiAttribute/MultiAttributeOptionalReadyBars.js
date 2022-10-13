@@ -24,17 +24,10 @@ const defaultValue = {
     supportType: 0
 }
 
-const initStateValue = {
-    selectedOption: [defaultValue],
-    counter: 0,
-    modalOpen: false,
-    supportType: 0
-}
-
 export default class MultiAttributeOptionalReadyBars extends React.Component {
     constructor(props) {
         super(props);
-        this.state = initStateValue
+        this.state = this.initStateValue()
     }
 
     componentDidMount() {
@@ -53,6 +46,18 @@ export default class MultiAttributeOptionalReadyBars extends React.Component {
         document.removeEventListener(EVENT_KEY_DOWN, this.handleKeyDownEvent, false);
     }
 
+    initStateValue = () => {
+        let selectedOption = []
+        selectedOption.push(defaultValue)
+
+        return {
+            selectedOption: selectedOption,
+            counter: 0,
+            modalOpen: false,
+            supportType: 0
+        }
+    }
+
     handleKeyDownEvent = (event) => {
         if (event.keyCode === SPACE_KEY_CODE) {
             const { selectedOption, counter } = this.state
@@ -60,7 +65,7 @@ export default class MultiAttributeOptionalReadyBars extends React.Component {
 
             if (this.isOptionWasSelectedInThisRound()) {
                 if (this.props.data.length === selectedOption.length) {
-                    this.setState(initStateValue, () => {
+                    this.setState(this.initStateValue(), () => {
                         this.props.action(selectedOption, currentSelectedAnswer)
                     })
                 } else if (selectedOption.length === (counter + 1)) {
