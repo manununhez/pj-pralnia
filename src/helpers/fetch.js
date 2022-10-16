@@ -15,11 +15,11 @@ const save_userlogtime_url = 'userlogtime'
 const save_usegeneraldata_url = 'usergeneraldata'
 const save_bargain_url = 'userbargain'
 const save_attributes_url = 'userattribute'
-const save_ratings_url = 'userrating'
-const save_preferences_url = 'userpreference'
-const save_rating_preferences_url = 'userratingpreference'
-const save_brands_url = 'userbrand'
-const save_input_url = 'userinput'
+// const save_ratings_url = 'userrating'
+// const save_preferences_url = 'userpreference'
+// const save_rating_preferences_url = 'userratingpreference'
+// const save_brands_url = 'userbrand'
+// const save_input_url = 'userinput'
 
 async function request(url, params, method = 'GET') {
 
@@ -334,50 +334,50 @@ export function saveAttributes(data, callback) {
     save(save_attributes_url, userattributes(data), callback)
 }
 
-/**
- * 
- * @param {*} data 
- * @param {*} callback 
- */
-export function saveRatings(data, callback) {
-    save(save_ratings_url, userratings(data), callback)
-}
+// /**
+//  * 
+//  * @param {*} data 
+//  * @param {*} callback 
+//  */
+// export function saveRatings(data, callback) {
+//     save(save_ratings_url, userratings(data), callback)
+// }
 
-/**
- * 
- * @param {*} data 
- * @param {*} callback 
- */
-export function savePreferences(data, callback) {
-    save(save_preferences_url, userpreferences(data), callback)
-}
+// /**
+//  * 
+//  * @param {*} data 
+//  * @param {*} callback 
+//  */
+// export function savePreferences(data, callback) {
+//     save(save_preferences_url, userpreferences(data), callback)
+// }
 
-/**
- * 
- * @param {*} data 
- * @param {*} callback 
- */
-export function saveRatingPreferences(data, callback) {
-    save(save_rating_preferences_url, userratingpreferences(data), callback)
-}
+// /**
+//  * 
+//  * @param {*} data 
+//  * @param {*} callback 
+//  */
+// export function saveRatingPreferences(data, callback) {
+//     save(save_rating_preferences_url, userratingpreferences(data), callback)
+// }
 
-/**
- * 
- * @param {*} data 
- * @param {*} callback 
- */
-export function saveBrands(data, callback) {
-    save(save_brands_url, userbrands(data), callback)
-}
+// /**
+//  * 
+//  * @param {*} data 
+//  * @param {*} callback 
+//  */
+// export function saveBrands(data, callback) {
+//     save(save_brands_url, userbrands(data), callback)
+// }
 
-/**
- * 
- * @param {*} data 
- * @param {*} callback 
- */
-export function saveInput(data, callback) {
-    save(save_input_url, userinput(data), callback)
-}
+// /**
+//  * 
+//  * @param {*} data 
+//  * @param {*} callback 
+//  */
+// export function saveInput(data, callback) {
+//     save(save_input_url, userinput(data), callback)
+// }
 
 /**
  * Helpers to format the data in the correct outputvalue
@@ -562,95 +562,95 @@ const usergeneraldata = (data, studyParams) => {
             });
 
             result = result.concat(bargains);
-        } else if (output.task === constant.RATING_PREFERENCE_TASK_SCREEN) {
-            for (let i = 0; i < constant.ATTRIBUTE_FOURTH_TASK.data.id.length; i++) {
-                result.push([
-                    output.userID,
-                    output.task,
-                    constant.ATTRIBUTE_FOURTH_TASK.data.id[i],
-                    constant.ATTRIBUTE_FOURTH_TASK.data.text[i],
-                    output.data[i],
-                    constant.TEXT_EMPTY,
-                    constant.TEXT_EMPTY,
-                    constant.TEXT_EMPTY,
-                    constant.TEXT_EMPTY,
-                    constant.TEXT_EMPTY,
-                    constant.TEXT_EMPTY,
-                    constant.TEXT_EMPTY,
-                    constant.TEXT_EMPTY
-                ]);
-            }
-        } else if (output.task === constant.PREFERENCE_TASK_SCREEN) {
-            for (let i = 0; i < constant.ATTRIBUTE.data.id.length; i++) {
-                result.push([
-                    output.userID,
-                    output.task,
-                    constant.ATTRIBUTE.data.id[i],
-                    constant.ATTRIBUTE.data.text[i],
-                    output.data[i],
-                    constant.TEXT_EMPTY,
-                    constant.TEXT_EMPTY,
-                    constant.TEXT_EMPTY,
-                    constant.TEXT_EMPTY,
-                    constant.TEXT_EMPTY,
-                    constant.TEXT_EMPTY,
-                    constant.TEXT_EMPTY,
-                    constant.TEXT_EMPTY
-                ]);
-            }
-        } else if (output.task === constant.RATING_TASK_SCREEN) {
-            for (let i = 0; i < constant.ATTRIBUTE_CUSTOM.data.id.length; i++) {
-                result.push([
-                    output.userID,
-                    output.task,
-                    constant.ATTRIBUTE_CUSTOM.data.id[i],
-                    constant.ATTRIBUTE_CUSTOM.data.text[i],
-                    output.data[i],
-                    constant.TEXT_EMPTY,
-                    constant.TEXT_EMPTY,
-                    constant.TEXT_EMPTY,
-                    constant.TEXT_EMPTY,
-                    constant.TEXT_EMPTY,
-                    constant.TEXT_EMPTY,
-                    constant.TEXT_EMPTY,
-                    constant.TEXT_EMPTY
-                ]);
-            }
-        }
-        else if (output.task === constant.BRAND_TASK_SCREEN) {
-            output.data.forEach((brand) => {
-                result.push([
-                    output.userID,
-                    output.task,
-                    brand,
-                    constant.TEXT_EMPTY,
-                    constant.TEXT_EMPTY,
-                    constant.TEXT_EMPTY,
-                    constant.TEXT_EMPTY,
-                    constant.TEXT_EMPTY,
-                    constant.TEXT_EMPTY,
-                    constant.TEXT_EMPTY,
-                    constant.TEXT_EMPTY,
-                    constant.TEXT_EMPTY,
-                    constant.TEXT_EMPTY
-                ])
-            });
-        } else if (output.task === constant.INPUT_TASK_SCREEN) {
-            result.push([
-                output.userID,
-                output.task,
-                output.data,
-                constant.TEXT_EMPTY,
-                constant.TEXT_EMPTY,
-                constant.TEXT_EMPTY,
-                constant.TEXT_EMPTY,
-                constant.TEXT_EMPTY,
-                constant.TEXT_EMPTY,
-                constant.TEXT_EMPTY,
-                constant.TEXT_EMPTY,
-                constant.TEXT_EMPTY,
-                constant.TEXT_EMPTY
-            ])
+            // } else if (output.task === constant.RATING_PREFERENCE_TASK_SCREEN) {
+            //     for (let i = 0; i < constant.ATTRIBUTE_FOURTH_TASK.data.id.length; i++) {
+            //         result.push([
+            //             output.userID,
+            //             output.task,
+            //             constant.ATTRIBUTE_FOURTH_TASK.data.id[i],
+            //             constant.ATTRIBUTE_FOURTH_TASK.data.text[i],
+            //             output.data[i],
+            //             constant.TEXT_EMPTY,
+            //             constant.TEXT_EMPTY,
+            //             constant.TEXT_EMPTY,
+            //             constant.TEXT_EMPTY,
+            //             constant.TEXT_EMPTY,
+            //             constant.TEXT_EMPTY,
+            //             constant.TEXT_EMPTY,
+            //             constant.TEXT_EMPTY
+            //         ]);
+            //     }
+            // } else if (output.task === constant.PREFERENCE_TASK_SCREEN) {
+            //     for (let i = 0; i < constant.ATTRIBUTE.data.id.length; i++) {
+            //         result.push([
+            //             output.userID,
+            //             output.task,
+            //             constant.ATTRIBUTE.data.id[i],
+            //             constant.ATTRIBUTE.data.text[i],
+            //             output.data[i],
+            //             constant.TEXT_EMPTY,
+            //             constant.TEXT_EMPTY,
+            //             constant.TEXT_EMPTY,
+            //             constant.TEXT_EMPTY,
+            //             constant.TEXT_EMPTY,
+            //             constant.TEXT_EMPTY,
+            //             constant.TEXT_EMPTY,
+            //             constant.TEXT_EMPTY
+            //         ]);
+            //     }
+            // } else if (output.task === constant.RATING_TASK_SCREEN) {
+            //     for (let i = 0; i < constant.ATTRIBUTE_CUSTOM.data.id.length; i++) {
+            //         result.push([
+            //             output.userID,
+            //             output.task,
+            //             constant.ATTRIBUTE_CUSTOM.data.id[i],
+            //             constant.ATTRIBUTE_CUSTOM.data.text[i],
+            //             output.data[i],
+            //             constant.TEXT_EMPTY,
+            //             constant.TEXT_EMPTY,
+            //             constant.TEXT_EMPTY,
+            //             constant.TEXT_EMPTY,
+            //             constant.TEXT_EMPTY,
+            //             constant.TEXT_EMPTY,
+            //             constant.TEXT_EMPTY,
+            //             constant.TEXT_EMPTY
+            //         ]);
+            //     }
+            // }
+            // else if (output.task === constant.BRAND_TASK_SCREEN) {
+            //     output.data.forEach((brand) => {
+            //         result.push([
+            //             output.userID,
+            //             output.task,
+            //             brand,
+            //             constant.TEXT_EMPTY,
+            //             constant.TEXT_EMPTY,
+            //             constant.TEXT_EMPTY,
+            //             constant.TEXT_EMPTY,
+            //             constant.TEXT_EMPTY,
+            //             constant.TEXT_EMPTY,
+            //             constant.TEXT_EMPTY,
+            //             constant.TEXT_EMPTY,
+            //             constant.TEXT_EMPTY,
+            //             constant.TEXT_EMPTY
+            //         ])
+            //     });
+            // } else if (output.task === constant.INPUT_TASK_SCREEN) {
+            //     result.push([
+            //         output.userID,
+            //         output.task,
+            //         output.data,
+            //         constant.TEXT_EMPTY,
+            //         constant.TEXT_EMPTY,
+            //         constant.TEXT_EMPTY,
+            //         constant.TEXT_EMPTY,
+            //         constant.TEXT_EMPTY,
+            //         constant.TEXT_EMPTY,
+            //         constant.TEXT_EMPTY,
+            //         constant.TEXT_EMPTY,
+            //         constant.TEXT_EMPTY,
+            //         constant.TEXT_EMPTY
+            //     ])
         }
     }
 
@@ -798,74 +798,74 @@ function userattributes(data) {
     return result;
 }
 
-function userratings(data) {
-    const { userID, outputRatings } = data;
+// function userratings(data) {
+//     const { userID, outputRatings } = data;
 
-    let result = []
+//     let result = []
 
-    for (let i = 0; i < constant.ATTRIBUTE_CUSTOM.data.id.length; i++) {
-        result.push([
-            userID,
-            constant.ATTRIBUTE_CUSTOM.data.id[i],
-            constant.ATTRIBUTE_CUSTOM.data.text[i],
-            outputRatings[i]
-        ]);
-    }
+//     for (let i = 0; i < constant.ATTRIBUTE_CUSTOM.data.id.length; i++) {
+//         result.push([
+//             userID,
+//             constant.ATTRIBUTE_CUSTOM.data.id[i],
+//             constant.ATTRIBUTE_CUSTOM.data.text[i],
+//             outputRatings[i]
+//         ]);
+//     }
 
-    return result;
-}
+//     return result;
+// }
 
-function userpreferences(data) {
-    const { userID, outputPreferences } = data;
+// function userpreferences(data) {
+//     const { userID, outputPreferences } = data;
 
-    let result = []
+//     let result = []
 
-    for (let i = 0; i < constant.ATTRIBUTE.data.id.length; i++) {
-        result.push([
-            userID,
-            constant.ATTRIBUTE.data.id[i],
-            constant.ATTRIBUTE.data.text[i],
-            outputPreferences[i]
-        ]);
-    }
+//     for (let i = 0; i < constant.ATTRIBUTE.data.id.length; i++) {
+//         result.push([
+//             userID,
+//             constant.ATTRIBUTE.data.id[i],
+//             constant.ATTRIBUTE.data.text[i],
+//             outputPreferences[i]
+//         ]);
+//     }
 
-    return result;
-}
+//     return result;
+// }
 
-function userinput(data) {
-    const { userID, outputInputTask } = data;
-    let result = []
-    result.push([userID, outputInputTask])
+// function userinput(data) {
+//     const { userID, outputInputTask } = data;
+//     let result = []
+//     result.push([userID, outputInputTask])
 
-    return result;
-}
+//     return result;
+// }
 
-function userratingpreferences(data) {
-    const { userID, outputRatingPreferences } = data;
+// function userratingpreferences(data) {
+//     const { userID, outputRatingPreferences } = data;
 
-    let result = []
+//     let result = []
 
-    for (let i = 0; i < constant.ATTRIBUTE_FOURTH_TASK.data.id.length; i++) {
-        result.push([
-            userID,
-            constant.ATTRIBUTE_FOURTH_TASK.data.id[i],
-            constant.ATTRIBUTE_FOURTH_TASK.data.text[i],
-            outputRatingPreferences[i]
-        ]);
-    }
+//     for (let i = 0; i < constant.ATTRIBUTE_FOURTH_TASK.data.id.length; i++) {
+//         result.push([
+//             userID,
+//             constant.ATTRIBUTE_FOURTH_TASK.data.id[i],
+//             constant.ATTRIBUTE_FOURTH_TASK.data.text[i],
+//             outputRatingPreferences[i]
+//         ]);
+//     }
 
-    return result;
-}
+//     return result;
+// }
 
-function userbrands(data) {
-    const { userID, outputBrands } = data;
+// function userbrands(data) {
+//     const { userID, outputBrands } = data;
 
-    let result = outputBrands.map((output) => {
-        return [
-            userID,
-            output
-        ];
-    });
+//     let result = outputBrands.map((output) => {
+//         return [
+//             userID,
+//             output
+//         ];
+//     });
 
-    return result;
-}
+//     return result;
+// }

@@ -234,11 +234,11 @@ export const PRALNIA_TASK_CONDITIONAL2_1_SCREEN = "PralniaTaskConditional2-1";
 export const PRALNIA_TASK_CONDITIONAL2_2_SCREEN = "PralniaTaskConditional2-2";
 export const PRALNIA_TASK_CONDITIONAL2_3_SCREEN = "PralniaTaskConditional2-3";
 
-export const RATING_TASK_SCREEN = "RatingTask";
-export const BRAND_TASK_SCREEN = "BrandTask";
-export const INPUT_TASK_SCREEN = "InputTask";
-export const PREFERENCE_TASK_SCREEN = "PreferenceTask";
-export const RATING_PREFERENCE_TASK_SCREEN = "RatingPreferenceTask";
+// export const RATING_TASK_SCREEN = "RatingTask";
+// export const BRAND_TASK_SCREEN = "BrandTask";
+// export const INPUT_TASK_SCREEN = "InputTask";
+// export const PREFERENCE_TASK_SCREEN = "PreferenceTask";
+// export const RATING_PREFERENCE_TASK_SCREEN = "RatingPreferenceTask";
 export const REWARD_TASK_SCREEN = "RewardTask";
 //CSV input stores
 export const STORES_SHORT_TYPE = "Stores-short";

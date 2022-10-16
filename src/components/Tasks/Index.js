@@ -30,11 +30,11 @@ import VisualPatternDemoTask from "./VisualPatternDemoTask";
 import PSForm from "./PSForm";
 import BargainTask from "./BargainTask/BargainTask";
 import BargainDemoTask from "./BargainTask/BargainDemoTask";
-import RatingTask from "./RatingTask";
-import BrandTask from "./BrandTask";
-import InputTask from "./InputTask";
-import PreferenceTask from "./PreferenceTask";
-import RatingPreferenceTask from "./RatingPreferenceTask";
+// import RatingTask from "./RatingTask";
+// import BrandTask from "./BrandTask";
+// import InputTask from "./InputTask";
+// import PreferenceTask from "./PreferenceTask";
+// import RatingPreferenceTask from "./RatingPreferenceTask";
 import RewardScreen from "./RewardScreen";
 import MultiAttributeWithReadyBars from "./MultiAttribute/MultiAttributeWithReadyBars";
 import MultiAttributeOptionalReadyBars from "./MultiAttribute/MultiAttributeOptionalReadyBars";
@@ -460,7 +460,9 @@ class Index extends Component {
         if (data) {
             if (DEBUG) console.log("SaveUserAttributes");
 
-            request.saveRatings(this.state, this._onSaveUserRatingsCallBack.bind(this))
+            // request.saveRatings(this.state, this._onSaveUserRatingsCallBack.bind(this))
+            //redirect to PROLIFIC
+            window.location.replace(PROLIFIC_REDIRECT_ACCEPTED);
 
         } else {
             if (DEBUG) console.log("Error saving user Attributes")
@@ -468,96 +470,96 @@ class Index extends Component {
         }
     }
 
-    /**
-     * 
-     * @param {*} data 
-     * @param {*} error 
-     */
-    _onSaveUserRatingsCallBack(data, error) {
-        if (DEBUG) console.log(data);
-        if (data) {
-            if (DEBUG) console.log("SaveUserRatings");
+    //     /**
+    //      * 
+    //      * @param {*} data 
+    //      * @param {*} error 
+    //      */
+    //     _onSaveUserRatingsCallBack(data, error) {
+    //         if (DEBUG) console.log(data);
+    //         if (data) {
+    //             if (DEBUG) console.log("SaveUserRatings");
 
-            request.savePreferences(this.state, this._onSaveUserPreferencesCallBack.bind(this))
+    //             request.savePreferences(this.state, this._onSaveUserPreferencesCallBack.bind(this))
 
-        } else {
-            if (DEBUG) console.log("Error saving User Ratings")
-            this.setState({ loading: false });
-        }
-    }
+    //         } else {
+    //             if (DEBUG) console.log("Error saving User Ratings")
+    //             this.setState({ loading: false });
+    //         }
+    //     }
 
-    /**
-     * 
-     * @param {*} data 
-     * @param {*} error 
-     */
-    _onSaveUserPreferencesCallBack(data, error) {
-        if (DEBUG) console.log(data);
-        if (data) {
-            if (DEBUG) console.log("SaveUserPreferences");
+    //     /**
+    //      * 
+    //      * @param {*} data 
+    //      * @param {*} error 
+    //      */
+    //     _onSaveUserPreferencesCallBack(data, error) {
+    //         if (DEBUG) console.log(data);
+    //         if (data) {
+    //             if (DEBUG) console.log("SaveUserPreferences");
 
-            request.saveRatingPreferences(this.state, this._onSaveUserRatingPreferencesCallBack.bind(this))
+    //             request.saveRatingPreferences(this.state, this._onSaveUserRatingPreferencesCallBack.bind(this))
 
-        } else {
-            if (DEBUG) console.log("Error saving user Preferences")
-            this.setState({ loading: false });
-        }
-    }
+    //         } else {
+    //             if (DEBUG) console.log("Error saving user Preferences")
+    //             this.setState({ loading: false });
+    //         }
+    //     }
 
-    /**
-     * 
-     * @param {*} data 
-     * @param {*} error 
-     */
-    _onSaveUserRatingPreferencesCallBack(data, error) {
-        if (DEBUG) console.log(data);
-        if (data) {
-            if (DEBUG) console.log("SaveUserRatingPreferences");
+    //     /**
+    //      * 
+    //      * @param {*} data 
+    //      * @param {*} error 
+    //      */
+    //     _onSaveUserRatingPreferencesCallBack(data, error) {
+    //         if (DEBUG) console.log(data);
+    //         if (data) {
+    //             if (DEBUG) console.log("SaveUserRatingPreferences");
 
-            request.saveInput(this.state, this._onSaveUserInputCallBack.bind(this))
+    //             request.saveInput(this.state, this._onSaveUserInputCallBack.bind(this))
 
-        } else {
-            if (DEBUG) console.log("Error saving user RatingPreferences")
-            this.setState({ loading: false });
-        }
-    }
+    //         } else {
+    //             if (DEBUG) console.log("Error saving user RatingPreferences")
+    //             this.setState({ loading: false });
+    //         }
+    //     }
 
-    /**
- * 
- * @param {*} data 
- * @param {*} error 
- */
-    _onSaveUserInputCallBack(data, error) {
-        if (DEBUG) console.log(data);
-        if (data) {
-            if (DEBUG) console.log("SaveUserInput");
+    //     /**
+    //  * 
+    //  * @param {*} data 
+    //  * @param {*} error 
+    //  */
+    //     _onSaveUserInputCallBack(data, error) {
+    //         if (DEBUG) console.log(data);
+    //         if (data) {
+    //             if (DEBUG) console.log("SaveUserInput");
 
-            request.saveBrands(this.state, this._onSaveUserBrandsCallBack.bind(this))
+    //             request.saveBrands(this.state, this._onSaveUserBrandsCallBack.bind(this))
 
-        } else {
-            if (DEBUG) console.log("Error saving user Input")
-            this.setState({ loading: false });
-        }
-    }
+    //         } else {
+    //             if (DEBUG) console.log("Error saving user Input")
+    //             this.setState({ loading: false });
+    //         }
+    //     }
 
-    /**
-     * 
-     * @param {*} data 
-     * @param {*} error 
-     */
-    _onSaveUserBrandsCallBack(data, error) {
-        if (DEBUG) console.log(data);
-        if (data) {
-            if (DEBUG) console.log("SaveUserBrands");
+    //     /**
+    //      * 
+    //      * @param {*} data 
+    //      * @param {*} error 
+    //      */
+    //     _onSaveUserBrandsCallBack(data, error) {
+    //         if (DEBUG) console.log(data);
+    //         if (data) {
+    //             if (DEBUG) console.log("SaveUserBrands");
 
-            //redirect to PROLIFIC
-            window.location.replace(PROLIFIC_REDIRECT_ACCEPTED);
+    //             //redirect to PROLIFIC
+    //             window.location.replace(PROLIFIC_REDIRECT_ACCEPTED);
 
-        } else {
-            if (DEBUG) console.log("Error saving UserBrands")
-            this.setState({ loading: false });
-        }
-    }
+    //         } else {
+    //             if (DEBUG) console.log("Error saving UserBrands")
+    //             this.setState({ loading: false });
+    //         }
+    //     }
 
     /**
      * Results from saving user general data
@@ -1203,115 +1205,115 @@ class Index extends Component {
         }
     }
 
-    /**
-     * 
-     * @param {*} selectedRatings 
-     */
-    ratingTaskHandler = (selectedRatings) => {
-        const { generalOutput, userID } = this.state;
+    // /**
+    //  * 
+    //  * @param {*} selectedRatings 
+    //  */
+    // ratingTaskHandler = (selectedRatings) => {
+    //     const { generalOutput, userID } = this.state;
 
-        generalOutput.push({
-            userID: userID,
-            task: constant.RATING_TASK_SCREEN,
-            data: selectedRatings,
-            sync: constant.STATE_NOT_SYNC
-        })
+    //     generalOutput.push({
+    //         userID: userID,
+    //         task: constant.RATING_TASK_SCREEN,
+    //         data: selectedRatings,
+    //         sync: constant.STATE_NOT_SYNC
+    //     })
 
-        this.setState({
-            generalOutput: generalOutput,
-            outputRatings: selectedRatings,
-        }, () => {
-            this._validateToNextPage()
-        })
-    }
+    //     this.setState({
+    //         generalOutput: generalOutput,
+    //         outputRatings: selectedRatings,
+    //     }, () => {
+    //         this._validateToNextPage()
+    //     })
+    // }
 
-    /**
-     * 
-     * @param {*} brand 
-     */
-    brandTaskHandler = (brand) => {
-        const { generalOutput, userID } = this.state;
+    // /**
+    //  * 
+    //  * @param {*} brand 
+    //  */
+    // brandTaskHandler = (brand) => {
+    //     const { generalOutput, userID } = this.state;
 
-        generalOutput.push({
-            userID: userID,
-            task: constant.BRAND_TASK_SCREEN,
-            data: brand,
-            sync: constant.STATE_NOT_SYNC
-        })
+    //     generalOutput.push({
+    //         userID: userID,
+    //         task: constant.BRAND_TASK_SCREEN,
+    //         data: brand,
+    //         sync: constant.STATE_NOT_SYNC
+    //     })
 
-        this.setState({
-            generalOutput: generalOutput,
-            outputBrands: brand,
-        }, () => {
-            this._validateToNextPage()
-        })
-    }
+    //     this.setState({
+    //         generalOutput: generalOutput,
+    //         outputBrands: brand,
+    //     }, () => {
+    //         this._validateToNextPage()
+    //     })
+    // }
 
-    /**
-     * 
-     * @param {*} value 
-     */
-    inputTaskHandler = (value) => {
-        const { generalOutput, userID } = this.state;
+    // /**
+    //  * 
+    //  * @param {*} value 
+    //  */
+    // inputTaskHandler = (value) => {
+    //     const { generalOutput, userID } = this.state;
 
-        generalOutput.push({
-            userID: userID,
-            task: constant.INPUT_TASK_SCREEN,
-            data: value,
-            sync: constant.STATE_NOT_SYNC
-        })
+    //     generalOutput.push({
+    //         userID: userID,
+    //         task: constant.INPUT_TASK_SCREEN,
+    //         data: value,
+    //         sync: constant.STATE_NOT_SYNC
+    //     })
 
-        this.setState({
-            generalOutput: generalOutput,
-            outputInputTask: value,
-        }, () => {
-            this._validateToNextPage()
-        })
-    }
+    //     this.setState({
+    //         generalOutput: generalOutput,
+    //         outputInputTask: value,
+    //     }, () => {
+    //         this._validateToNextPage()
+    //     })
+    // }
 
-    /**
-     * 
-     * @param {*} value 
-     */
-    preferenceTaskHandler = (value) => {
-        const { generalOutput, userID } = this.state;
+    // /**
+    //  * 
+    //  * @param {*} value 
+    //  */
+    // preferenceTaskHandler = (value) => {
+    //     const { generalOutput, userID } = this.state;
 
-        generalOutput.push({
-            userID: userID,
-            task: constant.PREFERENCE_TASK_SCREEN,
-            data: value,
-            sync: constant.STATE_NOT_SYNC
-        })
+    //     generalOutput.push({
+    //         userID: userID,
+    //         task: constant.PREFERENCE_TASK_SCREEN,
+    //         data: value,
+    //         sync: constant.STATE_NOT_SYNC
+    //     })
 
-        this.setState({
-            generalOutput: generalOutput,
-            outputPreferences: value,
-        }, () => {
-            this._validateToNextPage()
-        })
-    }
+    //     this.setState({
+    //         generalOutput: generalOutput,
+    //         outputPreferences: value,
+    //     }, () => {
+    //         this._validateToNextPage()
+    //     })
+    // }
 
-    /**
-     * 
-     * @param {*} value 
-     */
-    ratingPreferenceTaskHandler = (value) => {
-        const { generalOutput, userID } = this.state;
+    // /**
+    //  * 
+    //  * @param {*} value 
+    //  */
+    // ratingPreferenceTaskHandler = (value) => {
+    //     const { generalOutput, userID } = this.state;
 
-        generalOutput.push({
-            userID: userID,
-            task: constant.RATING_PREFERENCE_TASK_SCREEN,
-            data: value,
-            sync: constant.STATE_NOT_SYNC
-        })
+    //     generalOutput.push({
+    //         userID: userID,
+    //         task: constant.RATING_PREFERENCE_TASK_SCREEN,
+    //         data: value,
+    //         sync: constant.STATE_NOT_SYNC
+    //     })
 
-        this.setState({
-            generalOutput: generalOutput,
-            outputRatingPreferences: value,
-        }, () => {
-            this._validateToNextPage()
-        })
-    }
+    //     this.setState({
+    //         generalOutput: generalOutput,
+    //         outputRatingPreferences: value,
+    //     }, () => {
+    //         this._validateToNextPage()
+    //     })
+    // }
 
     /**
      * 
@@ -1470,11 +1472,11 @@ class Index extends Component {
                 screen === constant.PRALNIA_TASK_CONDITIONAL2_2_DEMO_SCREEN ||
                 screen === constant.PRALNIA_TASK_CONDITIONAL2_3_DEMO_SCREEN ||
                 screen === constant.PRALNIA_TASK_CONDITIONAL2_4_DEMO_SCREEN ||
-                screen === constant.RATING_TASK_SCREEN ||
-                screen === constant.BRAND_TASK_SCREEN ||
-                screen === constant.INPUT_TASK_SCREEN ||
-                screen === constant.PREFERENCE_TASK_SCREEN ||
-                screen === constant.RATING_PREFERENCE_TASK_SCREEN ||
+                // screen === constant.RATING_TASK_SCREEN ||
+                // screen === constant.BRAND_TASK_SCREEN ||
+                // screen === constant.INPUT_TASK_SCREEN ||
+                // screen === constant.PREFERENCE_TASK_SCREEN ||
+                // screen === constant.RATING_PREFERENCE_TASK_SCREEN ||
                 screen === constant.REWARD_TASK_SCREEN) {
                 this._goToNextTaskInInputNavigation();
             } else if (screen === constant.USER_FORM_SCREEN) {
@@ -1870,26 +1872,26 @@ function changePages(state, context) {
             action={context.multiAttributeDemoHandler}
             data={inputAttributes.demo}
             text={outputFormData.sex === constant.MALE_VALUE ? constant.PRALNIA_TASK_DEMO_M : constant.PRALNIA_TASK_DEMO_F} />;
-    } else if (screen === constant.RATING_TASK_SCREEN) {
-        return <RatingTask
-            action={context.ratingTaskHandler}
-            text={outputFormData.sex === constant.MALE_VALUE ? constant.RATING_TASK_TITLE_M : constant.RATING_TASK_TITLE_F} />;
-    } else if (screen === constant.BRAND_TASK_SCREEN) {
-        return <BrandTask
-            action={context.brandTaskHandler}
-            text={outputFormData.sex === constant.MALE_VALUE ? constant.BRAND_TASK_TITLE_M : constant.BRAND_TASK_TITLE_F} />;
-    } else if (screen === constant.INPUT_TASK_SCREEN) {
-        return <InputTask
-            action={context.inputTaskHandler}
-            text={outputFormData.sex === constant.MALE_VALUE ? constant.INPUT_TASK_TITLE_M : constant.INPUT_TASK_TITLE_F} />;
-    } else if (screen === constant.PREFERENCE_TASK_SCREEN) {
-        return <PreferenceTask
-            action={context.preferenceTaskHandler}
-            text={outputFormData.sex === constant.MALE_VALUE ? constant.PREFERENCE_TASK_TITLE_M : constant.PREFERENCE_TASK_TITLE_F} />
-    } else if (screen === constant.RATING_PREFERENCE_TASK_SCREEN) {
-        return <RatingPreferenceTask
-            action={context.ratingPreferenceTaskHandler}
-            text={outputFormData.sex === constant.MALE_VALUE ? constant.RATING_PREFERENCE_TASK_TITLE_M : constant.RATING_PREFERENCE_TASK_TITLE_F} />
+        // } else if (screen === constant.RATING_TASK_SCREEN) {
+        //     return <RatingTask
+        //         action={context.ratingTaskHandler}
+        //         text={outputFormData.sex === constant.MALE_VALUE ? constant.RATING_TASK_TITLE_M : constant.RATING_TASK_TITLE_F} />;
+        // } else if (screen === constant.BRAND_TASK_SCREEN) {
+        //     return <BrandTask
+        //         action={context.brandTaskHandler}
+        //         text={outputFormData.sex === constant.MALE_VALUE ? constant.BRAND_TASK_TITLE_M : constant.BRAND_TASK_TITLE_F} />;
+        // } else if (screen === constant.INPUT_TASK_SCREEN) {
+        //     return <InputTask
+        //         action={context.inputTaskHandler}
+        //         text={outputFormData.sex === constant.MALE_VALUE ? constant.INPUT_TASK_TITLE_M : constant.INPUT_TASK_TITLE_F} />;
+        // } else if (screen === constant.PREFERENCE_TASK_SCREEN) {
+        //     return <PreferenceTask
+        //         action={context.preferenceTaskHandler}
+        //         text={outputFormData.sex === constant.MALE_VALUE ? constant.PREFERENCE_TASK_TITLE_M : constant.PREFERENCE_TASK_TITLE_F} />
+        // } else if (screen === constant.RATING_PREFERENCE_TASK_SCREEN) {
+        //     return <RatingPreferenceTask
+        //         action={context.ratingPreferenceTaskHandler}
+        //         text={outputFormData.sex === constant.MALE_VALUE ? constant.RATING_PREFERENCE_TASK_TITLE_M : constant.RATING_PREFERENCE_TASK_TITLE_F} />
     } else if (screen === constant.REWARD_TASK_SCREEN) {
         return <RewardScreen
             data={outputAttribute.task}
