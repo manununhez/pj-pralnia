@@ -20,7 +20,7 @@ const defaultValue = {
     questionNumber: 0,
     selectedAnswer: '\0',
     isCorrectAnswer: false,
-    supportType: 1
+    supportType: 2
 }
 
 export default class MultiAttributeWithReadyBars extends React.Component {
@@ -94,7 +94,7 @@ export default class MultiAttributeWithReadyBars extends React.Component {
             questionID: currentAnswer.id,
             questionNumber: counter + 1,
             selectedAnswer: selectedValue,
-            supportType: 1,
+            supportType: 2,
             isCorrectAnswer: selectedValue === currentAnswer.correctAnswer.toString(),
         }
 

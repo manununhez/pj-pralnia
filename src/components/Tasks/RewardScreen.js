@@ -89,8 +89,8 @@ function parserResults(rewardInfo) {
     if (DEBUG) console.log("result: " + rewardInfo.result)
     if (DEBUG) console.log("Threshold: " + threshold)
 
-    if (isRewardObtained)
-        textBonus = textBonus + REWARD_BONUS_MESSAGE(bonusPoint);
+    // if (isRewardObtained)
+    //     textBonus = textBonus + REWARD_BONUS_MESSAGE(bonusPoint);
 
     return (<div style={{ textAlign: "justify" }}>
         <h2>{textToDisplay}</h2><br />

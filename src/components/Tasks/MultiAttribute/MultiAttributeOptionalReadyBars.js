@@ -21,7 +21,7 @@ const defaultValue = {
     questionNumber: 0,
     selectedAnswer: '\0',
     isCorrectAnswer: false,
-    supportType: 0
+    supportType: 1
 }
 
 export default class MultiAttributeOptionalReadyBars extends React.Component {
@@ -54,7 +54,7 @@ export default class MultiAttributeOptionalReadyBars extends React.Component {
             selectedOption: selectedOption,
             counter: 0,
             modalOpen: false,
-            supportType: 0
+            supportType: 1
         }
     }
 
@@ -71,7 +71,7 @@ export default class MultiAttributeOptionalReadyBars extends React.Component {
                 } else if (selectedOption.length === (counter + 1)) {
                     selectedOption.push(defaultValue)
 
-                    this.setState({ counter: (counter + 1), modalOpen: false, supportType: 0, selectedOption: selectedOption }, () => {
+                    this.setState({ counter: (counter + 1), modalOpen: false, supportType: 1, selectedOption: selectedOption }, () => {
                         this.props.action(selectedOption, currentSelectedAnswer)
                     })
                 }
@@ -108,7 +108,7 @@ export default class MultiAttributeOptionalReadyBars extends React.Component {
     }
 
     _stackDisplay() {
-        this.setState({ supportType: 1 }, () => {
+        this.setState({ supportType: 2 }, () => {
             document.getElementById("cardStackVisual").style.display = "";
             document.getElementById("btnShowStack").style.display = "none";
         })

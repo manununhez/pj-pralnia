@@ -106,10 +106,6 @@ function getTable(users, resultsType) {
           <th className="align-middle" style={{ textAlign: 'center', padding: '7px' }}>Sessions</th>
           <th className="align-middle" style={{ textAlign: 'center', padding: '7px' }}>Timestamp</th>
           <th className="align-middle" style={{ textAlign: 'center', padding: '7px' }}>Attribute results</th>
-          <th className="align-middle" style={{ textAlign: 'center', padding: '7px' }}>Brand results</th>
-          <th className="align-middle" style={{ textAlign: 'center', padding: '7px' }}>Preference results</th>
-          <th className="align-middle" style={{ textAlign: 'center', padding: '7px' }}>Rating results</th>
-          <th className="align-middle" style={{ textAlign: 'center', padding: '7px' }}>Rating preference results</th>
           <th className="align-middle" style={{ textAlign: 'center', padding: '7px' }}>Survey results</th>
           <th className="align-middle" style={{ textAlign: 'center', padding: '7px' }}>Demographic results</th>
           <th className="align-middle" style={{ textAlign: 'center', padding: '7px' }}>Memory task results</th>
@@ -129,10 +125,6 @@ function getTableAllUsers() {
         <tr>
           <th className="align-middle" style={{ textAlign: 'center', padding: '7px' }}></th>
           <th className="align-middle" style={{ textAlign: 'center', padding: '7px' }}>Attribute results</th>
-          <th className="align-middle" style={{ textAlign: 'center', padding: '7px' }}>Brand results</th>
-          <th className="align-middle" style={{ textAlign: 'center', padding: '7px' }}>Preference results</th>
-          <th className="align-middle" style={{ textAlign: 'center', padding: '7px' }}>Rating results</th>
-          <th className="align-middle" style={{ textAlign: 'center', padding: '7px' }}>Rating preference results</th>
           <th className="align-middle" style={{ textAlign: 'center', padding: '7px' }}>Survey results</th>
           <th className="align-middle" style={{ textAlign: 'center', padding: '7px' }}>Demographic results</th>
           <th className="align-middle" style={{ textAlign: 'center', padding: '7px' }}>Memory task results</th>
@@ -153,18 +145,6 @@ function getAllUsersBody(resultsType) {
     </td>
     <td style={{ textAlign: "-moz-center" }}>
       <NavLink href={"https://api.swps-pjatk-experiment.co/v5/attribute-result/" + resultsType}>Download</NavLink>
-    </td>
-    <td style={{ textAlign: "-moz-center" }}>
-      <NavLink href={"https://api.swps-pjatk-experiment.co/v5/brand-result/" + resultsType}>Download</NavLink>
-    </td>
-    <td style={{ textAlign: "-moz-center" }}>
-      <NavLink href={"https://api.swps-pjatk-experiment.co/v5/preference-result/" + resultsType}>Download</NavLink>
-    </td>
-    <td style={{ textAlign: "-moz-center" }}>
-      <NavLink href={"https://api.swps-pjatk-experiment.co/v5/rating-result/" + resultsType}>Download</NavLink>
-    </td>
-    <td style={{ textAlign: "-moz-center" }}>
-      <NavLink href={"https://api.swps-pjatk-experiment.co/v5/rating-preference-result/" + resultsType}>Download</NavLink>
     </td>
     <td style={{ textAlign: "-moz-center" }}>
       <NavLink href={"https://api.swps-pjatk-experiment.co/v5/survey-result/" + resultsType}>Download</NavLink>
@@ -193,18 +173,6 @@ function getTableBody(users, resultsType) {
         </td>
         <td style={{ textAlign: "-moz-center" }}>
           <NavLink href={"https://api.swps-pjatk-experiment.co/v5/attribute-result/" + resultsType + "/" + users[i].user_id}>Download</NavLink>
-        </td>
-        <td style={{ textAlign: "-moz-center" }}>
-          <NavLink href={"https://api.swps-pjatk-experiment.co/v5/brand-result/" + resultsType + "/" + users[i].user_id}>Download</NavLink>
-        </td>
-        <td style={{ textAlign: "-moz-center" }}>
-          <NavLink href={"https://api.swps-pjatk-experiment.co/v5/preference-result/" + resultsType + "/" + users[i].user_id}>Download</NavLink>
-        </td>
-        <td style={{ textAlign: "-moz-center" }}>
-          <NavLink href={"https://api.swps-pjatk-experiment.co/v5/rating-result/" + resultsType + "/" + users[i].user_id}>Download</NavLink>
-        </td>
-        <td style={{ textAlign: "-moz-center" }}>
-          <NavLink href={"https://api.swps-pjatk-experiment.co/v5/rating-preference-result/" + resultsType + "/" + users[i].user_id}>Download</NavLink>
         </td>
         <td style={{ textAlign: "-moz-center" }}>
           <NavLink href={"https://api.swps-pjatk-experiment.co/v5/survey-result/" + resultsType + "/" + users[i].user_id}>Download</NavLink>

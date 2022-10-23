@@ -22,7 +22,7 @@ const defaultValue = {
     questionNumber: 0,
     selectedAnswer: '\0',
     isCorrectAnswer: false,
-    supportType: 0
+    supportType: 1
 }
 
 export default class MultiAttributeRandomOptionalArrangeAndReadyBars extends React.Component {
@@ -59,7 +59,7 @@ export default class MultiAttributeRandomOptionalArrangeAndReadyBars extends Rea
             visibility: 0,
             coordinatesImage: { leftX: 0, leftY: 0, y: 0 },
             imageRating: 0,
-            supportType: 0,
+            supportType: 1,
             multiAttributeResults: { p1: [INDEX_HEADER_TOP], p2: [INDEX_HEADER_TOP], p3: [INDEX_HEADER_TOP] },
             multiAttributeResultsTmp: { p1: [INDEX_HEADER_TOP], p2: [INDEX_HEADER_TOP], p3: [INDEX_HEADER_TOP] }
         }
@@ -266,7 +266,7 @@ export default class MultiAttributeRandomOptionalArrangeAndReadyBars extends Rea
     }
 
     _stackDisplay = () => {
-        this.setState({ supportType: 1 }, () => {
+        this.setState({ supportType: 2 }, () => {
             document.getElementById("cardStackVisual").style.display = "";
             document.getElementById("btnShowStack").style.display = "none";
             document.getElementById("btnShowArrangeStack").style.display = "none";
@@ -274,7 +274,7 @@ export default class MultiAttributeRandomOptionalArrangeAndReadyBars extends Rea
     }
 
     _arrangeStackDisplay = () => {
-        this.setState({ supportType: 2 }, () => {
+        this.setState({ supportType: 3 }, () => {
             document.getElementById("cardArrangeStack").style.display = "";
             document.getElementById("btnShowArrangeStack").style.display = "none";
             document.getElementById("btnShowStack").style.display = "none";

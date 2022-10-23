@@ -26,7 +26,7 @@ const defaultValue = {
     questionNumber: 0,
     selectedAnswer: '\0',
     isCorrectAnswer: false,
-    supportType: 0
+    supportType: 1
 }
 
 export default class MultiAttributeDemoConditional1 extends React.Component {
@@ -147,7 +147,7 @@ export default class MultiAttributeDemoConditional1 extends React.Component {
             questionID: currentAnswer.id,
             questionNumber: counter + 1,
             selectedAnswer: selectedValue,
-            supportType: 0,
+            supportType: 1,
             isCorrectAnswer: selectedValue === currentAnswer.correctAnswer.toString(),
         }
 
