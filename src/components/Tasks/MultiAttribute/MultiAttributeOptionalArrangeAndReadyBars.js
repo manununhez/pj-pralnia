@@ -311,7 +311,7 @@ export default class MultiAttributeOptionalArrangeAndReadyBars extends React.Com
                     </Card>
                 </Row>
                 {
-                    supportType == 2
+                    supportType == 3
                         ?
                         <RateImage
                             image={ImageMapperRating(imageRating)}
@@ -533,7 +533,7 @@ function getTable(supportType, selectedValue, data, onClick, onDoubleClick, show
                 </tr>
             </thead>
             <tbody>
-                {(supportType == 0 || supportType == 1) ? getSimpleTableBody(data) : (supportType == 2 ? getTableBody(data, onDoubleClick, showMissingResultsIndicator, multiAttributeResults) : <></>)}
+                {(supportType == 1 || supportType == 2) ? getSimpleTableBody(data) : (supportType == 3 ? getTableBody(data, onDoubleClick, showMissingResultsIndicator, multiAttributeResults) : <></>)}
             </tbody>
         </Table>
     );

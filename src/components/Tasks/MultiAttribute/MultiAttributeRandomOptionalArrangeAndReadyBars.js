@@ -309,14 +309,6 @@ export default class MultiAttributeRandomOptionalArrangeAndReadyBars extends Rea
                         <div>{getTable(this.readyBarsShown(), selectedValue, data, this.optionClicked,
                             this.onDoubleClickImage, showMissingResultsIndicator, multiAttributeResults)}</div>
 
-                        {/* {this.readyBarsShown()
-                            ?
-                            (<Button color="info" id="btnShowStack" style={{ width: "fit-content", alignSelf: "center" }}
-                                onClick={() => this._stackDisplay()}>Gotowe słupki</Button>)
-                            :
-                            (<Button color="info" id="btnShowArrangeStack" style={{ width: "fit-content", alignSelf: "center" }}
-                                onClick={() => this._arrangeStackDisplay()}>Sam robię słupki</Button>)} */}
-
                     </Card>
                     {this.readyBarsShown() ?
                         <Card id="cardStackVisual" body style={{ marginTop: "20px" }}>
