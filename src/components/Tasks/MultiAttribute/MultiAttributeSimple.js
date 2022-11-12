@@ -12,7 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
     FIRST_TASK_PROPERTIES_TOTAL, FIRST_RADIO_VALUE, SECOND_RADIO_VALUE, WHITE, BLACK,
-    THIRD_RADIO_VALUE, TEXT_FOOTER, SPACE_KEY_CODE, EVENT_KEY_DOWN
+    THIRD_RADIO_VALUE, TEXT_FOOTER, SPACE_KEY_CODE, EVENT_KEY_DOWN, ButtonClicked, SupportType
 } from '../../../helpers/constants';
 import Footer from "../../Footers/Footer";
 
@@ -21,7 +21,8 @@ const defaultValue = {
     questionNumber: 0,
     selectedAnswer: '\0',
     isCorrectAnswer: false,
-    supportType: 1
+    buttonClicked: ButtonClicked.NO_BUTTON_CLICKED,
+    supportType: SupportType.NO_BARS_SHOWN
 }
 
 export default class MultiAttributeSimple extends React.Component {
@@ -98,7 +99,8 @@ export default class MultiAttributeSimple extends React.Component {
             questionID: currentAnswer.id,
             questionNumber: counter + 1,
             selectedAnswer: selectedValue,
-            supportType: 1,
+            buttonClicked: ButtonClicked.NO_BUTTON_CLICKED,
+            supportType: SupportType.NO_BARS_SHOWN,
             isCorrectAnswer: selectedValue === currentAnswer.correctAnswer.toString(),
         }
 

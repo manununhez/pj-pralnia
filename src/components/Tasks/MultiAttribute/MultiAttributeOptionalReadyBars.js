@@ -12,7 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
     FIRST_TASK_PROPERTIES_TOTAL, FIRST_RADIO_VALUE, SECOND_RADIO_VALUE, WHITE, BLACK,
-    THIRD_RADIO_VALUE, TEXT_FOOTER, SPACE_KEY_CODE, EVENT_KEY_DOWN
+    THIRD_RADIO_VALUE, TEXT_FOOTER, SPACE_KEY_CODE, EVENT_KEY_DOWN, ButtonClicked, SupportType
 } from '../../../helpers/constants';
 import Footer from "../../Footers/Footer";
 
@@ -21,7 +21,8 @@ const defaultValue = {
     questionNumber: 0,
     selectedAnswer: '\0',
     isCorrectAnswer: false,
-    supportType: 1
+    buttonClicked: ButtonClicked.NO_BUTTON_CLICKED,
+    supportType: SupportType.BUTTON_READY_BAR_AVAILABLE
 }
 
 export default class MultiAttributeOptionalReadyBars extends React.Component {
@@ -54,7 +55,8 @@ export default class MultiAttributeOptionalReadyBars extends React.Component {
             selectedOption: selectedOption,
             counter: 0,
             modalOpen: false,
-            supportType: 1
+            buttonClicked: ButtonClicked.NO_BUTTON_CLICKED,
+            supportType: SupportType.BUTTON_READY_BAR_AVAILABLE
         }
     }
 
@@ -71,7 +73,13 @@ export default class MultiAttributeOptionalReadyBars extends React.Component {
                 } else if (selectedOption.length === (counter + 1)) {
                     selectedOption.push(defaultValue)
 
-                    this.setState({ counter: (counter + 1), modalOpen: false, supportType: 1, selectedOption: selectedOption }, () => {
+                    this.setState({
+                        counter: (counter + 1),
+                        modalOpen: false,
+                        buttonClicked: ButtonClicked.NO_BUTTON_CLICKED,
+                        supportType: SupportType.BUTTON_READY_BAR_AVAILABLE,
+                        selectedOption: selectedOption
+                    }, () => {
                         this.props.action(selectedOption, currentSelectedAnswer)
                     })
                 }
@@ -87,7 +95,7 @@ export default class MultiAttributeOptionalReadyBars extends React.Component {
     }
 
     optionClicked = (evt) => {
-        const { selectedOption, counter, supportType } = this.state
+        const { selectedOption, counter, buttonClicked, supportType } = this.state
         const currentAnswer = this.props.data[counter]
 
         let selectedValue = evt.target.value
@@ -97,6 +105,7 @@ export default class MultiAttributeOptionalReadyBars extends React.Component {
             questionID: currentAnswer.id,
             questionNumber: counter + 1,
             selectedAnswer: selectedValue,
+            buttonClicked: buttonClicked,
             supportType: supportType,
             isCorrectAnswer: selectedValue === currentAnswer.correctAnswer.toString(),
         }
@@ -108,7 +117,7 @@ export default class MultiAttributeOptionalReadyBars extends React.Component {
     }
 
     _stackDisplay() {
-        this.setState({ supportType: 2 }, () => {
+        this.setState({ buttonClicked: ButtonClicked.READY_BAR_BUTTON_CLICKED }, () => {
             document.getElementById("cardStackVisual").style.display = "";
             document.getElementById("btnShowStack").style.display = "none";
         })
@@ -157,9 +166,9 @@ export default class MultiAttributeOptionalReadyBars extends React.Component {
                         <div>{getRatingStarBarTable(data)}</div>
                     </Card>
                     <Card body style={{ marginTop: "20px" }}>
-                        <div>{getTable(selectedOption[counter].selectedAnswer, data, this.optionClicked)}</div>
-                        <Button color="info" id="btnShowStack" style={{ width: "fit-content", alignSelf: "center" }}
+                        <Button color="info" id="btnShowStack" style={{ width: "fit-content", alignSelf: "center", marginBottom: "10px" }}
                             onClick={() => this._stackDisplay()}> Pokaż słupki</Button>
+                        <div>{getTable(selectedOption[counter].selectedAnswer, data, this.optionClicked)}</div>
                     </Card>
                     <Card id="cardStackVisual" body style={{ marginTop: "20px", display: 'none' }}>
                         <div>{getTableVisualization(data)}</div>

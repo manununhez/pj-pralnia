@@ -1,7 +1,7 @@
 import React from 'react';
 
 // reactstrap components
-import { Card, Button, Container, Row, Table, Alert, Modal, ModalHeader } from "reactstrap";
+import { Card, Container, Row, Table, Alert, Modal, ModalHeader } from "reactstrap";
 
 import ReactStars from "react-rating-stars-component";
 
@@ -12,7 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
     FIRST_TASK_PROPERTIES_TOTAL, FIRST_RADIO_VALUE, SECOND_RADIO_VALUE, WHITE, BLACK,
-    THIRD_RADIO_VALUE, TEXT_FOOTER, SPACE_KEY_CODE, EVENT_KEY_DOWN
+    THIRD_RADIO_VALUE, TEXT_FOOTER, SPACE_KEY_CODE, EVENT_KEY_DOWN, ButtonClicked, SupportType
 } from '../../../helpers/constants';
 
 const defaultValue = {
@@ -20,7 +20,8 @@ const defaultValue = {
     questionNumber: 0,
     selectedAnswer: '\0',
     isCorrectAnswer: false,
-    supportType: 2
+    buttonClicked: ButtonClicked.NO_BUTTON_CLICKED,
+    supportType: SupportType.READY_BARS_SHOWN
 }
 
 export default class MultiAttributeWithReadyBars extends React.Component {
@@ -94,7 +95,8 @@ export default class MultiAttributeWithReadyBars extends React.Component {
             questionID: currentAnswer.id,
             questionNumber: counter + 1,
             selectedAnswer: selectedValue,
-            supportType: 2,
+            buttonClicked: ButtonClicked.NO_BUTTON_CLICKED,
+            supportType: SupportType.READY_BARS_SHOWN,
             isCorrectAnswer: selectedValue === currentAnswer.correctAnswer.toString(),
         }
 

@@ -38,6 +38,20 @@ export const ItemTypesID = {
     PRODUCT_3: "columnProduct3"
 };
 
+export const ButtonClicked = {
+    NO_BUTTON_CLICKED: 0,
+    READY_BAR_BUTTON_CLICKED: 1,
+    BUILD_BAR_BUTTON_CLICKED: 2
+}
+
+export const SupportType = {
+    NO_BARS_SHOWN: 0,
+    READY_BARS_SHOWN: 1,
+    USER_BUILT_BARS: 2,
+    BUTTON_READY_BAR_AVAILABLE: 3,
+    BUTTONS_ARRANGE_AND_READY_BAR_AVAILABLE: 4
+}
+
 //PreferenceTask
 export const ATTRIBUTE = {
     data:

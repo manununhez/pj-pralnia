@@ -468,7 +468,7 @@ const usergeneraldata = (data, studyParams) => {
                 output.data.selectedAnswer,
                 output.data.isCorrectAnswer,
                 output.data.supportType,
-                constant.TEXT_EMPTY,
+                output.data.buttonClicked,
                 constant.TEXT_EMPTY,
                 constant.TEXT_EMPTY,
                 constant.TEXT_EMPTY,
@@ -484,7 +484,7 @@ const usergeneraldata = (data, studyParams) => {
                 output.data.selectedAnswer,
                 output.data.isCorrectAnswer,
                 output.data.supportType,
-                constant.TEXT_EMPTY,
+                output.data.buttonClicked,
                 constant.TEXT_EMPTY,
                 constant.TEXT_EMPTY,
                 constant.TEXT_EMPTY,
@@ -500,7 +500,7 @@ const usergeneraldata = (data, studyParams) => {
                 output.data.selectedAnswer,
                 output.data.isCorrectAnswer,
                 output.data.supportType,
-                constant.TEXT_EMPTY,
+                output.data.buttonClicked,
                 constant.TEXT_EMPTY,
                 constant.TEXT_EMPTY,
                 constant.TEXT_EMPTY,
@@ -516,7 +516,7 @@ const usergeneraldata = (data, studyParams) => {
                 output.data.selectedAnswer,
                 output.data.isCorrectAnswer,
                 output.data.supportType,
-                constant.TEXT_EMPTY,
+                output.data.buttonClicked,
                 constant.TEXT_EMPTY,
                 constant.TEXT_EMPTY,
                 constant.TEXT_EMPTY,
@@ -779,7 +779,8 @@ function userattributes(data) {
             outputAttribute.demo[i].questionNumber,
             outputAttribute.demo[i].selectedAnswer,
             outputAttribute.demo[i].isCorrectAnswer,
-            outputAttribute.demo[i].supportType
+            outputAttribute.demo[i].supportType,
+            outputAttribute.demo[i].buttonClicked
         ]);
     }
 
@@ -791,7 +792,8 @@ function userattributes(data) {
             outputAttribute.task[i].questionNumber,
             outputAttribute.task[i].selectedAnswer,
             outputAttribute.task[i].isCorrectAnswer,
-            outputAttribute.task[i].supportType
+            outputAttribute.task[i].supportType,
+            outputAttribute.task[i].buttonClicked
         ]);
     }
 

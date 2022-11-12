@@ -16,8 +16,8 @@ import "./style.css"
 
 import {
     FIRST_TASK_PROPERTIES_TOTAL, FIRST_RADIO_VALUE, SECOND_RADIO_VALUE, WHITE, BLACK,
-    THIRD_RADIO_VALUE, TEXT_FOOTER, SPACE_KEY_CODE, EVENT_KEY_DOWN,
-    GREEN, modaltStyle, ItemTypes, ItemTypesID, INDEX_HEADER_TOP, INDEX_HEADER
+    THIRD_RADIO_VALUE, TEXT_FOOTER, SPACE_KEY_CODE, EVENT_KEY_DOWN, SupportType,
+    GREEN, modaltStyle, ItemTypes, ItemTypesID, INDEX_HEADER_TOP, INDEX_HEADER, ButtonClicked
 } from '../../../helpers/constants';
 import RateImage from './RateImage';
 
@@ -26,7 +26,8 @@ const defaultValue = {
     questionNumber: 0,
     selectedAnswer: '\0',
     isCorrectAnswer: false,
-    supportType: 1
+    buttonClicked: ButtonClicked.NO_BUTTON_CLICKED,
+    supportType: SupportType.USER_BUILT_BARS
 }
 
 export default class MultiAttributeDemoConditional1 extends React.Component {
@@ -147,7 +148,8 @@ export default class MultiAttributeDemoConditional1 extends React.Component {
             questionID: currentAnswer.id,
             questionNumber: counter + 1,
             selectedAnswer: selectedValue,
-            supportType: 1,
+            buttonClicked: ButtonClicked.NO_BUTTON_CLICKED,
+            supportType: SupportType.USER_BUILT_BARS,
             isCorrectAnswer: selectedValue === currentAnswer.correctAnswer.toString(),
         }
 

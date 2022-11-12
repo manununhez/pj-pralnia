@@ -5,7 +5,7 @@ import RateImage from './RateImage';
 
 import "../style.css"
 
-import { Card, Container, Row, Col, Table, Modal, ModalHeader, Button } from "reactstrap";
+import { Card, Container, Row, Table, Modal, ModalHeader, Button } from "reactstrap";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faSmile, faFrown } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,7 +13,7 @@ import { ImageMapperRating } from './verticalRateImage';
 import { Box } from "./Box";
 import {
     FIRST_TASK_PROPERTIES_TOTAL, FIRST_RADIO_VALUE, SECOND_RADIO_VALUE, WHITE, BLACK,
-    THIRD_RADIO_VALUE, TEXT_FOOTER, SPACE_KEY_CODE, EVENT_KEY_DOWN,
+    THIRD_RADIO_VALUE, TEXT_FOOTER, SPACE_KEY_CODE, EVENT_KEY_DOWN, ButtonClicked, SupportType,
     GREEN, modaltStyle, ItemTypes, ItemTypesID, INDEX_HEADER_TOP, INDEX_HEADER
 } from '../../../helpers/constants';
 
@@ -22,7 +22,8 @@ const defaultValue = {
     questionNumber: 0,
     selectedAnswer: '\0',
     isCorrectAnswer: false,
-    supportType: 1
+    buttonClicked: ButtonClicked.NO_BUTTON_CLICKED,
+    supportType: SupportType.BUTTONS_ARRANGE_AND_READY_BAR_AVAILABLE
 }
 
 export default class MultiAttributeOptionalArrangeAndReadyBars extends React.Component {
@@ -58,7 +59,8 @@ export default class MultiAttributeOptionalArrangeAndReadyBars extends React.Com
             visibility: 0,
             coordinatesImage: { leftX: 0, leftY: 0, y: 0 },
             imageRating: 0,
-            supportType: 1,
+            buttonClicked: ButtonClicked.NO_BUTTON_CLICKED,
+            supportType: SupportType.BUTTONS_ARRANGE_AND_READY_BAR_AVAILABLE,
             multiAttributeResults: { p1: [INDEX_HEADER_TOP], p2: [INDEX_HEADER_TOP], p3: [INDEX_HEADER_TOP] },
             multiAttributeResultsTmp: { p1: [INDEX_HEADER_TOP], p2: [INDEX_HEADER_TOP], p3: [INDEX_HEADER_TOP] }
         }
@@ -88,7 +90,8 @@ export default class MultiAttributeOptionalArrangeAndReadyBars extends React.Com
                                 visibility: 0,
                                 coordinatesImage: { leftX: 0, leftY: 0, y: 0 },
                                 imageRating: 0,
-                                supportType: 1,
+                                buttonClicked: ButtonClicked.NO_BUTTON_CLICKED,
+                                supportType: SupportType.BUTTONS_ARRANGE_AND_READY_BAR_AVAILABLE,
                                 multiAttributeResults: { p1: [INDEX_HEADER_TOP], p2: [INDEX_HEADER_TOP], p3: [INDEX_HEADER_TOP] }
                             }, () => {
                                 this.props.action(selectedOption, currentSelectedAnswer)
@@ -118,7 +121,13 @@ export default class MultiAttributeOptionalArrangeAndReadyBars extends React.Com
         } else if (selectedOption.length === (counter + 1)) {
             selectedOption.push(defaultValue)
 
-            this.setState({ counter: (counter + 1), modalOpen: false, selectedOption: selectedOption }, () => {
+            this.setState({
+                counter: (counter + 1),
+                modalOpen: false,
+                selectedOption: selectedOption,
+                buttonClicked: ButtonClicked.NO_BUTTON_CLICKED,
+                supportType: SupportType.BUTTONS_ARRANGE_AND_READY_BAR_AVAILABLE
+            }, () => {
                 this.props.action(selectedOption, currentSelectedAnswer)
             })
         }
@@ -179,7 +188,7 @@ export default class MultiAttributeOptionalArrangeAndReadyBars extends React.Com
     }
 
     optionClicked = (evt) => {
-        const { supportType, selectedOption, counter } = this.state
+        const { buttonClicked, selectedOption, counter, supportType } = this.state
         const currentAnswer = this.props.data[counter]
 
         let selectedValue = evt.target.value
@@ -190,6 +199,7 @@ export default class MultiAttributeOptionalArrangeAndReadyBars extends React.Com
             questionID: currentAnswer.id,
             questionNumber: counter + 1,
             selectedAnswer: selectedValue,
+            buttonClicked: buttonClicked,
             supportType: supportType,
             isCorrectAnswer: selectedValue === currentAnswer.correctAnswer.toString(),
         }
@@ -259,7 +269,7 @@ export default class MultiAttributeOptionalArrangeAndReadyBars extends React.Com
     }
 
     _stackDisplay = () => {
-        this.setState({ supportType: 2 }, () => {
+        this.setState({ buttonClicked: ButtonClicked.READY_BAR_BUTTON_CLICKED }, () => {
             document.getElementById("cardStackVisual").style.display = "";
             document.getElementById("btnShowStack").style.display = "none";
             document.getElementById("btnShowArrangeStack").style.display = "none";
@@ -267,7 +277,7 @@ export default class MultiAttributeOptionalArrangeAndReadyBars extends React.Com
     }
 
     _arrangeStackDisplay = () => {
-        this.setState({ supportType: 3 }, () => {
+        this.setState({ buttonClicked: ButtonClicked.BUILD_BAR_BUTTON_CLICKED }, () => {
             document.getElementById("cardArrangeStack").style.display = "";
             document.getElementById("btnShowArrangeStack").style.display = "none";
             document.getElementById("btnShowStack").style.display = "none";
@@ -276,7 +286,7 @@ export default class MultiAttributeOptionalArrangeAndReadyBars extends React.Com
 
     render() {
         const { counter, selectedOption, modalOpen, visibility, imageRating, coordinatesImage,
-            multiAttributeResults, showMissingResultsIndicator, supportType } = this.state
+            multiAttributeResults, showMissingResultsIndicator, buttonClicked } = this.state
         const data = this.props.data[counter]
         const showFeedback = data.showFeedback
         const showFeedbackCorrectAnswer = this.isOptionWasSelectedInThisRound() ? selectedOption[counter].isCorrectAnswer : false
@@ -294,14 +304,14 @@ export default class MultiAttributeOptionalArrangeAndReadyBars extends React.Com
                         <div>{getRatingStarBarTable(data)}</div>
                     </Card>
                     <Card body style={{ marginTop: "20px" }}>
-                        <div>{getTable(supportType, selectedValue, data, this.optionClicked,
-                            this.onDoubleClickImage, showMissingResultsIndicator, multiAttributeResults)}</div>
-                        <Row className="justify-content-center">
+                        <Row className="justify-content-center" style={{ marginBottom: "10px" }}>
                             <Button color="info" id="btnShowStack" style={{ width: "fit-content", alignSelf: "center", marginRight: "10px" }}
                                 onClick={() => this._stackDisplay()}>Gotowe słupki</Button>
                             <Button color="info" id="btnShowArrangeStack" style={{ width: "fit-content", alignSelf: "center" }}
-                                onClick={() => this._arrangeStackDisplay()}>Sam robię słupki</Button></Row>
-
+                                onClick={() => this._arrangeStackDisplay()}>Sam robię słupki</Button>
+                        </Row>
+                        <div>{getTable(buttonClicked, selectedValue, data, this.optionClicked,
+                            this.onDoubleClickImage, showMissingResultsIndicator, multiAttributeResults)}</div>
                     </Card>
                     <Card id="cardStackVisual" body style={{ marginTop: "20px", display: 'none' }}>
                         <div>{getTableVisualization(data)}</div>
@@ -311,7 +321,7 @@ export default class MultiAttributeOptionalArrangeAndReadyBars extends React.Com
                     </Card>
                 </Row>
                 {
-                    supportType == 3
+                    buttonClicked === ButtonClicked.BUILD_BAR_BUTTON_CLICKED
                         ?
                         <RateImage
                             image={ImageMapperRating(imageRating)}
@@ -504,7 +514,7 @@ function getModalFeedback(showFeedback, showFeedbackCorrectAnswer) {
  * @param {*} multiAttributeResults 
  * @returns 
  */
-function getTable(supportType, selectedValue, data, onClick, onDoubleClick, showMissingResultsIndicator, multiAttributeResults) {
+function getTable(buttonClicked, selectedValue, data, onClick, onDoubleClick, showMissingResultsIndicator, multiAttributeResults) {
     return (
         <Table responsive style={{ textAlign: 'center' }}>
             <thead>
@@ -533,7 +543,9 @@ function getTable(supportType, selectedValue, data, onClick, onDoubleClick, show
                 </tr>
             </thead>
             <tbody>
-                {(supportType == 1 || supportType == 2) ? getSimpleTableBody(data) : (supportType == 3 ? getTableBody(data, onDoubleClick, showMissingResultsIndicator, multiAttributeResults) : <></>)}
+                {(buttonClicked === ButtonClicked.NO_BUTTON_CLICKED || buttonClicked === ButtonClicked.READY_BAR_BUTTON_CLICKED)
+                    ? getSimpleTableBody(data) :
+                    (buttonClicked === ButtonClicked.BUILD_BAR_BUTTON_CLICKED ? getTableBody(data, onDoubleClick, showMissingResultsIndicator, multiAttributeResults) : <></>)}
             </tbody>
         </Table>
     );

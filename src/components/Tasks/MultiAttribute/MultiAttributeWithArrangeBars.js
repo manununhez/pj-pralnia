@@ -18,7 +18,7 @@ import "../style.css"
 
 import {
     FIRST_TASK_PROPERTIES_TOTAL, FIRST_RADIO_VALUE, SECOND_RADIO_VALUE, WHITE, BLACK,
-    THIRD_RADIO_VALUE, TEXT_FOOTER, SPACE_KEY_CODE, EVENT_KEY_DOWN,
+    THIRD_RADIO_VALUE, TEXT_FOOTER, SPACE_KEY_CODE, EVENT_KEY_DOWN, ButtonClicked, SupportType,
     GREEN, modaltStyle, ItemTypes, ItemTypesID, INDEX_HEADER_TOP, INDEX_HEADER
 } from '../../../helpers/constants';
 
@@ -27,7 +27,8 @@ const defaultValue = {
     questionNumber: 0,
     selectedAnswer: '\0',
     isCorrectAnswer: false,
-    supportType: 3
+    buttonClicked: ButtonClicked.NO_BUTTON_CLICKED,
+    supportType: SupportType.USER_BUILT_BARS
 }
 
 export default class MultiAttributeWithArrangeBars extends React.Component {
@@ -156,7 +157,8 @@ export default class MultiAttributeWithArrangeBars extends React.Component {
             questionID: currentAnswer.id,
             questionNumber: counter + 1,
             selectedAnswer: selectedValue,
-            supportType: 3,
+            buttonClicked: ButtonClicked.NO_BUTTON_CLICKED,
+            supportType: SupportType.USER_BUILT_BARS,
             isCorrectAnswer: selectedValue === currentAnswer.correctAnswer.toString(),
         }
 

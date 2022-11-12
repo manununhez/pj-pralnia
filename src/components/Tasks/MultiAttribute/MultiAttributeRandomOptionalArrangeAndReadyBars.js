@@ -5,7 +5,7 @@ import RateImage from './RateImage';
 
 import "../style.css"
 
-import { Card, Container, Row, Table, Modal, ModalHeader, Button } from "reactstrap";
+import { Card, Container, Row, Table, Modal, ModalHeader } from "reactstrap";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faSmile, faFrown } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,7 +13,7 @@ import { ImageMapperRating } from './verticalRateImage';
 import { Box } from "./Box";
 import {
     FIRST_TASK_PROPERTIES_TOTAL, FIRST_RADIO_VALUE, SECOND_RADIO_VALUE, WHITE, BLACK,
-    THIRD_RADIO_VALUE, TEXT_FOOTER, SPACE_KEY_CODE, EVENT_KEY_DOWN,
+    THIRD_RADIO_VALUE, TEXT_FOOTER, SPACE_KEY_CODE, EVENT_KEY_DOWN, ButtonClicked, SupportType,
     GREEN, modaltStyle, ItemTypes, ItemTypesID, INDEX_HEADER_TOP, INDEX_HEADER
 } from '../../../helpers/constants';
 
@@ -22,7 +22,8 @@ const defaultValue = {
     questionNumber: 0,
     selectedAnswer: '\0',
     isCorrectAnswer: false,
-    supportType: 1
+    buttonClicked: ButtonClicked.NO_BUTTON_CLICKED,
+    supportType: SupportType.READY_BARS_SHOWN
 }
 
 export default class MultiAttributeRandomOptionalArrangeAndReadyBars extends React.Component {
@@ -59,7 +60,8 @@ export default class MultiAttributeRandomOptionalArrangeAndReadyBars extends Rea
             visibility: 0,
             coordinatesImage: { leftX: 0, leftY: 0, y: 0 },
             imageRating: 0,
-            supportType: 1,
+            buttonClicked: ButtonClicked.NO_BUTTON_CLICKED,
+            supportType: SupportType.READY_BARS_SHOWN,
             multiAttributeResults: { p1: [INDEX_HEADER_TOP], p2: [INDEX_HEADER_TOP], p3: [INDEX_HEADER_TOP] },
             multiAttributeResultsTmp: { p1: [INDEX_HEADER_TOP], p2: [INDEX_HEADER_TOP], p3: [INDEX_HEADER_TOP] }
         }
@@ -71,7 +73,7 @@ export default class MultiAttributeRandomOptionalArrangeAndReadyBars extends Rea
             const currentSelectedAnswer = selectedOption[counter]
 
             if (this.isOptionWasSelectedInThisRound()) {
-                if (this.readyBarsShown()) {
+                if (this.readyBarsShown(counter)) {
                     this.simplyHandleKeyDownEvent()
                 } else if (this.optionalArrangeButtonWasPressed()) { //Arranged bars shown AND optional button was pressed
                     const completedTask = this.controlIfAllOptionsAreSelected()
@@ -91,7 +93,8 @@ export default class MultiAttributeRandomOptionalArrangeAndReadyBars extends Rea
                                 visibility: 0,
                                 coordinatesImage: { leftX: 0, leftY: 0, y: 0 },
                                 imageRating: 0,
-                                supportType: this.readyBarsShown() ? 1 : 2,
+                                buttonClicked: ButtonClicked.NO_BUTTON_CLICKED,
+                                supportType: this.readyBarsShown(counter + 1) ? SupportType.READY_BARS_SHOWN : SupportType.USER_BUILT_BARS,
                                 multiAttributeResults: { p1: [INDEX_HEADER_TOP], p2: [INDEX_HEADER_TOP], p3: [INDEX_HEADER_TOP] }
                             }, () => {
                                 this.props.action(selectedOption, currentSelectedAnswer)
@@ -121,7 +124,13 @@ export default class MultiAttributeRandomOptionalArrangeAndReadyBars extends Rea
         } else if (selectedOption.length === (counter + 1)) {
             selectedOption.push(defaultValue)
 
-            this.setState({ counter: (counter + 1), modalOpen: false, selectedOption: selectedOption }, () => {
+            this.setState({
+                counter: (counter + 1),
+                modalOpen: false,
+                selectedOption: selectedOption,
+                buttonClicked: ButtonClicked.NO_BUTTON_CLICKED,
+                supportType: this.readyBarsShown(counter + 1) ? SupportType.READY_BARS_SHOWN : SupportType.USER_BUILT_BARS
+            }, () => {
                 this.props.action(selectedOption, currentSelectedAnswer)
             })
         }
@@ -158,9 +167,9 @@ export default class MultiAttributeRandomOptionalArrangeAndReadyBars extends Rea
     }
 
     modalToggle = () => {
-        const { selectedOption } = this.state
+        const { selectedOption, counter } = this.state
 
-        if (this.readyBarsShown()) {
+        if (this.readyBarsShown(counter)) {
             this.setState({
                 modalOpen: !this.state.modalOpen
             })
@@ -186,7 +195,7 @@ export default class MultiAttributeRandomOptionalArrangeAndReadyBars extends Rea
     }
 
     optionClicked = (evt) => {
-        const { supportType, selectedOption, counter } = this.state
+        const { buttonClicked, selectedOption, counter, supportType } = this.state
         const currentAnswer = this.props.data[counter]
 
         let selectedValue = evt.target.value
@@ -197,6 +206,7 @@ export default class MultiAttributeRandomOptionalArrangeAndReadyBars extends Rea
             questionID: currentAnswer.id,
             questionNumber: counter + 1,
             selectedAnswer: selectedValue,
+            buttonClicked: buttonClicked,
             supportType: supportType,
             isCorrectAnswer: selectedValue === currentAnswer.correctAnswer.toString(),
         }
@@ -265,35 +275,19 @@ export default class MultiAttributeRandomOptionalArrangeAndReadyBars extends Rea
         })
     }
 
-    _stackDisplay = () => {
-        this.setState({ supportType: 2 }, () => {
-            document.getElementById("cardStackVisual").style.display = "";
-            document.getElementById("btnShowStack").style.display = "none";
-            document.getElementById("btnShowArrangeStack").style.display = "none";
-        })
-    }
-
-    _arrangeStackDisplay = () => {
-        this.setState({ supportType: 3 }, () => {
-            document.getElementById("cardArrangeStack").style.display = "";
-            document.getElementById("btnShowArrangeStack").style.display = "none";
-            document.getElementById("btnShowStack").style.display = "none";
-        })
-    }
-
-    readyBarsShown = () => {
-        const { counter } = this.state
+    readyBarsShown = (counter) => {
         return (counter === 0 || counter === 1 || counter === 4 || counter === 6 || counter === 8 || counter === 9 || counter === 13 || counter === 14)
     }
 
     render() {
         const { counter, selectedOption, modalOpen, visibility, imageRating, coordinatesImage,
-            multiAttributeResults, showMissingResultsIndicator, supportType } = this.state
+            multiAttributeResults, showMissingResultsIndicator } = this.state
         const data = this.props.data[counter]
         const showFeedback = data.showFeedback
         const showFeedbackCorrectAnswer = this.isOptionWasSelectedInThisRound() ? selectedOption[counter].isCorrectAnswer : false
         const selectedValue = this.isOptionWasSelectedInThisRound() ? selectedOption[counter].selectedAnswer : false
-        const completedTask = this.readyBarsShown() ? true : (this.optionalArrangeButtonWasPressed() ? this.controlIfAllOptionsAreSelected() : true)
+        const readyBarsShown = this.readyBarsShown(counter)
+        const completedTask = readyBarsShown ? true : (this.optionalArrangeButtonWasPressed() ? this.controlIfAllOptionsAreSelected() : true)
 
         return (
             <Container key={"KEY_" + counter}>
@@ -306,11 +300,11 @@ export default class MultiAttributeRandomOptionalArrangeAndReadyBars extends Rea
                         <div>{getRatingStarBarTable(data)}</div>
                     </Card>
                     <Card body style={{ marginTop: "20px" }}>
-                        <div>{getTable(this.readyBarsShown(), selectedValue, data, this.optionClicked,
+                        <div>{getTable(readyBarsShown, selectedValue, data, this.optionClicked,
                             this.onDoubleClickImage, showMissingResultsIndicator, multiAttributeResults)}</div>
 
                     </Card>
-                    {this.readyBarsShown() ?
+                    {readyBarsShown ?
                         <Card id="cardStackVisual" body style={{ marginTop: "20px" }}>
                             <div>{getTableVisualization(data)}</div>
                         </Card> :
@@ -318,7 +312,7 @@ export default class MultiAttributeRandomOptionalArrangeAndReadyBars extends Rea
                             <DemoContainer action={this.multiAttributeResultsHandler} currentResult={multiAttributeResults} />
                         </Card>}
                 </Row>
-                {this.readyBarsShown() ? <></>
+                {readyBarsShown ? <></>
                     :
                     <RateImage
                         image={ImageMapperRating(imageRating)}
