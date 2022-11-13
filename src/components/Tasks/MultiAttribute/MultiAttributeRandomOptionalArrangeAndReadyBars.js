@@ -54,6 +54,7 @@ export default class MultiAttributeRandomOptionalArrangeAndReadyBars extends Rea
 
         return {
             selectedOption: selectedOption,
+            startDateTime: Date.now(),
             counter: 0,
             showMissingResultsIndicator: false,
             modalOpen: false,
@@ -69,8 +70,9 @@ export default class MultiAttributeRandomOptionalArrangeAndReadyBars extends Rea
 
     handleKeyDownEvent = (event) => {
         if (event.keyCode === SPACE_KEY_CODE) {
-            const { selectedOption, counter } = this.state
+            const { selectedOption, counter, startDateTime } = this.state
             const currentSelectedAnswer = selectedOption[counter]
+            currentSelectedAnswer.endDateTime = Math.floor((Date.now() - startDateTime) / 1000)
 
             if (this.isOptionWasSelectedInThisRound()) {
                 if (this.readyBarsShown(counter)) {
@@ -87,6 +89,7 @@ export default class MultiAttributeRandomOptionalArrangeAndReadyBars extends Rea
 
                             this.setState({
                                 selectedOption: selectedOption,
+                                startDateTime: Date.now(),
                                 counter: (counter + 1),
                                 showMissingResultsIndicator: false,
                                 modalOpen: false,
@@ -128,6 +131,7 @@ export default class MultiAttributeRandomOptionalArrangeAndReadyBars extends Rea
                 counter: (counter + 1),
                 modalOpen: false,
                 selectedOption: selectedOption,
+                startDateTime: Date.now(),
                 buttonClicked: ButtonClicked.NO_BUTTON_CLICKED,
                 supportType: this.readyBarsShown(counter + 1) ? SupportType.READY_BARS_SHOWN : SupportType.USER_BUILT_BARS
             }, () => {

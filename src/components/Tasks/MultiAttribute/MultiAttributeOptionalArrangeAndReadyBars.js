@@ -53,6 +53,7 @@ export default class MultiAttributeOptionalArrangeAndReadyBars extends React.Com
         selectedOption.push(defaultValue)
         return {
             selectedOption: selectedOption,
+            startDateTime: Date.now(),
             counter: 0,
             showMissingResultsIndicator: false,
             modalOpen: false,
@@ -68,8 +69,9 @@ export default class MultiAttributeOptionalArrangeAndReadyBars extends React.Com
 
     handleKeyDownEvent = (event) => {
         if (event.keyCode === SPACE_KEY_CODE) {
-            const { selectedOption, counter } = this.state
+            const { selectedOption, counter, startDateTime } = this.state
             const currentSelectedAnswer = selectedOption[counter]
+            currentSelectedAnswer.endDateTime = Math.floor((Date.now() - startDateTime) / 1000)
 
             if (this.isOptionWasSelectedInThisRound()) {
                 if (this.optionalArrangeButtonWasPressed()) { //Arranged bars shown AND optional button was pressed
@@ -84,6 +86,7 @@ export default class MultiAttributeOptionalArrangeAndReadyBars extends React.Com
 
                             this.setState({
                                 selectedOption: selectedOption,
+                                startDateTime: Date.now(),
                                 counter: (counter + 1),
                                 showMissingResultsIndicator: false,
                                 modalOpen: false,
@@ -125,6 +128,7 @@ export default class MultiAttributeOptionalArrangeAndReadyBars extends React.Com
                 counter: (counter + 1),
                 modalOpen: false,
                 selectedOption: selectedOption,
+                startDateTime: Date.now(),
                 buttonClicked: ButtonClicked.NO_BUTTON_CLICKED,
                 supportType: SupportType.BUTTONS_ARRANGE_AND_READY_BAR_AVAILABLE
             }, () => {

@@ -58,6 +58,7 @@ export default class MultiAttributeWithArrangeBars extends React.Component {
         selectedOption.push(defaultValue)
         return {
             selectedOption: [defaultValue],
+            startDateTime: Date.now(),
             counter: 0,
             showMissingResultsIndicator: false,
             modalOpen: false,
@@ -71,9 +72,10 @@ export default class MultiAttributeWithArrangeBars extends React.Component {
 
     handleKeyDownEvent = (event) => {
         if (event.keyCode === SPACE_KEY_CODE) {
-            const { selectedOption, counter } = this.state
+            const { selectedOption, counter, startDateTime } = this.state
             const completedTask = this.controlIfAllOptionsAreSelected()
             let currentSelectedAnswer = selectedOption[counter]
+            currentSelectedAnswer.endDateTime = Math.floor((Date.now() - startDateTime) / 1000)
 
             if (this.isOptionWasSelectedInThisRound()) {
                 if (completedTask) {
@@ -86,6 +88,7 @@ export default class MultiAttributeWithArrangeBars extends React.Component {
 
                         this.setState({
                             selectedOption: selectedOption,
+                            startDateTime: Date.now(),
                             counter: (counter + 1),
                             showMissingResultsIndicator: false,
                             modalOpen: false,

@@ -51,6 +51,7 @@ export default class MultiAttributeWithReadyBars extends React.Component {
         selectedOption.push(defaultValue)
         return {
             selectedOption: [defaultValue],
+            startDateTime: Date.now(),
             counter: 0,
             modalOpen: false
         }
@@ -58,8 +59,9 @@ export default class MultiAttributeWithReadyBars extends React.Component {
 
     handleKeyDownEvent = (event) => {
         if (event.keyCode === SPACE_KEY_CODE) {
-            const { selectedOption, counter } = this.state
+            const { selectedOption, counter, startDateTime } = this.state
             let currentSelectedAnswer = selectedOption[counter]
+            currentSelectedAnswer.endDateTime = Math.floor((Date.now() - startDateTime) / 1000)
 
             if (this.isOptionWasSelectedInThisRound()) {
                 if (this.props.data.length === selectedOption.length) {
@@ -69,7 +71,12 @@ export default class MultiAttributeWithReadyBars extends React.Component {
                 } else if (selectedOption.length === (counter + 1)) {
                     selectedOption.push(defaultValue)
 
-                    this.setState({ counter: (counter + 1), modalOpen: false, selectedOption: selectedOption }, () => {
+                    this.setState({
+                        counter: (counter + 1),
+                        modalOpen: false,
+                        selectedOption: selectedOption,
+                        startDateTime: Date.now()
+                    }, () => {
                         this.props.action(selectedOption, currentSelectedAnswer)
                     })
                 }

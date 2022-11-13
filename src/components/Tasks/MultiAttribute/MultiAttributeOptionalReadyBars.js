@@ -53,6 +53,7 @@ export default class MultiAttributeOptionalReadyBars extends React.Component {
 
         return {
             selectedOption: selectedOption,
+            startDateTime: Date.now(),
             counter: 0,
             modalOpen: false,
             buttonClicked: ButtonClicked.NO_BUTTON_CLICKED,
@@ -62,8 +63,9 @@ export default class MultiAttributeOptionalReadyBars extends React.Component {
 
     handleKeyDownEvent = (event) => {
         if (event.keyCode === SPACE_KEY_CODE) {
-            const { selectedOption, counter } = this.state
+            const { selectedOption, counter, startDateTime } = this.state
             let currentSelectedAnswer = selectedOption[counter]
+            currentSelectedAnswer.endDateTime = Math.floor((Date.now() - startDateTime) / 1000)
 
             if (this.isOptionWasSelectedInThisRound()) {
                 if (this.props.data.length === selectedOption.length) {
@@ -78,7 +80,8 @@ export default class MultiAttributeOptionalReadyBars extends React.Component {
                         modalOpen: false,
                         buttonClicked: ButtonClicked.NO_BUTTON_CLICKED,
                         supportType: SupportType.BUTTON_READY_BAR_AVAILABLE,
-                        selectedOption: selectedOption
+                        selectedOption: selectedOption,
+                        startDateTime: Date.now()
                     }, () => {
                         this.props.action(selectedOption, currentSelectedAnswer)
                     })

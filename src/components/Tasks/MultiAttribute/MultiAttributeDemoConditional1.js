@@ -33,8 +33,16 @@ const defaultValue = {
 export default class MultiAttributeDemoConditional1 extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            selectedOption: [defaultValue],
+        this.state = this.initStateValue()
+    }
+
+    initStateValue = () => {
+        let selectedOption = []
+        selectedOption.push(defaultValue)
+
+        return {
+            selectedOption: selectedOption,
+            startDateTime: Date.now(),
             counter: 0,
             showMissingResultsIndicator: false,
             modalOpen: false,
@@ -64,9 +72,10 @@ export default class MultiAttributeDemoConditional1 extends React.Component {
 
     handleKeyDownEvent = (event) => {
         if (event.keyCode === SPACE_KEY_CODE) {
-            const { selectedOption, counter } = this.state
+            const { selectedOption, counter, startDateTime } = this.state
             const completedTask = this.controlIfAllOptionsAreSelected()
             let currentSelectedAnswer = selectedOption[counter]
+            currentSelectedAnswer.endDateTime = Math.floor((Date.now() - startDateTime) / 1000)
 
             if (this.isOptionWasSelectedInThisRound()) {
                 if (completedTask) {
@@ -77,6 +86,7 @@ export default class MultiAttributeDemoConditional1 extends React.Component {
 
                         this.setState({
                             selectedOption: selectedOption,
+                            startDateTime: Date.now(),
                             counter: (counter + 1),
                             showMissingResultsIndicator: false,
                             modalOpen: false,
