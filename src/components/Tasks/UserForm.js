@@ -126,6 +126,12 @@ export default function UserForm(props) {
       <Form role="form" style={{ marginTop: '40px' }}>
         <FormGroup className="mb-3">
           <div className="d-flex align-items-left">
+            <h5>Numer osoby</h5>
+          </div>
+          <Input type="text" disabled="true" value={props.data} />
+        </FormGroup>
+        <FormGroup className="mb-3">
+          <div className="d-flex align-items-left">
             <h5>{constant.FORM_AGE_TITLE}</h5>
           </div>
           <NumberFormat className="form-control"

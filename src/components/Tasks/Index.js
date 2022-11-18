@@ -1745,7 +1745,7 @@ function isFooterShownInCurrentScreen(state) {
 function changePages(state, context) {
 
     const { outputFormData, currentScreenNumber, inputNavigation, inputTextInstructions,
-        outputAttribute, inputPSForm, inputStores, inputAttributes, typeTask } = state;
+        outputAttribute, inputPSForm, inputStores, inputAttributes, typeTask, userID } = state;
     const totalLength = inputNavigation.length;
 
     if (totalLength === 0 || currentScreenNumber >= totalLength) return //To prevent keep transition between pages
@@ -1763,6 +1763,7 @@ function changePages(state, context) {
             name={screen} />;
     } else if (screen === constant.USER_FORM_SCREEN) {
         return <UserForm
+            data={userID}
             action={context.formHandler} />;
     } else if (screen === constant.VISUAL_PATTERN_SCREEN) {
         return <VisualPatternTask

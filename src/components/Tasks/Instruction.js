@@ -55,7 +55,7 @@ class Instruction extends React.Component {
 
     render() {
         return (
-            <Container fluid="md">
+            <div style={{ width: "50%", margin: "auto" }}>
                 <Row className="justify-content-md-center">
                     <HtmlFormattedText text={this.props.text} screen={this.props.name} typeTask={this.props.typeTask} />
                 </Row>
@@ -69,8 +69,8 @@ class Instruction extends React.Component {
                         <ReactPlayer
                             className='react-player'
                             url={videoUrl}
-                            height='500px'
-                            width='900px'
+                            height='100%'
+                            width='100%'
                             controls={true}
                         />
                     </Row>
@@ -80,7 +80,7 @@ class Instruction extends React.Component {
                 {this.props.name.includes("BeforeFinish") ?
                     <FooterBack textBack={"Press enter to restart training"} text={"Press spacebar to continue"} />
                     : <></>}
-            </Container>
+            </div>
         )
     };
 }
