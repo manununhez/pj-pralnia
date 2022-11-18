@@ -94,13 +94,6 @@ export function fetchUserInitialData(typeTask, callback) {
 
     get(url, {})
         .then((response) => {
-            const indexFemale = 0
-            const indexMale = 1
-            const indexScenario1F = 2
-            const indexScenario2F = 3
-            const indexScenario1M = 4
-            const indexScenario2M = 5
-
             let screens = [];
             for (let value of Object.values(response.screens)) {
                 screens.push({
@@ -109,31 +102,7 @@ export function fetchUserInitialData(typeTask, callback) {
                 });
             }
 
-            let participants = Array(6);
-            //TODO MEJORAR ESTO. SE DEBE BUSCAR EL VALOR EN EL ARRAY EN LUGAR DE TENER UN INDEX FIJO
-            for (let value of Object.values(response.experimentCount)) {
-                if (value.category === 'female') {
-                    participants[indexFemale] = [value.group_1, value.group_2, value.group_3]
-                } else if (value.category === 'male') {
-                    participants[indexMale] = [value.group_1, value.group_2, value.group_3]
-                } else if (value.category === 'scenario_1_f') {
-                    participants[indexScenario1F] = [value.group_1, value.group_2, value.group_3]
-                } else if (value.category === 'scenario_2_f') {
-                    participants[indexScenario2F] = [value.group_1, value.group_2, value.group_3]
-                } else if (value.category === 'scenario_1_m') {
-                    participants[indexScenario1M] = [value.group_1, value.group_2, value.group_3]
-                } else if (value.category === 'scenario_2_m') {
-                    participants[indexScenario2M] = [value.group_1, value.group_2, value.group_3]
-                }
-            }
-
-            let totalParticipants = 0
-            for (let value of Object.values(response.participantsTotal)) {
-                totalParticipants = value.total_participants
-                break
-            }
-
-            callback({ screens, participants, totalParticipants });
+            callback({ screens });
         }, (response) => {
             callback(false, response);
         });
@@ -316,14 +285,6 @@ export function saveUserVisualPattern(data, callback) {
     save(save_visualpattern_url, uservisualpattern(data), callback)
 }
 
-/**
- * 
- * @param {*} data 
- * @param {*} callback 
- */
-export function saveBargains(data, callback) {
-    save(save_bargain_url, userbargain(data), callback)
-}
 
 /**
  * 
@@ -334,77 +295,10 @@ export function saveAttributes(data, callback) {
     save(save_attributes_url, userattributes(data), callback)
 }
 
-// /**
-//  * 
-//  * @param {*} data 
-//  * @param {*} callback 
-//  */
-// export function saveRatings(data, callback) {
-//     save(save_ratings_url, userratings(data), callback)
-// }
-
-// /**
-//  * 
-//  * @param {*} data 
-//  * @param {*} callback 
-//  */
-// export function savePreferences(data, callback) {
-//     save(save_preferences_url, userpreferences(data), callback)
-// }
-
-// /**
-//  * 
-//  * @param {*} data 
-//  * @param {*} callback 
-//  */
-// export function saveRatingPreferences(data, callback) {
-//     save(save_rating_preferences_url, userratingpreferences(data), callback)
-// }
-
-// /**
-//  * 
-//  * @param {*} data 
-//  * @param {*} callback 
-//  */
-// export function saveBrands(data, callback) {
-//     save(save_brands_url, userbrands(data), callback)
-// }
-
-// /**
-//  * 
-//  * @param {*} data 
-//  * @param {*} callback 
-//  */
-// export function saveInput(data, callback) {
-//     save(save_input_url, userinput(data), callback)
-// }
-
 /**
  * Helpers to format the data in the correct outputvalue
  * for a specific sheet
  */
-const userbargain = (data) => {
-    const { userID, outputBargainTask } = data;
-
-    let result = outputBargainTask.task.results.map((item) => {
-        return [
-            userID,
-            item.storeNumber,
-            item.typeTask,
-            item.enterStoreTimestamp,
-            item.leaveStoreTimestamp,
-            item.productsSeen,
-            item.lastProductDisplayed,
-            item.bargainTakenNumber,
-            item.bargainWronglyTakenNumber,
-            item.bargainShownNumber,
-            item.round,
-            item.totalBargainsInStore
-        ]
-    })
-
-    return result;
-}
 
 const usergeneraldata = (data, studyParams) => {
 
@@ -423,7 +317,7 @@ const usergeneraldata = (data, studyParams) => {
                 studyParams.PROLIFIC_PID,
                 studyParams.STUDY_ID,
                 studyParams.SESSION_ID,
-                constant.TEXT_EMPTY,
+                output.data.numerOsoby,
                 constant.TEXT_EMPTY,
                 constant.TEXT_EMPTY
             ]);
@@ -562,95 +456,6 @@ const usergeneraldata = (data, studyParams) => {
             });
 
             result = result.concat(bargains);
-            // } else if (output.task === constant.RATING_PREFERENCE_TASK_SCREEN) {
-            //     for (let i = 0; i < constant.ATTRIBUTE_FOURTH_TASK.data.id.length; i++) {
-            //         result.push([
-            //             output.userID,
-            //             output.task,
-            //             constant.ATTRIBUTE_FOURTH_TASK.data.id[i],
-            //             constant.ATTRIBUTE_FOURTH_TASK.data.text[i],
-            //             output.data[i],
-            //             constant.TEXT_EMPTY,
-            //             constant.TEXT_EMPTY,
-            //             constant.TEXT_EMPTY,
-            //             constant.TEXT_EMPTY,
-            //             constant.TEXT_EMPTY,
-            //             constant.TEXT_EMPTY,
-            //             constant.TEXT_EMPTY,
-            //             constant.TEXT_EMPTY
-            //         ]);
-            //     }
-            // } else if (output.task === constant.PREFERENCE_TASK_SCREEN) {
-            //     for (let i = 0; i < constant.ATTRIBUTE.data.id.length; i++) {
-            //         result.push([
-            //             output.userID,
-            //             output.task,
-            //             constant.ATTRIBUTE.data.id[i],
-            //             constant.ATTRIBUTE.data.text[i],
-            //             output.data[i],
-            //             constant.TEXT_EMPTY,
-            //             constant.TEXT_EMPTY,
-            //             constant.TEXT_EMPTY,
-            //             constant.TEXT_EMPTY,
-            //             constant.TEXT_EMPTY,
-            //             constant.TEXT_EMPTY,
-            //             constant.TEXT_EMPTY,
-            //             constant.TEXT_EMPTY
-            //         ]);
-            //     }
-            // } else if (output.task === constant.RATING_TASK_SCREEN) {
-            //     for (let i = 0; i < constant.ATTRIBUTE_CUSTOM.data.id.length; i++) {
-            //         result.push([
-            //             output.userID,
-            //             output.task,
-            //             constant.ATTRIBUTE_CUSTOM.data.id[i],
-            //             constant.ATTRIBUTE_CUSTOM.data.text[i],
-            //             output.data[i],
-            //             constant.TEXT_EMPTY,
-            //             constant.TEXT_EMPTY,
-            //             constant.TEXT_EMPTY,
-            //             constant.TEXT_EMPTY,
-            //             constant.TEXT_EMPTY,
-            //             constant.TEXT_EMPTY,
-            //             constant.TEXT_EMPTY,
-            //             constant.TEXT_EMPTY
-            //         ]);
-            //     }
-            // }
-            // else if (output.task === constant.BRAND_TASK_SCREEN) {
-            //     output.data.forEach((brand) => {
-            //         result.push([
-            //             output.userID,
-            //             output.task,
-            //             brand,
-            //             constant.TEXT_EMPTY,
-            //             constant.TEXT_EMPTY,
-            //             constant.TEXT_EMPTY,
-            //             constant.TEXT_EMPTY,
-            //             constant.TEXT_EMPTY,
-            //             constant.TEXT_EMPTY,
-            //             constant.TEXT_EMPTY,
-            //             constant.TEXT_EMPTY,
-            //             constant.TEXT_EMPTY,
-            //             constant.TEXT_EMPTY
-            //         ])
-            //     });
-            // } else if (output.task === constant.INPUT_TASK_SCREEN) {
-            //     result.push([
-            //         output.userID,
-            //         output.task,
-            //         output.data,
-            //         constant.TEXT_EMPTY,
-            //         constant.TEXT_EMPTY,
-            //         constant.TEXT_EMPTY,
-            //         constant.TEXT_EMPTY,
-            //         constant.TEXT_EMPTY,
-            //         constant.TEXT_EMPTY,
-            //         constant.TEXT_EMPTY,
-            //         constant.TEXT_EMPTY,
-            //         constant.TEXT_EMPTY,
-            //         constant.TEXT_EMPTY
-            //     ])
         }
     }
 
@@ -688,6 +493,7 @@ function userinfo(data) {
         studyParams.PROLIFIC_PID,
         studyParams.STUDY_ID,
         studyParams.SESSION_ID,
+        outputFormData.numerOsoby
     ]);
 
 
@@ -801,75 +607,3 @@ function userattributes(data) {
 
     return result;
 }
-
-// function userratings(data) {
-//     const { userID, outputRatings } = data;
-
-//     let result = []
-
-//     for (let i = 0; i < constant.ATTRIBUTE_CUSTOM.data.id.length; i++) {
-//         result.push([
-//             userID,
-//             constant.ATTRIBUTE_CUSTOM.data.id[i],
-//             constant.ATTRIBUTE_CUSTOM.data.text[i],
-//             outputRatings[i]
-//         ]);
-//     }
-
-//     return result;
-// }
-
-// function userpreferences(data) {
-//     const { userID, outputPreferences } = data;
-
-//     let result = []
-
-//     for (let i = 0; i < constant.ATTRIBUTE.data.id.length; i++) {
-//         result.push([
-//             userID,
-//             constant.ATTRIBUTE.data.id[i],
-//             constant.ATTRIBUTE.data.text[i],
-//             outputPreferences[i]
-//         ]);
-//     }
-
-//     return result;
-// }
-
-// function userinput(data) {
-//     const { userID, outputInputTask } = data;
-//     let result = []
-//     result.push([userID, outputInputTask])
-
-//     return result;
-// }
-
-// function userratingpreferences(data) {
-//     const { userID, outputRatingPreferences } = data;
-
-//     let result = []
-
-//     for (let i = 0; i < constant.ATTRIBUTE_FOURTH_TASK.data.id.length; i++) {
-//         result.push([
-//             userID,
-//             constant.ATTRIBUTE_FOURTH_TASK.data.id[i],
-//             constant.ATTRIBUTE_FOURTH_TASK.data.text[i],
-//             outputRatingPreferences[i]
-//         ]);
-//     }
-
-//     return result;
-// }
-
-// function userbrands(data) {
-//     const { userID, outputBrands } = data;
-
-//     let result = outputBrands.map((output) => {
-//         return [
-//             userID,
-//             output
-//         ];
-//     });
-
-//     return result;
-// }

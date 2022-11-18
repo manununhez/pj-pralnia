@@ -19,7 +19,7 @@ import "./style.css"
 // helpers
 import * as request from '../../helpers/fetch';
 import * as constant from '../../helpers/constants';
-import { USER_INFO, randomNumber } from '../../helpers/utils';
+import { USER_INFO } from '../../helpers/utils';
 
 // Views
 import Footer from "../Footers/Footer";
@@ -30,11 +30,6 @@ import VisualPatternDemoTask from "./VisualPatternDemoTask";
 import PSForm from "./PSForm";
 import BargainTask from "./BargainTask/BargainTask";
 import BargainDemoTask from "./BargainTask/BargainDemoTask";
-// import RatingTask from "./RatingTask";
-// import BrandTask from "./BrandTask";
-// import InputTask from "./InputTask";
-// import PreferenceTask from "./PreferenceTask";
-// import RatingPreferenceTask from "./RatingPreferenceTask";
 import RewardScreen from "./RewardScreen";
 import MultiAttributeWithReadyBars from "./MultiAttribute/MultiAttributeWithReadyBars";
 import MultiAttributeOptionalReadyBars from "./MultiAttribute/MultiAttributeOptionalReadyBars";
@@ -79,6 +74,7 @@ class Index extends Component {
             yearsEduc: 0,
             levelEduc: constant.FORM_LEVEL_EDUC_DEFAULT, //default selected 
             profession: constant.TEXT_EMPTY,
+            numerOsoby: constant.TEXT_EMPTY,
             typeAuction: constant.TEXT_EMPTY
         }
 
@@ -90,7 +86,6 @@ class Index extends Component {
             //Variables for input data
             inputNavigation: [],
             inputTextInstructions: [],
-            inputParticipants: [],
             inputPSForm: [],
             inputStores: { storesLong: [], storesShort: [] },
             inputAttributes: { task: [], demo: [] },
@@ -252,8 +247,7 @@ class Index extends Component {
     _onLoadInitialDataCallBack(data, error) {
         if (data) {
             this.setState({
-                inputNavigation: data.screens,
-                inputParticipants: { participants: data.participants, total: data.totalParticipants }
+                inputNavigation: data.screens
             })
 
             if (DEBUG) console.log(data)
@@ -470,96 +464,6 @@ class Index extends Component {
         }
     }
 
-    //     /**
-    //      * 
-    //      * @param {*} data 
-    //      * @param {*} error 
-    //      */
-    //     _onSaveUserRatingsCallBack(data, error) {
-    //         if (DEBUG) console.log(data);
-    //         if (data) {
-    //             if (DEBUG) console.log("SaveUserRatings");
-
-    //             request.savePreferences(this.state, this._onSaveUserPreferencesCallBack.bind(this))
-
-    //         } else {
-    //             if (DEBUG) console.log("Error saving User Ratings")
-    //             this.setState({ loading: false });
-    //         }
-    //     }
-
-    //     /**
-    //      * 
-    //      * @param {*} data 
-    //      * @param {*} error 
-    //      */
-    //     _onSaveUserPreferencesCallBack(data, error) {
-    //         if (DEBUG) console.log(data);
-    //         if (data) {
-    //             if (DEBUG) console.log("SaveUserPreferences");
-
-    //             request.saveRatingPreferences(this.state, this._onSaveUserRatingPreferencesCallBack.bind(this))
-
-    //         } else {
-    //             if (DEBUG) console.log("Error saving user Preferences")
-    //             this.setState({ loading: false });
-    //         }
-    //     }
-
-    //     /**
-    //      * 
-    //      * @param {*} data 
-    //      * @param {*} error 
-    //      */
-    //     _onSaveUserRatingPreferencesCallBack(data, error) {
-    //         if (DEBUG) console.log(data);
-    //         if (data) {
-    //             if (DEBUG) console.log("SaveUserRatingPreferences");
-
-    //             request.saveInput(this.state, this._onSaveUserInputCallBack.bind(this))
-
-    //         } else {
-    //             if (DEBUG) console.log("Error saving user RatingPreferences")
-    //             this.setState({ loading: false });
-    //         }
-    //     }
-
-    //     /**
-    //  * 
-    //  * @param {*} data 
-    //  * @param {*} error 
-    //  */
-    //     _onSaveUserInputCallBack(data, error) {
-    //         if (DEBUG) console.log(data);
-    //         if (data) {
-    //             if (DEBUG) console.log("SaveUserInput");
-
-    //             request.saveBrands(this.state, this._onSaveUserBrandsCallBack.bind(this))
-
-    //         } else {
-    //             if (DEBUG) console.log("Error saving user Input")
-    //             this.setState({ loading: false });
-    //         }
-    //     }
-
-    //     /**
-    //      * 
-    //      * @param {*} data 
-    //      * @param {*} error 
-    //      */
-    //     _onSaveUserBrandsCallBack(data, error) {
-    //         if (DEBUG) console.log(data);
-    //         if (data) {
-    //             if (DEBUG) console.log("SaveUserBrands");
-
-    //             //redirect to PROLIFIC
-    //             window.location.replace(PROLIFIC_REDIRECT_ACCEPTED);
-
-    //         } else {
-    //             if (DEBUG) console.log("Error saving UserBrands")
-    //             this.setState({ loading: false });
-    //         }
-    //     }
 
     /**
      * Results from saving user general data
@@ -1205,116 +1109,6 @@ class Index extends Component {
         }
     }
 
-    // /**
-    //  * 
-    //  * @param {*} selectedRatings 
-    //  */
-    // ratingTaskHandler = (selectedRatings) => {
-    //     const { generalOutput, userID } = this.state;
-
-    //     generalOutput.push({
-    //         userID: userID,
-    //         task: constant.RATING_TASK_SCREEN,
-    //         data: selectedRatings,
-    //         sync: constant.STATE_NOT_SYNC
-    //     })
-
-    //     this.setState({
-    //         generalOutput: generalOutput,
-    //         outputRatings: selectedRatings,
-    //     }, () => {
-    //         this._validateToNextPage()
-    //     })
-    // }
-
-    // /**
-    //  * 
-    //  * @param {*} brand 
-    //  */
-    // brandTaskHandler = (brand) => {
-    //     const { generalOutput, userID } = this.state;
-
-    //     generalOutput.push({
-    //         userID: userID,
-    //         task: constant.BRAND_TASK_SCREEN,
-    //         data: brand,
-    //         sync: constant.STATE_NOT_SYNC
-    //     })
-
-    //     this.setState({
-    //         generalOutput: generalOutput,
-    //         outputBrands: brand,
-    //     }, () => {
-    //         this._validateToNextPage()
-    //     })
-    // }
-
-    // /**
-    //  * 
-    //  * @param {*} value 
-    //  */
-    // inputTaskHandler = (value) => {
-    //     const { generalOutput, userID } = this.state;
-
-    //     generalOutput.push({
-    //         userID: userID,
-    //         task: constant.INPUT_TASK_SCREEN,
-    //         data: value,
-    //         sync: constant.STATE_NOT_SYNC
-    //     })
-
-    //     this.setState({
-    //         generalOutput: generalOutput,
-    //         outputInputTask: value,
-    //     }, () => {
-    //         this._validateToNextPage()
-    //     })
-    // }
-
-    // /**
-    //  * 
-    //  * @param {*} value 
-    //  */
-    // preferenceTaskHandler = (value) => {
-    //     const { generalOutput, userID } = this.state;
-
-    //     generalOutput.push({
-    //         userID: userID,
-    //         task: constant.PREFERENCE_TASK_SCREEN,
-    //         data: value,
-    //         sync: constant.STATE_NOT_SYNC
-    //     })
-
-    //     this.setState({
-    //         generalOutput: generalOutput,
-    //         outputPreferences: value,
-    //     }, () => {
-    //         this._validateToNextPage()
-    //     })
-    // }
-
-    // /**
-    //  * 
-    //  * @param {*} value 
-    //  */
-    // ratingPreferenceTaskHandler = (value) => {
-    //     const { generalOutput, userID } = this.state;
-
-    //     generalOutput.push({
-    //         userID: userID,
-    //         task: constant.RATING_PREFERENCE_TASK_SCREEN,
-    //         data: value,
-    //         sync: constant.STATE_NOT_SYNC
-    //     })
-
-    //     this.setState({
-    //         generalOutput: generalOutput,
-    //         outputRatingPreferences: value,
-    //     }, () => {
-    //         this._validateToNextPage()
-    //     })
-    // }
-
     /**
      * 
      * @param {*} value 
@@ -1337,56 +1131,7 @@ class Index extends Component {
     * Validate user form results
     */
     validateForm() {
-        const { outputFormData, inputParticipants } = this.state
-        const { sex, age, yearsEduc, levelEduc } = outputFormData;
-        const groups = constant.PARTICIPANTS_GROUPS
-        const firstGroupAgeLimit = groups[0]
-        const secondGroupAgeLimit = groups[1]
-        const thirdGroupAgeLimit = groups[2]
-
-        const participantsLimitPerSexPerGroup = inputParticipants.total / 2
-        const yearsEducLimit = constant.YEARS_EDUCATION_LIMIT
-
-        const femaleParticipants = inputParticipants.participants[0];
-        const maleParticipants = inputParticipants.participants[1];
-
-        const indexFirstGroup = 0
-        const indexSecondGroup = 1
-        const indexThirdGroup = 2
-
-        if (DEBUG) console.log("validateForm")
-        if (DEBUG) console.log(outputFormData)
-        let data = {
-            isValid: false,
-            redirect: false
-        }
-
-        let amountParticipant = 0;
-        let ageIncorrectIntervalFlag = false;
-
-        // CONTROL OF AMOUNT OF PARTICIPANTS
-        if (age >= parseInt(firstGroupAgeLimit.minAge) &&
-            age <= parseInt(firstGroupAgeLimit.maxAge)) { //firstGroup
-            amountParticipant = sex === constant.FEMALE_VALUE ? femaleParticipants[indexFirstGroup] : maleParticipants[indexFirstGroup];
-        } else if (age >= parseInt(secondGroupAgeLimit.minAge) &&
-            age <= parseInt(secondGroupAgeLimit.maxAge)) { //secondGroup
-            amountParticipant = sex === constant.FEMALE_VALUE ? femaleParticipants[indexSecondGroup] : maleParticipants[indexSecondGroup];
-        } else if (age >= parseInt(thirdGroupAgeLimit.minAge) &&
-            age <= parseInt(thirdGroupAgeLimit.maxAge)) { //thirdGroup
-            amountParticipant = sex === constant.FEMALE_VALUE ? femaleParticipants[indexThirdGroup] : maleParticipants[indexThirdGroup];
-        } else {
-            ageIncorrectIntervalFlag = true;
-        }
-
-
-        if (ageIncorrectIntervalFlag || parseInt(amountParticipant) >= participantsLimitPerSexPerGroup ||
-            levelEduc === constant.FORM_LEVEL_EDUC_INITIAL || yearsEduc < yearsEducLimit) {
-            data.redirect = true;
-        }
-
-        if (!data.redirect) data.isValid = true;
-
-
+        let data = { isValid: true }
         return data;
     }
 
@@ -1472,11 +1217,6 @@ class Index extends Component {
                 screen === constant.PRALNIA_TASK_CONDITIONAL2_2_DEMO_SCREEN ||
                 screen === constant.PRALNIA_TASK_CONDITIONAL2_3_DEMO_SCREEN ||
                 screen === constant.PRALNIA_TASK_CONDITIONAL2_4_DEMO_SCREEN ||
-                // screen === constant.RATING_TASK_SCREEN ||
-                // screen === constant.BRAND_TASK_SCREEN ||
-                // screen === constant.INPUT_TASK_SCREEN ||
-                // screen === constant.PREFERENCE_TASK_SCREEN ||
-                // screen === constant.RATING_PREFERENCE_TASK_SCREEN ||
                 screen === constant.REWARD_TASK_SCREEN) {
                 this._goToNextTaskInInputNavigation();
             } else if (screen === constant.USER_FORM_SCREEN) {
@@ -1485,75 +1225,6 @@ class Index extends Component {
                 });
             }
         }
-    }
-
-    _randomUserScenarioAssignment() {
-        const { inputParticipants, outputFormData } = this.state;
-        const { sex, age } = outputFormData;
-        const groups = constant.PARTICIPANTS_GROUPS
-        const firstGroupAgeLimit = groups[0]
-        const secondGroupAgeLimit = groups[1]
-        const thirdGroupAgeLimit = groups[2]
-        const scenarios = constant.SCENARIOS
-        const participantsLimitPerScenarioPerSexPerGroup = inputParticipants.total / 4
-        const scenariosSex = (sex === constant.FEMALE_VALUE) ? 0 : 2
-
-        let randomNumberGenerated = []
-        let scenarioNumber = 0
-        let groupAge = 0
-
-        if (age >= parseInt(firstGroupAgeLimit.minAge) &&
-            age <= parseInt(firstGroupAgeLimit.maxAge)) { //firstGroup
-            groupAge = 0
-        } else if (age >= parseInt(secondGroupAgeLimit.minAge) &&
-            age <= parseInt(secondGroupAgeLimit.maxAge)) { //secondGroup
-            groupAge = 1
-        } else if (age >= parseInt(thirdGroupAgeLimit.minAge) &&
-            age <= parseInt(thirdGroupAgeLimit.maxAge)) { //thirdGroup
-            groupAge = 2
-        }
-
-
-        //Logic to assign and check scenarios availability
-        while (true) {
-            scenarioNumber = randomNumber(0, (scenarios.length - 1))
-
-            if (randomNumberGenerated.includes(scenarioNumber)) { //If we already have generated a certain number, we do not check again scenario availability, we only check if we have seen all number options availables
-                if (randomNumberGenerated.length === scenarios.length) {
-                    alert(constant.PARTICIPANTS_QUOTA_FULL_ALERT_ERROR);
-                    this.setState({ showAlertWindowsClosing: false }, () => {
-                        window.location.replace(PROLIFIC_REDIRECT_REJECT);
-                    })
-                    break;
-                }
-            } else { //if we generated a new number option, we add it to randomNumberGenerated and check that scenario availability 
-                randomNumberGenerated.push(scenarioNumber)
-                //Index in inputParticipant array are:
-                // indexScenario1F = 2
-                // indexScenario2F = 3
-                // indexScenario1M = 4
-                // indexScenario2M = 5
-                //ScenarioNumber should be a random number between 0 and 1 (there are two scenarios),
-                //so if we add 2, plus scenarioSex (0 if Female, 2 is Male), we have the correct table index with values for the scenario 
-
-                let indexScenarioSex = scenarioNumber + 2 + scenariosSex
-
-                if (DEBUG) console.log("scenarioNumber: " + scenarioNumber)
-                if (DEBUG) console.log("indexScenarioSex: " + indexScenarioSex)
-                if (DEBUG) console.log("participantsLimitPerScenarioPerSexPerGroup: " + participantsLimitPerScenarioPerSexPerGroup)
-                if (DEBUG) console.log("groupAge: " + groupAge)
-                if (DEBUG) console.log("scenarios: " + scenarios)
-                if (DEBUG) console.log(inputParticipants.participants[indexScenarioSex][groupAge])
-
-                if (inputParticipants.participants[indexScenarioSex][groupAge] < parseInt(participantsLimitPerScenarioPerSexPerGroup)) {
-                    break;
-                }
-            }
-        }
-
-
-        //we update select hotel value
-        this.setState({ typeTask: (scenarios[scenarioNumber] === constant.EXPERIMENT_TYPE_LONG ? constant.EXPERIMENT_TYPE_LONG : constant.EXPERIMENT_TYPE_SHORT) })
     }
 
     /**
@@ -1873,26 +1544,6 @@ function changePages(state, context) {
             action={context.multiAttributeDemoHandler}
             data={inputAttributes.demo}
             text={outputFormData.sex === constant.MALE_VALUE ? constant.PRALNIA_TASK_DEMO_M : constant.PRALNIA_TASK_DEMO_F} />;
-        // } else if (screen === constant.RATING_TASK_SCREEN) {
-        //     return <RatingTask
-        //         action={context.ratingTaskHandler}
-        //         text={outputFormData.sex === constant.MALE_VALUE ? constant.RATING_TASK_TITLE_M : constant.RATING_TASK_TITLE_F} />;
-        // } else if (screen === constant.BRAND_TASK_SCREEN) {
-        //     return <BrandTask
-        //         action={context.brandTaskHandler}
-        //         text={outputFormData.sex === constant.MALE_VALUE ? constant.BRAND_TASK_TITLE_M : constant.BRAND_TASK_TITLE_F} />;
-        // } else if (screen === constant.INPUT_TASK_SCREEN) {
-        //     return <InputTask
-        //         action={context.inputTaskHandler}
-        //         text={outputFormData.sex === constant.MALE_VALUE ? constant.INPUT_TASK_TITLE_M : constant.INPUT_TASK_TITLE_F} />;
-        // } else if (screen === constant.PREFERENCE_TASK_SCREEN) {
-        //     return <PreferenceTask
-        //         action={context.preferenceTaskHandler}
-        //         text={outputFormData.sex === constant.MALE_VALUE ? constant.PREFERENCE_TASK_TITLE_M : constant.PREFERENCE_TASK_TITLE_F} />
-        // } else if (screen === constant.RATING_PREFERENCE_TASK_SCREEN) {
-        //     return <RatingPreferenceTask
-        //         action={context.ratingPreferenceTaskHandler}
-        //         text={outputFormData.sex === constant.MALE_VALUE ? constant.RATING_PREFERENCE_TASK_TITLE_M : constant.RATING_PREFERENCE_TASK_TITLE_F} />
     } else if (screen === constant.REWARD_TASK_SCREEN) {
         return <RewardScreen
             data={outputAttribute.task}

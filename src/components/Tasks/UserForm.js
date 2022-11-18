@@ -17,7 +17,8 @@ export default function UserForm(props) {
     age: 0,
     yearsEduc: 0,
     levelEduc: constant.FORM_LEVEL_EDUC_DEFAULT, //default selected 
-    profession: constant.TEXT_EMPTY
+    profession: constant.TEXT_EMPTY,
+    numerOsoby: constant.TEXT_EMPTY
   }
   const defaultError = {
     showError: false,
@@ -37,7 +38,10 @@ export default function UserForm(props) {
           textError: constant.TEXT_EMPTY
         }
         // CONTROL OF EMPTY_TEXT
-        if (formData.age === 0) {
+        if (formData.numerOsoby === constant.TEXT_EMPTY) {
+          error.textError = constant.FORM_NUMER_OSOBY_ALERT_ERROR;
+          error.showError = true;
+        } else if (formData.age === 0) {
           error.textError = constant.FORM_AGE_ALERT_ERROR;
           error.showError = true;
         } else if (formData.profession === constant.TEXT_EMPTY) {
@@ -76,8 +80,12 @@ export default function UserForm(props) {
     if (DEBUG) console.log(formId)
     if (DEBUG) console.log(formInputValue)
 
-    //We save all fields from form data 
-    if (formId === constant.FORM_SEX_ID) {
+    //We save all fields from form data
+    if (formId === constant.FORM_NUMER_OSOBY) {
+      if (formInputValue < 10000) {
+        formDataResult.numerOsoby = formInputValue
+      }
+    } else if (formId === constant.FORM_SEX_ID) {
       if (formInputValue === constant.MALE_VALUE || formInputValue === constant.FEMALE_VALUE) {
         formDataResult.sex = formInputValue
       } else {
@@ -126,9 +134,15 @@ export default function UserForm(props) {
       <Form role="form" style={{ marginTop: '40px' }}>
         <FormGroup className="mb-3">
           <div className="d-flex align-items-left">
-            <h5>Numer osoby</h5>
+            <h5>Numer osoby badanej</h5>
           </div>
-          <Input type="text" disabled="true" value={props.data} />
+          <NumberFormat className="form-control"
+            id={constant.FORM_NUMER_OSOBY}
+            placeholder={constant.TEXT_EMPTY}
+            autoFocus={true}
+            allowNegative={false}
+            onValueChange={validateNumberFormat.bind(this, constant.FORM_NUMER_OSOBY)}
+            decimalScale={0} />
         </FormGroup>
         <FormGroup className="mb-3">
           <div className="d-flex align-items-left">
@@ -137,7 +151,6 @@ export default function UserForm(props) {
           <NumberFormat className="form-control"
             id={constant.FORM_AGE_ID}
             placeholder={constant.TEXT_EMPTY}
-            autoFocus={true}
             onValueChange={validateNumberFormat.bind(this, constant.FORM_AGE_ID)}
             decimalScale={0} />
         </FormGroup>

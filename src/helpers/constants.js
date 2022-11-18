@@ -167,6 +167,7 @@ export const ONE_SECOND_MS = 1000;
 // Form IDs
 export const FORM_SEX_ID = "radioSex";
 export const FORM_AGE_ID = "age";
+export const FORM_NUMER_OSOBY = "numerOsoby";
 export const FORM_PROFESSION_ID = "profession";
 export const FORM_YEARS_EDUC_ID = "yearsEduc";
 export const FORM_LEVEL_EDUC_ID = "levelEducationSelect";
@@ -264,6 +265,7 @@ export const REWARD_RESULT_MESSAGE = (result) => { return `Udało Ci się popraw
 export const REWARD_INPUT = { threshold: 60, bonusPoint: 50 }
 
 //General App messages KEYS
+export const FORM_NUMER_OSOBY_ALERT_ERROR = "Pole Numer osoby badanej nie może pozostać puste.";//Number osoby field cannot be empty
 export const FORM_AGE_ALERT_ERROR = "Pole Wiek nie może pozostać puste.";//Age field cannot be empty
 export const FORM_YEARS_EDUC_ALERT_ERROR = "Pole Lata formalnej edukacji nie może pozostać puste.";//Years Education field cannot be empty!
 export const FORM_PROFESSION_ALERT_ERROR = "Pole Zawód nie może pozostać puste.";//Profession field cannot be empty!
