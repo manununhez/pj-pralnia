@@ -277,6 +277,7 @@ export default class MultiAttributeOptionalArrangeAndReadyBars extends React.Com
             document.getElementById("cardStackVisual").style.display = "";
             document.getElementById("btnShowStack").style.display = "none";
             document.getElementById("btnShowArrangeStack").style.display = "none";
+            document.getElementById("cardHeader").style.display = "none";
         })
     }
 
@@ -285,6 +286,7 @@ export default class MultiAttributeOptionalArrangeAndReadyBars extends React.Com
             document.getElementById("cardArrangeStack").style.display = "";
             document.getElementById("btnShowArrangeStack").style.display = "none";
             document.getElementById("btnShowStack").style.display = "none";
+            document.getElementById("cardHeader").style.display = "none";
         })
     }
 
@@ -303,24 +305,27 @@ export default class MultiAttributeOptionalArrangeAndReadyBars extends React.Com
                 <Modal isOpen={modalOpen} toggle={this.modalToggle} style={modaltStyle}>
                     {getModalText(showFeedback, showFeedbackCorrectAnswer, completedTask)}
                 </Modal>
+                <Row className="justify-content-center" id="cardHeader"
+                    style={{ flexWrap: 'nowrap', backgroundColor: 'white', paddingTop: '0.5em', paddingBottom: '0.5em' }}>
+                    <Row className="justify-content-center" >
+                        <Button color="info" id="btnShowStack" style={{ width: "fit-content", alignSelf: "center", marginRight: "10px" }}
+                            onClick={() => this._stackDisplay()}>Gotowe słupki</Button>
+                        <Button color="info" id="btnShowArrangeStack" style={{ width: "fit-content", alignSelf: "center" }}
+                            onClick={() => this._arrangeStackDisplay()}>Sam robię słupki</Button>
+                    </Row>
+                </Row>
                 <Row className="justify-content-center" style={{ flexWrap: 'nowrap' }}>
-                    <Card body style={{ marginTop: "20px" }}>
+                    <Card body style={{ marginTop: "10px" }}>
                         <div>{getRatingStarBarTable(data)}</div>
                     </Card>
-                    <Card body style={{ marginTop: "20px" }}>
-                        <Row className="justify-content-center" style={{ marginBottom: "10px" }}>
-                            <Button color="info" id="btnShowStack" style={{ width: "fit-content", alignSelf: "center", marginRight: "10px" }}
-                                onClick={() => this._stackDisplay()}>Gotowe słupki</Button>
-                            <Button color="info" id="btnShowArrangeStack" style={{ width: "fit-content", alignSelf: "center" }}
-                                onClick={() => this._arrangeStackDisplay()}>Sam robię słupki</Button>
-                        </Row>
+                    <Card body style={{ marginTop: "10px" }}>
                         <div>{getTable(buttonClicked, selectedValue, data, this.optionClicked,
                             this.onDoubleClickImage, showMissingResultsIndicator, multiAttributeResults)}</div>
                     </Card>
-                    <Card id="cardStackVisual" body style={{ marginTop: "20px", display: 'none' }}>
+                    <Card id="cardStackVisual" body style={{ marginTop: "10px", display: 'none' }}>
                         <div>{getTableVisualization(data)}</div>
                     </Card>
-                    <Card id="cardArrangeStack" body style={{ marginTop: "20px", display: 'none' }}>
+                    <Card id="cardArrangeStack" body style={{ marginTop: "10px", display: 'none' }}>
                         <DemoContainer action={this.multiAttributeResultsHandler} currentResult={multiAttributeResults} />
                     </Card>
                 </Row>

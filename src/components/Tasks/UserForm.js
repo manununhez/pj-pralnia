@@ -27,6 +27,12 @@ export default function UserForm(props) {
 
   const [formData, setFormData] = useState(defaultForm);
   const [error, setError] = useState(defaultError);
+  const MAX_VAL = 999;
+  const withValueCap = (inputObj) => {
+    const { value } = inputObj;
+    if (value <= MAX_VAL) return true;
+    return false;
+  };
 
   useEffect(() => {
     const handleKeyDownEvent = event => {
@@ -141,6 +147,7 @@ export default function UserForm(props) {
             placeholder={constant.TEXT_EMPTY}
             autoFocus={true}
             allowNegative={false}
+            isAllowed={withValueCap}
             onValueChange={validateNumberFormat.bind(this, constant.FORM_NUMER_OSOBY)}
             decimalScale={0} />
         </FormGroup>

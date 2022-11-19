@@ -123,6 +123,7 @@ export default class MultiAttributeOptionalReadyBars extends React.Component {
         this.setState({ buttonClicked: ButtonClicked.READY_BAR_BUTTON_CLICKED }, () => {
             document.getElementById("cardStackVisual").style.display = "";
             document.getElementById("btnShowStack").style.display = "none";
+            document.getElementById("cardHeader").style.display = "none";
         })
     }
 
@@ -164,16 +165,21 @@ export default class MultiAttributeOptionalReadyBars extends React.Component {
                         <br /><div><h4>{TEXT_FOOTER}</h4></div>
                     </ModalHeader>
                 </Modal>
+                <Row className="justify-content-center" id="cardHeader"
+                    style={{ flexWrap: 'nowrap', backgroundColor: 'white', paddingTop: '0.5em', paddingBottom: '0.5em' }}>
+                    <Row className="justify-content-center" >
+                        <Button color="info" id="btnShowStack" style={{ width: "fit-content", alignSelf: "center" }}
+                            onClick={() => this._stackDisplay()}> Pokaż słupki</Button>
+                    </Row>
+                </Row>
                 <Row className="justify-content-center" style={{ flexWrap: 'nowrap' }}>
-                    <Card body style={{ marginTop: "20px" }}>
+                    <Card body style={{ marginTop: "10px" }}>
                         <div>{getRatingStarBarTable(data)}</div>
                     </Card>
-                    <Card body style={{ marginTop: "20px" }}>
-                        <Button color="info" id="btnShowStack" style={{ width: "fit-content", alignSelf: "center", marginBottom: "10px" }}
-                            onClick={() => this._stackDisplay()}> Pokaż słupki</Button>
+                    <Card body style={{ marginTop: "10px" }}>
                         <div>{getTable(selectedOption[counter].selectedAnswer, data, this.optionClicked)}</div>
                     </Card>
-                    <Card id="cardStackVisual" body style={{ marginTop: "20px", display: 'none' }}>
+                    <Card id="cardStackVisual" body style={{ marginTop: "10px", display: 'none' }}>
                         <div>{getTableVisualization(data)}</div>
                     </Card>
                 </Row>
